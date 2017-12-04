@@ -113,7 +113,7 @@ public class SeminarController {
 	
 	@RequestMapping(value = "/seminar/{seminarId}/group/my",method=GET)
 	public Group getMySeminarGroup(@PathVariable int seminarId) {
-		Group group=new Group();
+		Group group=new Group(1,1,1);
 		return group;
 	}
 	
