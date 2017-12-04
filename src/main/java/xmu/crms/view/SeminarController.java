@@ -16,36 +16,42 @@ import xmu.crms.entity.Group;
 import xmu.crms.entity.Me;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.Topic;
-
+/**
+*
+* @author xingbo hu
+* @date 2017/12/5
+*/
 @Controller
 public class SeminarController {
 	
-	List<Seminar> Seminars=new LinkedList<Seminar>();
+	List<Seminar> allSeminar=new LinkedList<Seminar>();
 	
 	public SeminarController() {
-		Seminars.add(new Seminar(1,"讨论课1","需求分析","random",new Date("2017-09-20"),new Date("2017-09-30")));
-		Seminars.add(new Seminar(2,"讨论课2","界面原型","fixed",new Date("2017-10-10"),new Date("2017-10-20")));
-		Seminars.add(new Seminar(3,"讨论课3","概要设计","fixed",new Date("2017-10-30"),new Date("2017-11-10")));
+		allSeminar.add(new Seminar(1,"讨论课1","需求分析","random",new Date("2017-09-20"),new Date("2017-09-30")));
+		allSeminar.add(new Seminar(2,"讨论课2","界面原型","fixed",new Date("2017-10-10"),new Date("2017-10-20")));
+		allSeminar.add(new Seminar(3,"讨论课3","概要设计","fixed",new Date("2017-10-30"),new Date("2017-11-10")));
 	}
 	
 	@RequestMapping(value = "/seminar/{seminarId}",method=GET)
 	public Seminar getSeminarById(@PathVariable int seminarId) {
-		Iterator<Seminar> it = Seminars.iterator();
+		Iterator<Seminar> it = allSeminar.iterator();
 		while (it.hasNext()) {
 			Seminar seminar=it.next();
-			if(seminar.getId()==seminarId)return seminar;
+			if(seminar.getId()==seminarId) {
+				return seminar;
+			}
 		}
 		return null;
 	}
     
 	@RequestMapping(value = "/seminar/{seminarId}",method=PUT)
 	public Seminar updateSeminar(@PathVariable int seminarId, Seminar newseminar) {
-		Iterator<Seminar> it = Seminars.iterator();
+		Iterator<Seminar> it = allSeminar.iterator();
 		while (it.hasNext()) {
 			Seminar seminar=it.next();
 			if(seminar.getId()==seminarId) {
-				Seminars.remove(seminar);
-				Seminars.add(newseminar);
+				allSeminar.remove(seminar);
+				allSeminar.add(newseminar);
 				return seminar;
 			}
 		}
@@ -54,11 +60,11 @@ public class SeminarController {
 	
 	@RequestMapping(value = "/seminar/{seminarId}",method=DELETE)
 	public String deleteSeminar(@PathVariable int seminarId) {
-		Iterator<Seminar> it = Seminars.iterator();
+		Iterator<Seminar> it = allSeminar.iterator();
 		while (it.hasNext()) {
 			Seminar seminar=it.next();
 			if(seminar.getId()==seminarId) {
-				Seminars.remove(seminar);
+				allSeminar.remove(seminar);
 				return "success";
 			}
 		}
@@ -74,10 +80,12 @@ public class SeminarController {
 	
 	@RequestMapping(value = "/seminar/{seminarId}/detail",method=GET)
 	public Seminar getSeminarDetailById(@PathVariable int seminarId) {
-		Iterator<Seminar> it = Seminars.iterator();
+		Iterator<Seminar> it = allSeminar.iterator();
 		while (it.hasNext()) {
 			Seminar seminar=it.next();
-			if(seminar.getId()==seminarId)return seminar;
+			if(seminar.getId()==seminarId) {
+				return seminar;
+			}
 		}
 		return null;
 	}
