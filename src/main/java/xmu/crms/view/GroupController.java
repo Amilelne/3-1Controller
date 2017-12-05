@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GroupController {
 	
 	/**
-	 * 按小组ID获取小组详情
+	 * 按小组ID获取小组详情4
 	 * @param groupId
 	 * @return
 	 */
