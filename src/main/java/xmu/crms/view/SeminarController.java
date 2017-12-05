@@ -1,7 +1,6 @@
 package xmu.crms.view;
 
-import java.util.Date;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,21 +11,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.*;
 
 import xmu.crms.entity.Group;
 import xmu.crms.entity.Me;
-import xmu.crms.entity.Seminar;
-import xmu.crms.entity.Topic;
+import xmu.crms.view.vo.GroupVO;
+import xmu.crms.view.vo.SeminarVO;
+import xmu.crms.view.vo.TopicVO;
 /**
 *
 * @author xingbo hu
 * @date 2017/12/5
 */
 @RestController
-public class SeminarController {
-	
-	List<Seminar> allSeminar=new LinkedList<Seminar>();
-	
+public class SeminarController {	
+
+	/**
+	 * test
+	 * @return
+	 */
+	@GetMapping(value = "/seminar")
+	public ResponseEntity<String> getSeminar() {
+		return new ResponseEntity<String>("success",HttpStatus.OK);
+
+	}
 	
 	/**
 	 * 按ID获取讨论课
@@ -34,15 +45,13 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}")
-	public Seminar getSeminarById(@PathVariable int seminarId) {
-		Iterator<Seminar> it = allSeminar.iterator();
-		while (it.hasNext()) {
-			Seminar seminar=it.next();
-			if(seminar.getId()==seminarId) {
-				return seminar;
-			}
-		}
-		return null;
+	public ResponseEntity<SeminarVO> getSeminarById(@PathVariable int seminarId) {
+		SeminarVO seminar=new SeminarVO(32,"概要设计","模型层与数据库设计","fixed","2017-10-10","2017-10-24");
+		TopicVO topic1=new TopicVO(257,"A","领域模型与模块","Domain model与模块划分",5,6,2);
+		seminar.addTopic(topic1);
+		TopicVO topic2=new TopicVO(258,"B","数据库设计","类图与ER图",5,6,2);
+		seminar.addTopic(topic2);
+		return new ResponseEntity<SeminarVO>(seminar,HttpStatus.OK);
 	}
     
 	/**
@@ -51,17 +60,9 @@ public class SeminarController {
 	 * @return
 	 */
 	@PutMapping(value = "/seminar/{seminarId}")
-	public Seminar updateSeminar(@PathVariable int seminarId, Seminar newseminar) {
-		Iterator<Seminar> it = allSeminar.iterator();
-		while (it.hasNext()) {
-			Seminar seminar=it.next();
-			if(seminar.getId()==seminarId) {
-				allSeminar.remove(seminar);
-				allSeminar.add(newseminar);
-				return seminar;
-			}
-		}
-		return null;
+	public ResponseEntity updateSeminar(@PathVariable int seminarId, @RequestBody SeminarVO seminarRes) {
+
+		return new ResponseEntity(HttpStatus.OK);
 	}
 	
 	/**
@@ -70,16 +71,9 @@ public class SeminarController {
 	 * @return
 	 */
 	@DeleteMapping(value = "/seminar/{seminarId}")
-	public String deleteSeminar(@PathVariable int seminarId) {
-		Iterator<Seminar> it = allSeminar.iterator();
-		while (it.hasNext()) {
-			Seminar seminar=it.next();
-			if(seminar.getId()==seminarId) {
-				allSeminar.remove(seminar);
-				return "success";
-			}
-		}
-		return "fail";
+	public ResponseEntity deleteSeminar(@PathVariable int seminarId) {
+		
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	/**
@@ -88,10 +82,13 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/my")
-	public List<Seminar> getSeminarsOfStudent(){
-		List<Seminar> stuSeminars=new LinkedList<Seminar>();
-		stuSeminars.add(new Seminar(3,"讨论课3","概要设计","fixed",new Date("2017-10-30"),new Date("2017-11-10")));
-		return stuSeminars;
+	public ResponseEntity<SeminarVO> getSeminarsOfStudent(@PathVariable int seminarId){
+		SeminarVO seminar=new SeminarVO(32,"概要设计","模型层与数据库设计","fixed","2017-10-10","2017-10-24");
+		seminar.setCourseName("OOAD");
+		seminar.setClassCalling(23);
+		seminar.setLeader(true);
+		seminar.setAreTopicsSelected(true);
+		return new ResponseEntity<SeminarVO>(seminar,HttpStatus.OK);
 	}
 	
 	/**
@@ -100,15 +97,12 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/detail")
-	public Seminar getSeminarDetailById(@PathVariable int seminarId) {
-		Iterator<Seminar> it = allSeminar.iterator();
-		while (it.hasNext()) {
-			Seminar seminar=it.next();
-			if(seminar.getId()==seminarId) {
-				return seminar;
-			}
-		}
-		return null;
+	public ResponseEntity<SeminarVO> getSeminarDetailById(@PathVariable int seminarId) {
+		SeminarVO seminar=new SeminarVO(32,"概要设计","模型层与数据库设计","fixed","2017-10-10","2017-10-24");
+		seminar.setSite("海韵201");
+		seminar.setTeacherName("邱明");
+		seminar.setTeacherEmail("mingqiu@xmu.edu.cn");
+		return new ResponseEntity<SeminarVO>(seminar,HttpStatus.OK);
 	}
 	
 	/**
@@ -117,11 +111,14 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/topic")
-	public List<Topic> getSeminarTopic(@PathVariable int seminarId){
-		List<Topic> seminarTopics=new LinkedList<Topic>();
-		seminarTopics.add(new Topic(1, "A", "web界面原型", "给出web端的界面导航图与界面原型", 6, 5, 6));
-		seminarTopics.add(new Topic(2, "B", "小程序界面原型", "给出微信小程序的界面导航图与界面原型", 6, 5, 6));
-		return seminarTopics;
+	public ResponseEntity<List<TopicVO>> getSeminarTopic(@PathVariable int seminarId){
+		SeminarVO seminar=new SeminarVO(32,"概要设计","模型层与数据库设计","fixed","2017-10-10","2017-10-24");
+		TopicVO topic1=new TopicVO(257,"A","领域模型与模块","Domain model与模块划分",5,6,2);
+		seminar.addTopic(topic1);
+		TopicVO topic2=new TopicVO(258,"B","数据库设计","类图与ER图",5,6,2);
+		seminar.addTopic(topic2);
+		List<TopicVO> topics=seminar.getTopics();
+		return new ResponseEntity<List<TopicVO>>(topics,HttpStatus.OK);
 	}
 	
 	/**
@@ -130,9 +127,9 @@ public class SeminarController {
 	 * @return
 	 */
 	@PostMapping(value = "/seminar/{seminarId}/topic")
-	public Topic createSeminarTopic(@PathVariable int seminarId){
-		Topic topic=new Topic(3, "A", "模块划分", "使用Restful风格进行模块划分", 6, 5, 6);
-		return topic;
+	public ResponseEntity createSeminarTopic(@PathVariable int seminarId,@RequestBody TopicVO topic){
+		
+		return new ResponseEntity(HttpStatus.OK);
 	}
 	
 	/**
@@ -141,10 +138,10 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/group")
-	public List<Group> getSeminarGroup(@PathVariable int seminarId){
-		List<Group> seminarGroups=new LinkedList<Group>();
-		
-		return seminarGroups;
+	public ResponseEntity<List<GroupVO>> getSeminarGroup(@PathVariable int seminarId){
+		List<GroupVO> groups=new ArrayList<GroupVO>();
+		GroupVO group=new GroupVO();
+		return new ResponseEntity<List<GroupVO>>(groups,HttpStatus.OK);
 	}
 	
 	/**
