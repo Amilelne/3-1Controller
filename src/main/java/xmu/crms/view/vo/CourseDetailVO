@@ -1,0 +1,7 @@
+package xmu.crms.view.vo;
+
+public class CourseDetailVO {
+	int id;
+	TeacherVO teacher;
+	
+}
