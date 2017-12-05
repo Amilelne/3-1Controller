@@ -25,7 +25,7 @@ public class ClassController {
 
 
     @GetMapping("/class")
-    public ResponseEntity<List<ClassVO>> getClass(@RequestParam("courseName") String courseName,@RequestParam("courseTeacher") String courseTeacher) {
+    public ResponseEntity<List<ClassVO>> getClassController(@RequestParam("courseName") String courseName,@RequestParam("courseTeacher") String courseTeacher) {
 		
 		List<ClassVO> classVOs = new ArrayList<ClassVO>();
 		ClassVO temp = new ClassVO();
