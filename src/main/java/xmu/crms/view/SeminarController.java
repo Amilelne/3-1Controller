@@ -59,9 +59,9 @@ public class SeminarController {
 	 * @return
 	 */
 	@PutMapping(value = "/seminar/{seminarId}")
-	public ResponseEntity updateSeminar(@PathVariable int seminarId, @RequestBody SeminarVO seminarRes) {
-
-		return new ResponseEntity(HttpStatus.OK);
+	public ResponseEntity updateSeminar(@PathVariable int seminarId) {
+		
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class SeminarController {
 	@DeleteMapping(value = "/seminar/{seminarId}")
 	public ResponseEntity deleteSeminar(@PathVariable int seminarId) {
 		
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	/**
@@ -126,9 +126,9 @@ public class SeminarController {
 	 * @return
 	 */
 	@PostMapping(value = "/seminar/{seminarId}/topic")
-	public ResponseEntity createSeminarTopic(@PathVariable int seminarId,@RequestBody TopicVO topic){
-		
-		return new ResponseEntity(HttpStatus.OK);
+	public ResponseEntity<TopicVO> createSeminarTopic(@PathVariable int seminarId){
+		TopicVO topic=new TopicVO(257,"A","领域模型与模块","Domain model与模块划分",5,6,2);
+		return new ResponseEntity<TopicVO>(topic,HttpStatus.OK);
 	}
 	
 	/**
