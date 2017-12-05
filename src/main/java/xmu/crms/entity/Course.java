@@ -9,9 +9,9 @@ public class Course {
 	private String name;
 	private int numClass;
 	private int numStudent;
-	private Date startTime;
-	private Date endTime;
-	public Course(int id, String name, int numClass, int numStudent, Date startTime, Date endTime) {
+	private String startTime;
+	private String endTime;
+	public Course(int id, String name, int numClass, int numStudent, String startTime, String endTime) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -44,18 +44,5 @@ public class Course {
 	public void setNumStudent(int numStudent) {
 		this.numStudent = numStudent;
 	}
-	public Date getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-	public Date getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-	
 	
 }
