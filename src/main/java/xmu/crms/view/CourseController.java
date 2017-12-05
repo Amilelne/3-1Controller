@@ -31,9 +31,10 @@ public class CourseController {
 	
 	//创建课程
 	@PostMapping("/course")
-	public ResponseEntity<Integer> createCourse() {
-			
-		return new ResponseEntity<Integer>(23, HttpStatus.OK);
+	public ResponseEntity<CourseVO> createCourse() {
+		CourseVO course = new CourseVO();
+		course.setId(23);
+		return new ResponseEntity<CourseVO>(course, HttpStatus.CREATED);
 	}
 	
 	//按ID获取课程
@@ -75,9 +76,10 @@ public class CourseController {
 	
 	//在指定ID的课程创建班级
 	@PostMapping("/course/{courseId}/class")
-	public ResponseEntity<Integer> createClassById(@PathVariable("courseId") int courseId) {
-
-		return new ResponseEntity<Integer>(45, HttpStatus.OK);
+	public ResponseEntity<ClassVO> createClassById(@PathVariable("courseId") int courseId) {
+		ClassVO newClass = new ClassVO();
+		newClass.setId(45);
+		return new ResponseEntity<ClassVO>(newClass, HttpStatus.CREATED);
 	}
 	
 	//按课程ID获取讨论课详情列表
@@ -113,9 +115,10 @@ public class CourseController {
 	
 	//在指定ID的课程创建讨论课
 	@PostMapping("/course/{courseId}/seminar")
-	public ResponseEntity<Integer> createSeminarById(@PathVariable("courseId") int courseId){
-
-		return new ResponseEntity<Integer>(32, HttpStatus.OK);
+	public ResponseEntity<SeminarVO> createSeminarById(@PathVariable("courseId") int courseId){
+		SeminarVO seminar = new SeminarVO();
+		seminar.setId(32);
+		return new ResponseEntity<SeminarVO>(seminar, HttpStatus.CREATED);
 	}
 	
 	//获取课程正在进行的讨论课
@@ -125,6 +128,7 @@ public class CourseController {
 		tempSeminar.setId(29);
 		tempSeminar.setName("界面原型设计");
 		tempSeminar.setCourseName("OOAD");
+		tempSeminar.setGroupingMethod("fixed");
 		/*
 		 * tempSeminar.setGroupingMethod("fixed");
 		 * model与example不一致*/
