@@ -10,13 +10,15 @@ public class MeVO {
 	private String phone;
 	private String email;
 	private String gender;
-	private simpleSchoolInfo school;
+	private SimpleSchoolInfoVO school;
 	private String title;
 	private String avatar;
-	public MeVO() {
-		school=new simpleSchoolInfo();
+	public MeVO() 
+	{
+		super();
+		school=new SimpleSchoolInfoVO();
 	};
-	public MeVO(int id, String type, String name,String number, String phone, String email, String gender, simpleSchoolInfo school, String title,
+	public MeVO(int id, String type, String name,String number, String phone, String email, String gender, SimpleSchoolInfoVO school, String title,
 			String avatar) {
 		super();
 		this.id = id;
@@ -83,10 +85,10 @@ public class MeVO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public simpleSchoolInfo getSchool() {
+	public SimpleSchoolInfoVO getSchool() {
 		return school;
 	}
-	public void setSchool(simpleSchoolInfo school) {
+	public void setSchool(SimpleSchoolInfoVO school) {
 		this.school = school;
 	}
 	public String getTitle() {
@@ -109,26 +111,3 @@ public class MeVO {
 	}
 }
 
-class simpleSchoolInfo
-{
-	private int id;
-	private String name;
-	public simpleSchoolInfo() {};
-	public simpleSchoolInfo(int id,String name)
-	{
-		this.id=id;
-		this.name=name;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-}

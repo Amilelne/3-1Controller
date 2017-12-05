@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import xmu.crms.view.vo.MeVO;
-import xmu.crms.view.vo.SchoolVO;
+import xmu.crms.view.vo.SimpleSchoolInfoVO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +18,7 @@ public class MeController {
 	@GetMapping("/me")
 	public ResponseEntity<MeVO> createMe() 
 	{
-		MeVO newme=new MeVO();
-		newme.setId(3486);
-		newme.setName("张三");
-		newme.setType("student");
-		newme.setNumber("23320152202333");
-		newme.setPhone("18911114514");
-		newme.setEmail("23320152202333@stu.xmu.edu.cn");
-		newme.setGender("male");
-		newme.setSchoolId(32);
-		newme.setSchoolName("厦门大学");
-		newme.setAvatar("//avatar//3486.png");
+		MeVO newme=new MeVO(3486,"张三","student","23320152202333","18911114514","23320152202333@stu.xmu.edu.cn", "male",new SimpleSchoolInfoVO(32,"厦门大学"),"","");
 		return new ResponseEntity<MeVO>(newme,HttpStatus.OK);
 	}
 	

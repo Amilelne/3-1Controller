@@ -13,6 +13,9 @@ public class TopicVO{
 	private int GroupLimit;
 	private int GroupMemberLimit;
 	private int GroupLeft;
+	public TopicVO() {
+		super();
+	};
 	public TopicVO(int id, String serial, String name, String description, int groupLimit, int groupMemberLimit,
 			int groupLeft) {
 		super();

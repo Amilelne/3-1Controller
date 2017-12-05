@@ -8,6 +8,10 @@ public class SchoolVO {
 	private String name;
 	private String province;
 	private String city;
+	public SchoolVO()
+	{
+		super();
+	}
 	public SchoolVO(int id, String name, String province, String city) {
 		super();
 		this.id = id;
