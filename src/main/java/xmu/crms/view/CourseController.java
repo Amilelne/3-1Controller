@@ -2,8 +2,6 @@ package xmu.crms.view;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import xmu.crms.view.vo.ClassVO;
 import xmu.crms.view.vo.CourseVO;
+import xmu.crms.view.vo.SeminarClassesVO;
+import xmu.crms.view.vo.SeminarClassesVO.CourseClass;
+import xmu.crms.view.vo.SeminarGradeDetailVO;
 import xmu.crms.view.vo.SeminarVO;
 
 @Controller
@@ -91,7 +92,9 @@ public class CourseController {
 		tempSeminar.setGroupingMethod("fixed");
 		tempSeminar.setStartTime("2017-09-25");
 		tempSeminar.setEndTime("2017-10-09");
-		tempSeminar.setGrade(4);
+		/*
+		 * tempSeminar.setGrade(4);
+		 * embedGrade==false 则不用*/
 		list.add(tempSeminar);
 		
 		tempSeminar = new SeminarVO();
@@ -101,7 +104,9 @@ public class CourseController {
 		tempSeminar.setGroupingMethod("fixed");
 		tempSeminar.setStartTime("2017-10-10");
 		tempSeminar.setEndTime("2017-10-24");
-		tempSeminar.setGrade(5);
+		/*
+		 * tempSeminar.setGrade(5);
+		 * embedGrade==false 则不用*/
 		list.add(tempSeminar);
 		return new ResponseEntity<List<SeminarVO>>(list, HttpStatus.OK);
 	}
@@ -115,104 +120,29 @@ public class CourseController {
 	
 	//获取课程正在进行的讨论课
 	@GetMapping("/course/{courseId}/seminar/current")
-	public ResponseEntity<SeminarVO> getSeminar(@PathVariable("courseId") int courseId) {
-		SeminarVO tempSeminar = new SeminarVO();
+	public ResponseEntity<SeminarClassesVO> getSeminar(@PathVariable("courseId") int courseId) {
+		SeminarClassesVO tempSeminar = new SeminarClassesVO();
 		tempSeminar.setId(29);
 		tempSeminar.setName("界面原型设计");
-		tempSeminar.setCourseName("OOAD");	//?
-		tempSeminar.setGroupingMethod("fixed");
+		tempSeminar.setCourseName("OOAD");
+		/*
+		 * tempSeminar.setGroupingMethod("fixed");
+		 * model与example不一致*/
 		tempSeminar.setStartTime("2017-09-25");
 		tempSeminar.setEndTime("2017-10-09");
 		
-		LinkedList classes = new LinkedList<ClassVO>();
-		ClassVO tempClass = new ClassVO();
-		tempClass.setId(53);
-		tempClass.setName("周三12");
-		classes.add(tempClass);
+		tempSeminar.addClass(53, "周三12");
+		tempSeminar.addClass(57, "周三34");
 		
-		tempClass = new ClassVO();
-		tempClass.setId(57);
-		tempClass.setName("周三34");
-		classes.add(tempClass);
-		
-		tempSeminar.setClasses(classes);
-		return new ResponseEntity<SeminarVO>(tempSeminar, HttpStatus.OK);
+		return new ResponseEntity<SeminarClassesVO>(tempSeminar, HttpStatus.OK);
 	}
 	
 	//按课程ID获取学生的所有讨论课成绩
 	@GetMapping("/course/{courseId}/grade")
-	public ResponseEntity<List<Grade>> getSeminarGradeById(@PathVariable("courseId") int courseId) {
-		LinkedList list = new LinkedList<Grade>();
-		list.add(new Grade("需求分析", "3A2", "张三", 3, 4, 4));
-		list.add(new Grade("界面原型设计", "3A3", "张三", 4, 4, 4));
-		return new ResponseEntity<List<Grade>>(list, HttpStatus.OK);
-	}
-	
-	class Grade{
-		private String seminarName;
-		private String groupName;
-		private String leaderName;
-		private int presentationGrade;
-		private int reportGrade;
-		private int grade;
-		
-		public Grade(String seminarName, String groupName, String leaderName, int presentationGrade, int reportGrade,
-				int grade) {
-			super();
-			this.seminarName = seminarName;
-			this.groupName = groupName;
-			this.leaderName = leaderName;
-			this.presentationGrade = presentationGrade;
-			this.reportGrade = reportGrade;
-			this.grade = grade;
-		}
-
-		public String getSeminarName() {
-			return seminarName;
-		}
-
-		public void setSeminarName(String seminarName) {
-			this.seminarName = seminarName;
-		}
-
-		public String getGroupName() {
-			return groupName;
-		}
-
-		public void setGroupName(String groupName) {
-			this.groupName = groupName;
-		}
-
-		public String getLeaderName() {
-			return leaderName;
-		}
-
-		public void setLeaderName(String leaderName) {
-			this.leaderName = leaderName;
-		}
-
-		public int getPresentationGrade() {
-			return presentationGrade;
-		}
-
-		public void setPresentationGrade(int presentationGrade) {
-			this.presentationGrade = presentationGrade;
-		}
-
-		public int getReportGrade() {
-			return reportGrade;
-		}
-
-		public void setReportGrade(int reportGrade) {
-			this.reportGrade = reportGrade;
-		}
-
-		public int getGrade() {
-			return grade;
-		}
-
-		public void setGrade(int grade) {
-			this.grade = grade;
-		}
+	public ResponseEntity<List<SeminarGradeDetailVO>> getSeminarGradeById(@PathVariable("courseId") int courseId) {
+		LinkedList<SeminarGradeDetailVO> list = new LinkedList<SeminarGradeDetailVO>();
+		list.add(new SeminarGradeDetailVO("需求分析", "3A2", "张三", 3, 4, 4));
+		list.add(new SeminarGradeDetailVO("界面原型设计", "3A3", "张三", 4, 4, 4));
+		return new ResponseEntity<List<SeminarGradeDetailVO>>(list, HttpStatus.OK);
 	}
 }
