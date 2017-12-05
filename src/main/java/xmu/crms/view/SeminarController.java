@@ -27,16 +27,6 @@ import xmu.crms.view.vo.TopicVO;
 */
 @RestController
 public class SeminarController {	
-
-	/**
-	 * test
-	 * @return
-	 */
-	@GetMapping(value = "/seminar")
-	public ResponseEntity<String> getSeminar() {
-		return new ResponseEntity<String>("success",HttpStatus.OK);
-
-	}
 	
 	/**
 	 * 按ID获取讨论课
@@ -183,7 +173,7 @@ public class SeminarController {
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/class/{classId}/attendance")
 	public ResponseEntity<RosterVO> getAttendance(@PathVariable int seminarId,@PathVariable int classId) {
-		RosterVO roster=new RosterVO(40,60,"calling","grouping");
+		RosterVO roster=new RosterVO(40,60,"tocall","grouping");
 		return new ResponseEntity<RosterVO>(roster,HttpStatus.OK);
 	}
 	
