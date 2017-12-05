@@ -10,10 +10,13 @@ public class MeVO {
 	private String phone;
 	private String email;
 	private String gender;
-	private SchoolVO school;
+	private simpleSchoolInfo school;
 	private String title;
 	private String avatar;
-	public MeVO(int id, String type, String name,String number, String phone, String email, String gender, SchoolVO school, String title,
+	public MeVO() {
+		school=new simpleSchoolInfo();
+	};
+	public MeVO(int id, String type, String name,String number, String phone, String email, String gender, simpleSchoolInfo school, String title,
 			String avatar) {
 		super();
 		this.id = id;
@@ -27,6 +30,23 @@ public class MeVO {
 		this.title = title;
 		this.avatar = avatar;
 	}
+	public int getSchoolId()
+	{
+		return school.getId();
+	}
+	public void setSchoolId(int id)
+	{
+		school.setId(id);
+	}
+	public String getSchoolName()
+	{
+		return school.getName();
+	}
+	public void setSchoolName(String name)
+	{
+		school.setName(name);
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -63,10 +83,10 @@ public class MeVO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public SchoolVO getSchool() {
+	public simpleSchoolInfo getSchool() {
 		return school;
 	}
-	public void setSchool(SchoolVO school) {
+	public void setSchool(simpleSchoolInfo school) {
 		this.school = school;
 	}
 	public String getTitle() {
@@ -86,5 +106,29 @@ public class MeVO {
 	}
 	public void setNumber(String number) {
 		this.number = number;
+	}
+}
+
+class simpleSchoolInfo
+{
+	private int id;
+	private String name;
+	public simpleSchoolInfo() {};
+	public simpleSchoolInfo(int id,String name)
+	{
+		this.id=id;
+		this.name=name;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }
