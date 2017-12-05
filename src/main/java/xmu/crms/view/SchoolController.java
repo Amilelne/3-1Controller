@@ -42,7 +42,7 @@ public class SchoolController {
 		return new ResponseEntity<List<String>>(provinceList,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/shcool/city?province= {province}",method=GET)
+	@GetMapping(value="/shcool/city?province= {province}")
 	public ResponseEntity<List<String>> getCityByProvince(@RequestBody String province)
 	{
 		List<String> cityList=new ArrayList<String>();
