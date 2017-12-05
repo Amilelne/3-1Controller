@@ -1,10 +1,8 @@
 package xmu.crms.view;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +14,11 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
-import xmu.crms.entity.Group;
-import xmu.crms.entity.Me;
 import xmu.crms.view.vo.GroupVO;
+import xmu.crms.view.vo.Member;
+import xmu.crms.view.vo.RosterVO;
 import xmu.crms.view.vo.SeminarVO;
+import xmu.crms.view.vo.SiteVO;
 import xmu.crms.view.vo.TopicVO;
 /**
 *
@@ -139,8 +138,22 @@ public class SeminarController {
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/group")
 	public ResponseEntity<List<GroupVO>> getSeminarGroup(@PathVariable int seminarId){
+		List<TopicVO> topics=new ArrayList<TopicVO>();
+		topics.add(new TopicVO(257,"A","领域模型与模块","Domain model与模块划分",5,6,2));
 		List<GroupVO> groups=new ArrayList<GroupVO>();
-		GroupVO group=new GroupVO();
+		List<Member> members=new ArrayList<Member>();
+		Member member=new Member(5324,"李四");
+		members.add(member);
+		member=new Member(5678,"王五");
+		members.add(member);
+		GroupVO group=new GroupVO(28,"1A1",new Member(8888,"张三"),members,topics);
+		groups.add(group);
+		group=new GroupVO(29,"1A2",new Member(8888,"张三"),members,topics);
+		groups.add(group);
+		group=new GroupVO(30,"1B1",new Member(8888,"张三"),members,topics);
+		groups.add(group);
+		group=new GroupVO(31,"1B2",new Member(8888,"张三"),members,topics);
+		groups.add(group);
 		return new ResponseEntity<List<GroupVO>>(groups,HttpStatus.OK);
 	}
 	
@@ -150,9 +163,16 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/group/my")
-	public Group getMySeminarGroup(@PathVariable int seminarId) {
-		Group group=new Group(1,1,1);
-		return group;
+	public ResponseEntity<GroupVO> getMySeminarGroup(@PathVariable int seminarId) {
+		List<TopicVO> topics=new ArrayList<TopicVO>();
+		topics.add(new TopicVO(257,"A","领域模型与模块","Domain model与模块划分",5,6,2));
+		List<Member> members=new ArrayList<Member>();
+		Member member=new Member(5324,"李四");
+		members.add(member);
+		member=new Member(5678,"王五");
+		members.add(member);
+		GroupVO group=new GroupVO(28,"1A1",new Member(8888,"张三"),members,topics);
+		return new ResponseEntity<GroupVO>(group,HttpStatus.OK);
 	}
 	
 	/**
@@ -162,10 +182,9 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/class/{classId}/attendance")
-	public List<Me> getAttendance(@PathVariable int seminarId,@PathVariable int classId) {
-		List<Me> attendance=new LinkedList<Me>();
-		
-		return attendance;
+	public ResponseEntity<RosterVO> getAttendance(@PathVariable int seminarId,@PathVariable int classId) {
+		RosterVO roster=new RosterVO(40,60,"calling","grouping");
+		return new ResponseEntity<RosterVO>(roster,HttpStatus.OK);
 	}
 	
 	/**
@@ -175,10 +194,12 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/class/{classId}/attendance/present")
-	public List<Me> getAttendancePresent(@PathVariable int seminarId,@PathVariable int classId) {
-		List<Me> attendancePresent=new LinkedList<Me>();
-		
-		return attendancePresent;
+	public ResponseEntity<List<Member>> getAttendancePresent(@PathVariable int seminarId,@PathVariable int classId) {
+		List<Member> present=new ArrayList<Member>();
+		present.add(new Member(8888,"张三"));
+		present.add(new Member(5324,"李四"));
+		present.add(new Member(5678,"王五"));
+		return new ResponseEntity<List<Member>>(present,HttpStatus.OK);
 	}
 	
 	/**
@@ -188,10 +209,12 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/class/{classId}/attendance/late")
-	public List<Me> getAttendanceLate(@PathVariable int seminarId,@PathVariable int classId) {
-		List<Me> attendanceLate=new LinkedList<Me>();
-		
-		return attendanceLate;
+	public ResponseEntity<List<Member>> getAttendanceLate(@PathVariable int seminarId,@PathVariable int classId) {
+		List<Member> late=new ArrayList<Member>();
+		late.add(new Member(1101,"周一"));
+		late.add(new Member(1102,"周二"));
+		late.add(new Member(1103,"周三"));
+		return new ResponseEntity<List<Member>>(late,HttpStatus.OK);
 	}
 	
 	/**
@@ -201,22 +224,23 @@ public class SeminarController {
 	 * @return
 	 */
 	@GetMapping(value = "/seminar/{seminarId}/class/{classId}/attendance/absent")
-	public List<Me> getAttendanceAbsent(@PathVariable int seminarId,@PathVariable int classId) {
-		List<Me> attendanceAbsent=new LinkedList<Me>();
-		
-		return attendanceAbsent;
+	public ResponseEntity<List<Member>> getAttendanceAbsent(@PathVariable int seminarId,@PathVariable int classId) {
+		List<Member> absent=new ArrayList<Member>();
+		absent.add(new Member(1104,"赵一"));
+		absent.add(new Member(1105,"赵二"));	
+		return new ResponseEntity<List<Member>>(absent,HttpStatus.OK);
 	}
 	
 	/**
-	 * 按小组ID获取小组详情
+	 * 签到（上传位置信息）
 	 * @param seminarId
 	 * @param classId
 	 * @param studentId
 	 * @return
 	 */
 	@PutMapping(value = "/seminar/{seminarId}/class/{classId}/attendance/{studentId}")
-	public String uploadLocation(@PathVariable int seminarId,@PathVariable int classId,@PathVariable int studentId,Model model) {
-		model.addAttribute("report", "reportURL");
-		return "success";
+	public ResponseEntity<String> uploadLocation(@PathVariable int seminarId,@PathVariable int classId,@PathVariable int studentId,@RequestBody SiteVO site) {
+		String status="late";
+		return new ResponseEntity<String>(status,HttpStatus.OK);
 	}
 }
