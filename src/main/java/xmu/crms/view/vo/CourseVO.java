@@ -8,17 +8,16 @@ public class CourseVO {
 	private String name;
 	private int numClass;
 	private int numStudent;
-	private Date startTime;
-	private Date endTime;
+	private String startTime;
+	private String endTime;
 	//
 	private String description;
-	//private Proportion proportion;
 
 	private String teacherName;
 	private String teacherEmail;
 
 
-	public CourseVO(int id, String name, int numClass, int numStudent, Date startTime, Date endTime) {
+	public CourseVO(int id, String name, int numClass, int numStudent, String startTime, String endTime) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -27,15 +26,6 @@ public class CourseVO {
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
-
-	/*public CourseVO(String name, String description, Date startTime, Date endTime, int report,int presentation, int c, int b, int a ) {
-		super();
-		this.name = name;
-		this.description = description;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.proportion = new Proportion(report, presentation, c, b, a);
-	}*/
 
 	public CourseVO(int id, String name, String description, String teacherName, String teacherEmail) {
 		super();
@@ -70,44 +60,20 @@ public class CourseVO {
 	public void setNumStudent(int numStudent) {
 		this.numStudent = numStudent;
 	}
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+	//
 	
-	/*
-	public class Proportion {
-		public int report;
-		public int presentation;
-		public int c;
-		public int b;
-		public int a;
-		public Proportion(int report,int presentation, int c, int b, int a) {
-			super();
-			this.report = report;
-			this.presentation = presentation;
-			this.c = c;
-			this.b = b;
-			this.a = a;
-		}
-	}
-	
-	public Proportion getProportion() {
-		return proportion;
-	}
-
-	public void setProportion(Proportion proportion) {
-		this.proportion = proportion;
-	}
-	*/
 	public String getDescription() {
 		return description;
 	}
@@ -133,4 +99,3 @@ public class CourseVO {
 		this.teacherEmail = teacherEmail;
 	}
 }
-
