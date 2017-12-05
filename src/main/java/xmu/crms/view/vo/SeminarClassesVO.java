@@ -5,26 +5,26 @@ import java.util.LinkedList;
 import xmu.crms.view.vo.SeminarClassesVO.CourseClass;
 
 public class SeminarClassesVO {
+	public String getGroupingMethod() {
+		return groupingMethod;
+	}
+
+	public void setGroupingMethod(String groupingMethod) {
+		this.groupingMethod = groupingMethod;
+	}
+
+
 	private int id;
 	private String name;
 	private String courseName;
+	private String groupingMethod;
 	private String startTime;
 	private String endTime;
 	private LinkedList<CourseClass> classes;
 	
 	public SeminarClassesVO() {
 		super();
-	}
-
-	public SeminarClassesVO(int id, String name, String courseName, String startTime, String endTime,
-			LinkedList<CourseClass> classes) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.courseName = courseName;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.classes = classes;
+		classes = new LinkedList<CourseClass>();
 	}
 	
 	public void addClass(int id, String name) {
