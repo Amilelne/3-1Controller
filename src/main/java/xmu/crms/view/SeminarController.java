@@ -27,11 +27,6 @@ public class SeminarController {
 	
 	List<Seminar> allSeminar=new LinkedList<Seminar>();
 	
-	public SeminarController() {
-		allSeminar.add(new Seminar(1,"讨论课1","需求分析","random",new Date("2017-09-20"),new Date("2017-09-30")));
-		allSeminar.add(new Seminar(2,"讨论课2","界面原型","fixed",new Date("2017-10-10"),new Date("2017-10-20")));
-		allSeminar.add(new Seminar(3,"讨论课3","概要设计","fixed",new Date("2017-10-30"),new Date("2017-11-10")));
-	}
 	
 	/**
 	 * 按ID获取讨论课
