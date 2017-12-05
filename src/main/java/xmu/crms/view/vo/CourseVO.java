@@ -3,6 +3,23 @@ package xmu.crms.view.vo;
  * @author:zimu
  */
 public class CourseVO {
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public String getTeacherEmail() {
+		return teacherEmail;
+	}
+
+	public void setTeacherEmail(String teacherEmail) {
+		this.teacherEmail = teacherEmail;
+	}
+
 	private int id;
 	private String name;
 	private int numClass;
@@ -12,6 +29,8 @@ public class CourseVO {
 	
 	private String description;
 	private TeacherVO teacher;
+	private String teacherName;
+	private String teacherEmail;
 
 	/*proportion 不需要*/
 	
@@ -34,8 +53,17 @@ public class CourseVO {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.teacher.setName(teacherName);
-		this.teacher.setEmail(teacherEmail);
+		this.teacherName = teacherName;
+		this.teacherEmail = teacherEmail;
+		/*this.teacher = new TeacherVO(teacherName, teacherEmail);*/
+	}
+	
+	public TeacherVO getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(TeacherVO teacher) {
+		this.teacher = teacher;
 	}
 
 	public int getId() {
