@@ -17,7 +17,11 @@ import xmu.crms.view.vo.Member;
 import xmu.crms.view.vo.PresentationGradeVO;
 import xmu.crms.view.vo.SeminarGradeVO;
 import xmu.crms.view.vo.TopicVO;
-
+/**
+ * 
+ * @author zimu
+ * @date 12/5
+ */
 @RestController
 public class GroupController {
 	

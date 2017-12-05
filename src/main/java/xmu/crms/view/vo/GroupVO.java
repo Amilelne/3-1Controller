@@ -9,6 +9,11 @@ public class GroupVO {
 	public List<Member> members;
 	public List<TopicVO> topics;
 	
+	public GroupVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public GroupVO(int groupId,Member leader,List<Member> members,List<TopicVO> topics) {
 		this.id = groupId;
 		this.leader = leader;
