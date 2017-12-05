@@ -15,7 +15,18 @@ public class CourseVO {
 
 	private String teacherName;
 	private String teacherEmail;
-
+	public CourseVO() {
+		super();
+		this.id = 0;
+		this.name = "";
+		this.numClass = 0;
+		this.numStudent = 0;
+		this.startTime = "";
+		this.endTime = "";
+		this.description= "";
+		this.teacherName = "";
+		this.teacherEmail = "";
+	}
 
 	public CourseVO(int id, String name, int numClass, int numStudent, String startTime, String endTime) {
 		super();
