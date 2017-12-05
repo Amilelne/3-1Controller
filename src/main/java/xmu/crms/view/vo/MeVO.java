@@ -3,7 +3,6 @@ package xmu.crms.view.vo;
  * @author:JennieCheng
  */
 public class MeVO {
-
 	private int id;
 	private String type;
 	private String name;
@@ -11,10 +10,10 @@ public class MeVO {
 	private String phone;
 	private String email;
 	private String gender;
-	private String school;
+	private SchoolVO school;
 	private String title;
 	private String avatar;
-	public MeVO(int id, String type, String name,String number, String phone, String email, String gender, String school, String title,
+	public MeVO(int id, String type, String name,String number, String phone, String email, String gender, SchoolVO school, String title,
 			String avatar) {
 		super();
 		this.id = id;
@@ -64,10 +63,10 @@ public class MeVO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getSchool() {
+	public SchoolVO getSchool() {
 		return school;
 	}
-	public void setSchool(String school) {
+	public void setSchool(SchoolVO school) {
 		this.school = school;
 	}
 	public String getTitle() {
