@@ -1,4 +1,4 @@
-ackage com.xmu.ooad.classmanagementsystem.controller;
+package xmu.crms.view;
 
 import com.xmu.ooad.classmanagementsystem.dto.ClassDTO;
 import com.xmu.ooad.classmanagementsystem.dto.GpsDTO;
