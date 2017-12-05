@@ -24,13 +24,13 @@ public class TopicController {
 	@PutMapping("/topic/{topicId}")
 	public ResponseEntity reviseTopic(@PathVariable int topicId,@RequestBody reviseTopicInfo reviseInfo)
 	{
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@DeleteMapping("/topic/{topicId}")
 	public ResponseEntity deleteTopic(@PathVariable int topicId)
 	{
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/topic/{topicId}/group")

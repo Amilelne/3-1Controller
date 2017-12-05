@@ -25,7 +25,7 @@ public class MeController {
 	@PutMapping("/me")
 	public ResponseEntity reviseMe(@RequestBody reviseMeInfo reviseInfo)
 	{
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	@GetMapping("/signin")
 	public ResponseEntity<signInfo> signUp(String code,String state,String success_url)

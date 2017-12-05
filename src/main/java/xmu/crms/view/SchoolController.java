@@ -29,7 +29,7 @@ public class SchoolController {
 	@PostMapping(value="/school")
 	public ResponseEntity<Integer> createSchool(@RequestBody createSchoolInfo createInfo)
 	{
-		return new ResponseEntity<Integer>(38,HttpStatus.OK);
+		return new ResponseEntity<Integer>(38,HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value="/school/province")
