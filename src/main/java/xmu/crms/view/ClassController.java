@@ -107,9 +107,10 @@ public class ClassController {
     }
     
     @PostMapping("/class/{classId}/student")
-    public ResponseEntity<String> addStudent(@PathVariable("classId") int classId) {
-        String url = new String("/class/"+ classId);
-        return new ResponseEntity<String>(url, HttpStatus.OK);
+    public ResponseEntity<urlTest> addStudent(@PathVariable("classId") int classId) {
+    	urlTest test=new urlTest();
+    	test.setUrl("/class/"+ classId);
+        return new ResponseEntity<urlTest>(test, HttpStatus.CREATED);
     }
     
     @DeleteMapping("/class/{classId}/student/{studentId}")
@@ -159,4 +160,17 @@ public class ClassController {
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+}
+class urlTest
+{
+	private String url;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 }

@@ -23,7 +23,7 @@ public class MeController {
 	}
 	
 	@PutMapping("/me")
-	public ResponseEntity reviseMe(@RequestBody reviseMeInfo reviseInfo)
+	public ResponseEntity reviseMe()
 	{
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}

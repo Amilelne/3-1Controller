@@ -127,7 +127,7 @@ public class ClassControllerTest {
                 .content("{\"id\": 233}".getBytes()))
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.url").isString())
-        .andDo(print());        
+        .andDo(print());
     }
     
     /**
