@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class SchoolController {
 	
-	@GetMapping("/school?city= {city}")
-	public ResponseEntity<List<simpleSchoolInfo>> getSchoolByCity(@PathVariable String city)
+	@GetMapping("/school")
+	public ResponseEntity<List<simpleSchoolInfo>> getSchoolByCity(@RequestParam("city") String city)
 	{
 		List<simpleSchoolInfo> schoolList=new ArrayList<simpleSchoolInfo>();
 		simpleSchoolInfo school1=new simpleSchoolInfo(32,"厦门大学","福建","厦门");
@@ -27,9 +27,9 @@ public class SchoolController {
 	}
 	
 	@PostMapping(value="/school")
-	public ResponseEntity<Integer> createSchool(@RequestBody createSchoolInfo createInfo)
+	public ResponseEntity createSchool()
 	{
-		return new ResponseEntity<Integer>(38,HttpStatus.CREATED);
+		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value="/school/province")
@@ -42,8 +42,8 @@ public class SchoolController {
 		return new ResponseEntity<List<String>>(provinceList,HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/shcool/city?province= {province}")
-	public ResponseEntity<List<String>> getCityByProvince(@RequestBody String province)
+	@GetMapping(value="/school/city")
+	public ResponseEntity<List<String>> getCityByProvince(@RequestParam("province") String province)
 	{
 		List<String> cityList=new ArrayList<String>();
 		cityList.add("福州");
