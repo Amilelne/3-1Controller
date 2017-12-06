@@ -6,6 +6,8 @@ import xmu.crms.view.vo.ClassProportionsVO;
 import xmu.crms.view.vo.ClassVO;
 import xmu.crms.view.vo.GroupVO;
 import xmu.crms.view.vo.MeVO;
+import xmu.crms.view.vo.Member;
+import xmu.crms.view.vo.TopicVO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -117,26 +119,15 @@ public class ClassController {
     }
     
     @GetMapping("/class/{classId}/classgroup")
-    public ResponseEntity<GroupVO> getClass(@PathVariable("classId") int classId) {
-
-        GroupVO group = new GroupVO();
-        MeVO me = new MeVO();
-        me.setId(2357);
-        me.setName("张三");
-        me.setNumber("24320152202333");
-        group.setLeader(me);
-
-        me = new MeVO();
-        me.setId(2756);
-        me.setName("李四");
-        me.setNumber("23320152202443");
-        group.addMember(me);
-
-        me = new MeVO();
-        me.setId(2777);
-        me.setName("王五");
-        me.setNumber("23320152202433");
-        group.addMember(me);
+    public ResponseEntity<GroupVO> getClass(@PathVariable int classId) {
+    	Member me = new Member(2357,"张三","24320152202333");
+    	Member me1 = new Member(2357,"张三","24320152202333");
+    	Member me2 = new Member(2357,"张三","24320152202333");
+    	List<Member> mes=new ArrayList<Member>();
+        mes.add(me1);
+        mes.add(me2);
+        List<TopicVO> topics=new ArrayList<TopicVO>();
+        GroupVO group = new GroupVO(199,me,mes,topics);
 
         return new ResponseEntity<GroupVO>(group, HttpStatus.OK);
     }

@@ -4,6 +4,7 @@ public class Member {
 
 	public int id;
 	public String name;
+	public String number;
 	
 	public Member() {
 		super();
@@ -13,5 +14,11 @@ public class Member {
 	public Member(int id, String name) {
 		this.id = id;
 		this.name = name;
+	}
+	
+	public Member(int id, String name,String number) {
+		this.id = id;
+		this.name = name;
+		this.number=number;
 	}
 }
