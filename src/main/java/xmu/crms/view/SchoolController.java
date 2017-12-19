@@ -27,14 +27,9 @@ public class SchoolController {
 	}
 	
 	@GetMapping("/school")
-	public ResponseEntity<List<simpleSchoolInfo>> getSchoolByCity(@RequestParam("city") String city)
+	public ResponseEntity<List<School>> getSchoolByCity(@RequestParam("city") String city)
 	{
-		List<simpleSchoolInfo> schoolList=new ArrayList<simpleSchoolInfo>();
-		simpleSchoolInfo school1=new simpleSchoolInfo(32,"厦门大学","福建","厦门");
-		simpleSchoolInfo school2=new simpleSchoolInfo(37,"厦门软件学院","福建","厦门");
-		schoolList.add(school1);
-		schoolList.add(school2);
-		return new ResponseEntity<List<simpleSchoolInfo>>(schoolList,HttpStatus.OK);
+		return new ResponseEntity<List<School>>(schoolService.listSchoolByCity(city),HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/school")
