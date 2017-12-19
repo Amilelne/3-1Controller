@@ -8,12 +8,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import xmu.crms.view.vo.TopicVO;
+import xmu.crms.entity.School;
+import xmu.crms.service.SchoolService;
 import xmu.crms.view.vo.SchoolVO;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RestController
 public class SchoolController {
+	@Autowired
+	private SchoolService schoolService;
+	
+	@RequestMapping("/")
+	public ResponseEntity<List<School>> listSchoolByCity(){
+		return new ResponseEntity<List<School>>(schoolService.listSchoolByCity("重庆"),HttpStatus.OK);
+	}
 	
 	@GetMapping("/school")
 	public ResponseEntity<List<simpleSchoolInfo>> getSchoolByCity(@RequestParam("city") String city)
