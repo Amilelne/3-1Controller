@@ -1,0 +1,65 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.crms.mapper.ClassMapper">
+    <delete id="deleteClassSelectionByClassId">
+        delete from course_selection where class_id=#{classId.longValue()};
+    </delete>
+
+    <select id="listClassByName" resultType="ClassInfo">
+        select class_info.* from class_info,user_info,course where course.name=#{courseName}  and course.teacher_id=user_info.id and user_info.name=#{teacherName} and course.id=class_info.course_id ;
+    </select>
+
+    <select id="listClassByCourseId" resultType="ClassInfo">
+        select class_info.* from class_info  where  class_info.course_id=#{courseId.longValue()};
+    </select>
+
+    <select id="getClassByClassId" resultType="ClassInfo">
+        select * from class_info where id=#{classId.longValue()};
+    </select>
+
+    <update id="updateClassByClassId">
+
+    </update>
+
+    <delete id="deleteClassByClassId">
+        delete from class_info where id=#{classId.longValue()};
+    </delete>
+
+    <insert id="insertCourseSelectionById">
+        insert into course_selection(class_id,student_id) values(classId.longValue(),userId.longValue());
+    </insert>
+
+    <delete id="deleteCourseSelectionById">
+        delete from course_selection where class_id=#{classId.longValue()} and student_Id=#{userId.longValue()};
+    </delete>
+
+    <select id="getCallGroupStatusById" resultType="ClassInfo">
+        select status,is_fixed from location,seminar where location.seminar_id=#{seminarId.longValue()} and semimar.id=#{seminarId};
+    </select>
+
+    <insert id="insertClassById" resultType="ClassInfo">
+        insert into class_info(name,course_id) values("周三三四节",#{courseId});
+    </insert>
+
+    <delete id="deleteClassByCourseId">
+        delete from class_info where course_id=#{courseId};
+    </delete>
+
+    <update id="deleteScoreRuleById">
+        update class_info set report_percentage=null,presentation_percentage=null,five_point_percentage=null,four_point_percentage=null,three_point_percentage where id=#{classId};
+    </update>
+
+    <select id="getScoreRule" resultType="ClassInfo">
+        select * from class_info where id=#{classId};
+    </select>
+
+    <insert id="insertScoreRule">
+
+    </insert>
+
+    <update id="updateScoreRule">
+
+    </update>
+
+</mapper>
