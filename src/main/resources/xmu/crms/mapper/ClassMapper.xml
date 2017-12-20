@@ -2,6 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.crms.mapper.ClassMapper">
+<!-- 
     <delete id="deleteClassSelectionByClassId">
         delete from course_selection where class_id=#{classId.longValue()};
     </delete>
@@ -53,7 +54,7 @@
     <select id="getScoreRule" resultType="ClassInfo">
         select * from class_info where id=#{classId};
     </select>
-
+ 
     <insert id="insertScoreRule">
 
     </insert>
@@ -61,5 +62,5 @@
     <update id="updateScoreRule">
 
     </update>
-
+ -->
 </mapper>
