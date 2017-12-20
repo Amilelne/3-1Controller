@@ -1,6 +1,8 @@
 package xmu.crms.mapper;
 
 import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,18 +17,37 @@ import xmu.crms.entity.Course;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional(transactionManager="transactionManager")
+@Rollback(value=true)
 public class CourseMapperTest {
 	@Autowired
 	private CourseMapper courseMapper;
 	
 	@Test
-	public void testGetCourseNameByCourseId() {
-		Assert.assertEquals("课程1", courseMapper.getCourseNameByCourseId(new BigInteger("1")));
+	public void testListCourseByUserId() {
+		BigInteger userId=new BigInteger("1");
+		List<Course> course=courseMapper.listCourseByUserId(userId);
+		Assert.assertEquals("课程1",course.get(0).getName());
 	}
 	
 	@Test
-	@Transactional
-	@Rollback
+	public void testInsertCourseByUserId() {
+		Course course=new Course();
+		course.setName("课程4");
+		course.setStartDate(new Date());
+		course.setEndDate(new Date());
+		course.setDescription("课程4说明");
+		course.setReportPercentage(50);
+		course.setPresentationPercentage(50);
+		course.setFivePointPercentage(10);
+		course.setFourPointPercentage(30);
+		course.setThreePointPercentage(60);
+		BigInteger userId=new BigInteger("1");
+		Boolean insert=courseMapper.insertCourseByUserId(userId, course);
+		Assert.assertEquals(true, insert);
+	}
+	
+	@Test
 	public void testGetCourseByCourseId() {
 		Course course=courseMapper.getCourseByCourseId(new BigInteger("1"));
 		System.out.println(course.getId());
@@ -52,10 +73,7 @@ public class CourseMapperTest {
 		Assert.assertEquals("课程1", course.getName());
 	}
 	
-	@Test
-	@Transactional
-	@Rollback
-	public void testInsertCourseByUserId() {
-		
-	}
+	
+	
+	
 }
