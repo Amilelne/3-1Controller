@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.crms.mapper.FixGroupMapper">
+    <delete id="deleteStudentScoreGroupByTopicId">
+        delete from student_score_group where seminar_group_topic_id = #{topicId.longValue()};
+    </delete>
+
+    <select id="listSeminarGradeBySeminarGroupId"  resultType="BigInteger">
+        select report_grade,presentation_grade,final_grade from seminar_group,seminar_group_member m1,seminar_group_member m2 where leader_id=m1.student_id and m1.seminar_group_id=m2.seminar_group_id and m2.student_id=#{userID.longValue()} and m2.seminar_group_id=#{seminarGroupId};
+    </select>
+
+    <insert id="insertGroupGradeByUserId">
+        insert into student_score_group(student_id,seminar_group_topic_id,grade) values(#{userId,longValue()},#{topicId.longValue()},#{grade.longValue()});
+    </insert>
+
+    <update id="updateGroupByGroupId">
+        update seminar_group,seminar_group_member set report_grade=#{grade.intValue()} where leader_id=student_id and seminar_group_id =#{seminar_group_id.longValue()};
+    </update>
+
+    <select id="listSeminarGradeByStudentId" resultType="BigInteger">
+        select g.presentation_grade from seminar_group_member m,seminar_group_topic g where m.student_id=#{userId.longValue()} and m.seminar_group_id=g.seminar_group_id;
+    </select>
+
+</mapper>
