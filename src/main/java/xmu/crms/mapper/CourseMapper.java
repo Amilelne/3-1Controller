@@ -3,15 +3,16 @@ package xmu.crms.mapper;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
 
 public interface CourseMapper {
-	public String getCourseNameByCourseId(BigInteger userId);
 	
 	public List<Course> listCourseByUserId(BigInteger userId);
 	
-	public BigInteger insertCourseByUserId(BigInteger userId,Course course);
+	public Boolean insertCourseByUserId(@Param("userId")BigInteger userId,@Param("course")Course course);
 	
 	public Course getCourseByCourseId(BigInteger courseId);
 	
