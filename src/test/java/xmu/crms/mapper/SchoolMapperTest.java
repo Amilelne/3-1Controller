@@ -4,6 +4,8 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.math.BigInteger;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class SchoolMapperTest {
 	@Test
 	public void testGetSchoolByCity() {
 		School school;
-		school = schoolMapper.getSchoolBySchoolId(1);
+		school = schoolMapper.getSchoolBySchoolId(new BigInteger("1"));
 		System.out.println(school.getName());
 		assertNotNull(school);
 	}
