@@ -19,9 +19,6 @@ public class TopicServiceImpl implements TopicService{
 
 	public Topic getTopicByTopicId(BigInteger topicId) throws TopicNotFoundException, InfoIllegalException {
 		Topic topic=topicMapper.getTopicByTopicId(topicId);
-		if(topic==null) {
-			throw new TopicNotFoundException();
-		}
 		return topic;
 	}
 

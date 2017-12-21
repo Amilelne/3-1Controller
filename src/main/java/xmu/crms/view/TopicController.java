@@ -19,22 +19,10 @@ public class TopicController {
 	@Autowired
 	private TopicService topicService;
 	
-	@GetMapping("/topic/{topicId}")
-	public ResponseEntity<Topic> getTopic(@PathVariable BigInteger topicId)
+	@GetMapping("/topic")
+	public ResponseEntity<Topic> getTopic(@RequestParam("id") BigInteger topicId) throws TopicNotFoundException, InfoIllegalException
 	{
-		Topic topic = null;
-		try {
-			topic = topicService.getTopicByTopicId(topicId);
-			return new ResponseEntity<Topic>(topic,HttpStatus.OK);
-		} catch (TopicNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity<Topic>(topic,HttpStatus.NOT_FOUND);
-		} catch (InfoIllegalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity<Topic>(topic,HttpStatus.BAD_REQUEST);
-		}
+		return new ResponseEntity<Topic>(topicService.getTopicByTopicId(new BigInteger("1")),HttpStatus.BAD_REQUEST);
 	}
 	
 	@PutMapping("/topic/{topicId}")
