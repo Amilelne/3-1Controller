@@ -3,26 +3,83 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.crms.mapper.TopicMapper">
 
-	<!-- TODO:about a chain of class property- seminar -->
 	<resultMap type="xmu.crms.entity.Topic" id="TopicResultMap">
     	<id column="id" property="id"/>
     	<result column="name" property="name"/>
     	<result column="description" property="description"/>
     	<result column="group_number_limit" property="groupNumberLimit"/>
     	<result column="group_student_limit" property="groupStudentLimit"/>
+    	<association column="seminar_id" property="seminar" select="selectSeminarByTopic"></association>
     </resultMap>
+    
+    <resultMap type="xmu.crms.entity.Seminar" id="SeminarReaultMap">
+    	<id column="id" property="id"/>
+    	<result column="name" property="name"/>
+    	<result column="description" property="description"/>
+    	<result column="is_fixed" property="fixed"/>
+    	<result column="start_time" property="startTime"/>
+    	<result column="end_time" property="endTime"/>
+    	<association column="course_id" property="course" select="selectCourseBySemianr"></association>
+    </resultMap>
+    
+    <resultMap type="xmu.crms.entity.Course" id="CourseResultMap">
+    	<id column="id" property="id"/>
+    	<result column="name" property="name"/>
+    	<result column="start_date" property="startDate"/>
+    	<result column="end_date" property="endDate"/>
+    	<result column="description" property="description"/>
+    	<result column="report_percentage" property="reportPercentage"/>
+    	<result column="presentation_percentage" property="presentationPercentage"/>
+    	<result column="five_point_percentage" property="fivePointPercentage"/>
+    	<result column="four_point_percentage" property="fourPointPercentage"/>
+    	<result column="three_point_percentage" property="threePointPercentage"/>
+    	<association column="teacher_id" property="teacher" select="selectTeacherByCourse"></association>
+    </resultMap>
+    
+    <resultMap type="xmu.crms.entity.User" id="UserResultMap">
+    	<id column="id" property="id"/>
+    	<result column="phone" property="phone"/>
+    	<result column="wechat_id" property="wechatId"/>
+    	<result column="openid" property="openid"/>
+    	<result column="avatar" property="avatar"/>
+    	<result column="password" property="password"/>
+    	<result column="name" property="name"/>
+    	<result column="gender" property="gender"/>
+    	<result column="type" property="type"/>
+    	<result column="number" property="number"/>
+    	<result column="education" property="education"/>
+    	<result column="title" property="title"/>
+    	<result column="email" property="email"/>
+    	<association column="school_id" property="school" select="selectSchoolByTeacher"/>
+    </resultMap>
+    
+    <select id="selectSchoolByTeacher" resultType="xmu.crms.entity.School">
+    	select * from school where id=#{id}
+    </select>
+    
+    <select id="selectTeacherByCourse" resultMap="UserResultMap">
+    	select * from user_info where id=#{id}
+    </select>
+    
+    <select id="selectCourseBySemianr" resultMap="CourseResultMap">
+    	select * from course where id=#{id}
+    </select>
+    
+    <select id="selectSeminarByTopic" resultMap="SeminarResultMap">
+    	select * from seminar where id=#{id}
+    </select>
 	
 	<select id="getCourseByCourseId" parameterType="java.math.BigInteger" resultMap="TopicResultMap">
 		select * from topic where id = #{id}
     </select>
     
-    <!-- TODO:about class property- seminar -->
     <update id="updateTopicByTopicId" parameterType="xmu.crms.entity.Topic">
     	update topic set
     		name=#{topic.name},
     		description=#{topic.description},
     		group_number_limit=#{topic.groupNumberLimit},
     		group_student_limit=#{topic.groupStudentLimit},
+    		seminar_id=#{topic.seminar.id}
     	where id=#{topicId}
     </update>
     
@@ -36,6 +93,9 @@
     </select>
     
     <insert id="insertTopicBySeminarId">
+    	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
+               SELECT LAST_INSERT_ID() as id
+        </selectKey>
     	insert into topic(
     		name,
     		description,
@@ -55,13 +115,13 @@
     	delete from seminar_group_topic where topic_id=#{topic_id} and seminar_group_id=#{groupId}
     </delete>
     
-    <delete id="deleteSeminarGroupTopicByTopicId">
+    <delete id="deleteSeminarGroupTopicByTopicId" parameterType="java.math.BigInteger">
     	delete from seminar_group_topic where topic_id=#{topic_id}
     </delete>
     
     <!-- TODO:about a chain of events that need to delete -->
-    <delete id="deleteTopicBySeminarId">
-    	
+    <delete id="deleteTopicBySeminarId" parameterType="java.math.BigInteger">
+    	delete from topic where id=#{id}
     </delete>
 
 </mapper>
