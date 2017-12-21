@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import xmu.crms.entity.*;
 
 /**
@@ -12,6 +14,7 @@ import xmu.crms.entity.*;
  * @version 2.00
  *
  */
+
 public interface SchoolService {
 	/**
 	 * 按城市名称查学校.
@@ -21,6 +24,7 @@ public interface SchoolService {
 	 * @return list 学校列表
 	 */
 	 List<School> listSchoolByCity(String city);
+	 
 	
 	/**
 	 * 添加学校.
@@ -55,5 +59,5 @@ public interface SchoolService {
 	 * @param SchoolId 学校id
 	 * @return SchoolBO 学校信息
 	 */
-	 School getSchoolBySchoolId(BigInteger SchoolId);
+	 School getSchoolBySchoolId(int SchoolId);
 }

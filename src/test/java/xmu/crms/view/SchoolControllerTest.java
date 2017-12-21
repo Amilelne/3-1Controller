@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -21,9 +20,32 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest()
+@Transactional
 public class SchoolControllerTest {
 	@Autowired
 	private MockMvc mvc;
+	
+	/**
+	 * listSchoolByCity
+	 */
+	@Test
+	public void testListSchoolByCity() throws Exception{
+		this.mvc.perform(get("/school/id")
+					.param("id", "1")
+					).andExpect(status().isOk());
+	}
+	
+	/**
+	 * insert school
+	 */
+	@Test
+	public void testInsertSchool() throws Exception{
+		mvc.perform(post("/school")
+					.param("name","清华大学")
+					.param("city","北京")
+					.param("province","北京"))
+					.andExpect(status().isCreated());
+	}
 
 	/**
 	 * 获取学校列表，成功返回200

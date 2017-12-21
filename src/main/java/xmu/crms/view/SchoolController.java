@@ -1,16 +1,10 @@
 package xmu.crms.view;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.ui.Model;
-import xmu.crms.view.vo.TopicVO;
 import xmu.crms.entity.School;
 import xmu.crms.service.SchoolService;
-import xmu.crms.view.vo.SchoolVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,21 +15,16 @@ public class SchoolController {
 	@Autowired
 	private SchoolService schoolService;
 	
-	@RequestMapping("/")
-	public ResponseEntity<List<School>> listSchoolByCity(){
-		return new ResponseEntity<List<School>>(schoolService.listSchoolByCity("重庆"),HttpStatus.OK);
+	@PostMapping("/school")
+	public ResponseEntity insertSchool(@RequestParam("detail") School school) {
+		Boolean result = schoolService.insertSchool(school);
+		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/school")
+	@GetMapping("/school/city")
 	public ResponseEntity<List<School>> getSchoolByCity(@RequestParam("city") String city)
 	{
 		return new ResponseEntity<List<School>>(schoolService.listSchoolByCity(city),HttpStatus.OK);
-	}
-	
-	@PostMapping(value="/school")
-	public ResponseEntity createSchool()
-	{
-		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value="/school/province")
@@ -45,16 +34,22 @@ public class SchoolController {
 		provinceList.add("北京");
 		provinceList.add("天津");
 		provinceList.add("河北");
-		return new ResponseEntity<List<String>>(provinceList,HttpStatus.OK);
+		return new ResponseEntity<List<String>>(schoolService.listProvince(),HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/school/city")
+	@GetMapping(value="/school/province/city")
 	public ResponseEntity<List<String>> getCityByProvince(@RequestParam("province") String province)
 	{
 		List<String> cityList=new ArrayList<String>();
 		cityList.add("福州");
 		cityList.add("厦门");
-		return new ResponseEntity<List<String>>(cityList,HttpStatus.OK);
+		return new ResponseEntity<List<String>>(schoolService.listCity(province),HttpStatus.OK);
+	}
+	
+	@GetMapping("/school/id")
+	public ResponseEntity<School> getSchoolBySchoolId(@RequestParam("id") int id){
+		
+		return new ResponseEntity<School>(schoolService.getSchoolBySchoolId(id),HttpStatus.OK);
 	}
 }
 class simpleSchoolInfo

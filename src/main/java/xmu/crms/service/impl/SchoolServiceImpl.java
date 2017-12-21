@@ -9,9 +9,10 @@ import xmu.crms.service.SchoolService;
 import java.math.BigInteger;
 import java.util.List;
 
-@Service("SchoolService")
+@Service("schoolService")
 public class SchoolServiceImpl implements SchoolService{
-	@Autowired SchoolMapper schoolMapper;
+	@Autowired 
+	private SchoolMapper schoolMapper;
 	
     public List<School> listSchoolByCity(String city){
     	
@@ -36,7 +37,7 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     
-    public School getSchoolBySchoolId(BigInteger SchoolId){
+    public School getSchoolBySchoolId(int SchoolId){
     	return schoolMapper.getSchoolBySchoolId(SchoolId);
 
     }

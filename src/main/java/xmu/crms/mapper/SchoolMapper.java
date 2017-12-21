@@ -7,13 +7,13 @@ import xmu.crms.entity.School;
 
 public interface SchoolMapper {
 
-	public List<School> listSchoolByCity(String city);
+	List<School> listSchoolByCity(String city);
 	
-	public Boolean insertSchool(School school);
+	Boolean insertSchool(School school);
 	
-	public List<String> listProvince();
+	List<String> listProvince();
 	
-	public List<String> listCity(String province);
+	List<String> listCity(String province);
 	
-	public School getSchoolBySchoolId(BigInteger SchoolId);
+	School getSchoolBySchoolId(int SchoolId);
 }
