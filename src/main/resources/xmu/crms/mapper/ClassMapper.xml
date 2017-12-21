@@ -57,7 +57,7 @@ insert into course_selection(class_id,student_id) values(classId.longValue(),use
 delete from course_selection where class_id=#{classId.longValue()} and student_Id=#{userId.longValue()};
 </delete>
 <!--2有问题不懂，返回值应该是location-->
-<select id="getCallGroupStatusById" resultMap="ClassInfoResultMap">
+<select id="getCallGroupStatusById" resultMap="LocationResultMap">
     select * from location where seminar_id=#{seminarId};
 </select>
 
