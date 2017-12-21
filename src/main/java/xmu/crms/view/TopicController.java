@@ -1,36 +1,70 @@
 package xmu.crms.view;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.ui.Model;
-import xmu.crms.view.vo.TopicVO;
-import xmu.crms.view.vo.SchoolVO;
+import xmu.crms.entity.Topic;
+import xmu.crms.exception.InfoIllegalException;
+import xmu.crms.exception.TopicNotFoundException;
+import xmu.crms.service.TopicService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 @RestController
 public class TopicController {
+	@Autowired
+	private TopicService topicService;
 	
 	@GetMapping("/topic/{topicId}")
-	public ResponseEntity<TopicVO> getTopic(@PathVariable int topicId)
+	public ResponseEntity<Topic> getTopic(@PathVariable BigInteger topicId)
 	{
-		return new ResponseEntity<TopicVO>(new TopicVO(257,"A","领域模型与模块","Domain model与模块划分",5,6,2),HttpStatus.OK);
+		Topic topic = null;
+		try {
+			topic = topicService.getTopicByTopicId(topicId);
+			return new ResponseEntity<Topic>(topic,HttpStatus.OK);
+		} catch (TopicNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<Topic>(topic,HttpStatus.NOT_FOUND);
+		} catch (InfoIllegalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<Topic>(topic,HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PutMapping("/topic/{topicId}")
-	public ResponseEntity reviseTopic(@PathVariable int topicId,@RequestBody reviseTopicInfo reviseInfo)
+	public ResponseEntity reviseTopic(@PathVariable BigInteger topicId,@RequestBody Topic topic)
 	{
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+		try {
+			topicService.updateTopicByTopicId(topicId, topic);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (TopicNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		} catch (InfoIllegalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@DeleteMapping("/topic/{topicId}")
-	public ResponseEntity deleteTopic(@PathVariable int topicId)
+	public ResponseEntity deleteTopic(@PathVariable BigInteger topicId, @PathVariable BigInteger seminarId)
 	{
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+		try {
+			topicService.deleteTopicByTopicId(topicId, seminarId);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (InfoIllegalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@GetMapping("/topic/{topicId}/group")
@@ -45,44 +79,7 @@ public class TopicController {
 	}
 	
 }
-class reviseTopicInfo
-{
-	private String serial;
-	private String name;
-	private String description;
-	private int groupLimit;
-	private int groupMemberLimit;
-	public String getSerial() {
-		return serial;
-	}
-	public void setSerial(String serial) {
-		this.serial = serial;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public int getGroupLimit() {
-		return groupLimit;
-	}
-	public void setGroupLimit(int groupLimit) {
-		this.groupLimit = groupLimit;
-	}
-	public int getGroupMemberLimit() {
-		return groupMemberLimit;
-	}
-	public void setGroupMemberLimit(int groupMemberLimit) {
-		this.groupMemberLimit = groupMemberLimit;
-	}
-}
+
 class simpleGroupInfo
 {
 	private int id;
