@@ -20,6 +20,6 @@ public class TopicMapperTest {
 	@Test
 	public void testGetTopicByTopicId() {
 		Topic topic=topicMapper.getTopicByTopicId(new BigInteger("1"));
-		
+		Assert.assertEquals("话题1",topic.getName());
 	}
 }
