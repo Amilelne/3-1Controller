@@ -17,7 +17,6 @@ public class TopicServiceImpl implements TopicService{
 	@Autowired
 	private TopicMapper topicMapper;
 
-	@Override
 	public Topic getTopicByTopicId(BigInteger topicId) throws TopicNotFoundException, InfoIllegalException {
 		Topic topic=topicMapper.getTopicByTopicId(topicId);
 		if(topic==null) {
@@ -26,45 +25,38 @@ public class TopicServiceImpl implements TopicService{
 		return topic;
 	}
 
-	@Override
 	public Boolean updateTopicByTopicId(BigInteger topicId, Topic topic)
 			throws TopicNotFoundException, InfoIllegalException {
 		Boolean update=topicMapper.updateTopicByTopicId(topicId, topic);
 		return update;
 	}
 
-	@Override
 	public Boolean deleteTopicByTopicId(BigInteger topicId, BigInteger seminarId) throws InfoIllegalException {
 		// TODO Auto-generated method stub
 		Boolean delete=topicMapper.deleteTopicByTopicId(topicId, seminarId);
 		return delete;
 	}
 
-	@Override
 	public List<Topic> listTopicBySeminarId(BigInteger seminarId) throws InfoIllegalException {
 		List<Topic> topics=topicMapper.listTopicBySeminarId(seminarId);
 		return topics;
 	}
 
-	@Override
 	public BigInteger insertTopicBySeminarId(BigInteger seminarId, Topic topic) throws InfoIllegalException {
 		BigInteger insert=topicMapper.insertTopicBySeminarId(seminarId, topic);
 		return insert;
 	}
 
-	@Override
 	public Boolean deleteTopicById(BigInteger groupId, BigInteger topicId) throws InfoIllegalException {
 		Boolean delete=topicMapper.deleteTopicById(groupId, topicId);
 		return delete;
 	}
 
-	@Override
 	public Boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId) throws InfoIllegalException {
 		Boolean delete=topicMapper.deleteSeminarGroupTopicByTopicId(topicId);
 		return delete;
 	}
 
-	@Override
 	public Boolean deleteTopicBySeminarId(BigInteger seminarId) throws InfoIllegalException {
 		// TODO Auto-generated method stub
 		Boolean delete=topicMapper.deleteTopicBySeminarId(seminarId);
