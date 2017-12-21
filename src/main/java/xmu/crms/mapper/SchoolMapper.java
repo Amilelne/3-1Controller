@@ -15,5 +15,5 @@ public interface SchoolMapper {
 	
 	List<String> listCity(String province);
 	
-	School getSchoolBySchoolId(int SchoolId);
+	School getSchoolBySchoolId(BigInteger SchoolId);
 }

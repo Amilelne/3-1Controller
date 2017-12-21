@@ -37,7 +37,7 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     
-    public School getSchoolBySchoolId(int SchoolId){
+    public School getSchoolBySchoolId(BigInteger SchoolId){
     	return schoolMapper.getSchoolBySchoolId(SchoolId);
 
     }

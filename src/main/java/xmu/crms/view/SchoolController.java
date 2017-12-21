@@ -1,5 +1,6 @@
 package xmu.crms.view;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
@@ -47,9 +48,9 @@ public class SchoolController {
 	}
 	
 	@GetMapping("/school/id")
-	public ResponseEntity<School> getSchoolBySchoolId(@RequestParam("id") int id){
+	public ResponseEntity<School> getSchoolBySchoolId(@RequestParam("id") String id){
 		
-		return new ResponseEntity<School>(schoolService.getSchoolBySchoolId(id),HttpStatus.OK);
+		return new ResponseEntity<School>(schoolService.getSchoolBySchoolId(new BigInteger(id)),HttpStatus.OK);
 	}
 }
 class simpleSchoolInfo
