@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
+import xmu.crms.exception.TopicNotFoundException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,13 +25,13 @@ public class TopicServiceTest {
 	private TopicService topicService;
 	
 	@Test
-	public void testUpdateTopicByTopicId() {
-		Topic topic=new Topic();
-		topic.setName("话题14");
-		topic.setDescription("话题14描述");
-		topic.setGroupNumberLimit(4);
+	public void testUpdateTopicByTopicId() throws IllegalArgumentException, TopicNotFoundException {
+		Topic topic=topicService.getTopicByTopicId(new BigInteger("15"));
+		topic.setName("话题15");
+		topic.setDescription("话题15描述");
+		topic.setGroupNumberLimit(9);
 		topic.setGroupStudentLimit(5);
-		
+		Assert.assertEquals(true,topicService.updateTopicByTopicId(new BigInteger("15"), topic));
 	}
 	
 	@Test
