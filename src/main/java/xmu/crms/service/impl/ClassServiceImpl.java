@@ -53,7 +53,7 @@ public class ClassServiceImpl implements ClassService{
 
 
 	 public Boolean updateClassByClassId(BigInteger classId,ClassInfo newClass)
-	         throws ClassesNotFoundException
+	         throws ClassNotFoundException
 	 {
 		 return true;
 		 
