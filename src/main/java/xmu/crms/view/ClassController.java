@@ -24,7 +24,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.exception.*;
-import xmu.crms.service.ClassService;
+import xmu.crms.service.impl.*;
+import xmu.crms.service.*;
 import xmu.crms.service.TopicService;
 
 /**
@@ -45,10 +46,9 @@ public class ClassController {
     }
     
     @GetMapping("/class/{classId}")
-    public ResponseEntity<ClassInfo> getClassById(@PathVariable int classId) {
-    		ClassInfo fclass = new ClassInfo();
-    		BigInteger classid=BigInteger.valueOf(classId);
-		fclass = classService.getClassByClassId(classid);
+    public ResponseEntity<ClassInfo> getClassById(@PathVariable BigInteger classId) {
+    		ClassInfo fclass = new ClassInfo(); 		
+		fclass = classService.getClassByClassId(new BigInteger("1"));
 		return new ResponseEntity<ClassInfo>(fclass,HttpStatus.OK);
 		
     }

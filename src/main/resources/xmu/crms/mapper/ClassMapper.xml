@@ -6,7 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <resultMap type="xmu.crms.entity.ClassInfo" id="ClassInfoResultMap">
     <id column="id" property="id"/>
     <result column="name" property="name"/>
-    <result column="course_id" property="course.id"/>
     <result column="site" property="site"/>
     <result column="class_time" property="classTime"/>
     <result column="report_percentage" property="reportPercentage"/>
@@ -14,8 +13,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result column="five_point_percentage" property="fivePointPercentage"/>
     <result column="four_point_percentage" property="fourPointPercentage"/>
     <result column="three_point_percentage" property="threePointPercentage"/>
+    <association column="course_id" property="course" select="selectCourseByClass"/>
 </resultMap>
 
+<resultMap type="xmu.crms.entity.Course" id="CourseResultMap">
+    	<id column="id" property="id"/>
+    	<result column="name" property="name"/>
+    	<result column="start_date" property="startDate"/>
+    	<result column="end_date" property="endDate"/>
+    	<result column="description" property="description"/>
+    	<result column="report_percentage" property="reportPercentage"/>
+    	<result column="presentation_percentage" property="presentationPercentage"/>
+    	<result column="five_point_percentage" property="fivePointPercentage"/>
+    	<result column="four_point_percentage" property="fourPointPercentage"/>
+    	<result column="three_point_percentage" property="threePointPercentage"/>
+    	<association column="teacher_id" property="teacher" select="selectTeacherByCourse"></association>
+    </resultMap>
+     <resultMap type="xmu.crms.entity.User" id="UserResultMap">
+    	<id column="id" property="id"/>
+    	<result column="phone" property="phone"/>
+    	<result column="wechat_id" property="wechatId"/>
+    	<result column="openid" property="openid"/>
+    	<result column="avatar" property="avatar"/>
+    	<result column="password" property="password"/>
+    	<result column="name" property="name"/>
+    	<result column="gender" property="gender"/>
+    	<result column="type" property="type"/>
+    	<result column="number" property="number"/>
+    	<result column="education" property="education"/>
+    	<result column="title" property="title"/>
+    	<result column="email" property="email"/>
+    	<association column="school_id" property="school" select="selectSchoolByTeacher"/>
+    </resultMap>
+    
+    <select id="selectSchoolByTeacher" resultType="xmu.crms.entity.School">
+    		select * from school where id=#{id}
+    </select>
+    
+    <select id="selectTeacherByCourse" resultMap="UserResultMap">
+    		select * from user_info where id=#{id}
+    </select>
+    
+    <select id="selectCourseByClass" resultMap="CourseResultMap">
+    		select * from course where id=#{id}
+    </select>
+    
 <!--2 location table
 <resultMap type="xmu.crms.entity.Location" id="LocationResultMap">
     <id column="id" property="id"/>
@@ -38,7 +80,7 @@ select class_info.* from class_info,user_info,course where course.name=#{courseN
 select class_info.* from class_info  where  class_info.course_id=#{courseId.longValue()};
 </select>
 
-<select id="getClassByClassId" resultMap="ClassInfoResultMap">
+<select id="getClassByClassId" parameterType="java.math.BigInteger" resultMap="ClassInfoResultMap">
 select * from class_info where id=#{classId};
 </select>
 <update id="updateClassByClassId">
