@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import xmu.crms.entity.*;
-
+import xmu.crms.exception.*;
 /**
  * 
  * @author YeXiaona,ZhouZhongJun
@@ -64,7 +64,8 @@ public interface ClassService {
 	 * @param classId 班级ID
 	 * @return boolean 班级修改是否成功情况
 	 */
-	 Boolean updateClassByClassId(BigInteger classId);
+	 Boolean updateClassByClassId(BigInteger classId,ClassInfo newClass)
+	         throws ClassNotFoundException;
 
 	/**
 	 * 按班级id删除班级.
@@ -114,7 +115,8 @@ public interface ClassService {
 	 * @return classBO 班级
 	 * @see SeminarGroupService #listSeminarGroupBySeminarId(BigInteger seminarId)
 	 */
-	 ClassInfo getCallGroupStatusById(BigInteger seminarId);
+	 ClassInfo getCallStatusById(BigInteger seminarId)
+	         throws SeminarNotFoundException;
 
 	/**
 	 * 新建班级.

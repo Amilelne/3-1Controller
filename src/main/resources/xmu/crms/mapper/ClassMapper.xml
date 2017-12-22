@@ -40,9 +40,12 @@ select class_info.* from class_info  where  class_info.course_id=#{courseId.long
 <select id="getClassByClassId" resultMap="ClassInfoResultMap">
 select * from class_info where id=#{classId.longValue()};
 </select>
-
 <update id="updateClassByClassId">
-
+	update class_info set name=#{newClass.name},site=#{newClass.site},
+	course_id=#{newClass.course.id},class_time=#{newClass.classTime},
+	report_persentage=#{newClass.reportPercentage},five_point_persentage=#{newClass.fivePointPercentage},
+	four_point_persentage=#{newClass.fourPointPercentage},three_point_persentage=#{newClass.threePointPercentage},
+	where id=#{classId};
 </update>
 
 <delete id="deleteClassByClassId">
@@ -57,7 +60,7 @@ insert into course_selection(class_id,student_id) values(classId.longValue(),use
 delete from course_selection where class_id=#{classId.longValue()} and student_Id=#{userId.longValue()};
 </delete>
 <!--2有问题不懂，返回值应该是location-->
-<select id="getCallGroupStatusById" resultMap="LocationResultMap">
+<select id="getCallStatusById" resultMap="LocationResultMap">
     select * from location where seminar_id=#{seminarId};
 </select>
 
@@ -69,19 +72,16 @@ insert into class_info(name,course_id) values("周三三四节",#{courseId});
 delete from class_info where course_id=#{courseId};
 </delete>
 
+<!--ScoreRule表已经删除,以下的表可以做空方法来实现-->
 <update id="deleteScoreRuleById">
-update class_info set report_percentage=null,presentation_percentage=null,five_point_percentage=null,four_point_percentage=null,three_point_percentage where id=#{classId};
 </update>
 
 <select id="getScoreRule" resultMap="ClassInfoResultMap">
-select * from class_info where id=#{classId};
 </select>
 
 <insert id="insertScoreRule">
-
 </insert>
 
 <update id="updateScoreRule">
-
 </update>
 </mapper>
