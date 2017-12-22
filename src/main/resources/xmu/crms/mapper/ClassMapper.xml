@@ -39,7 +39,7 @@ select class_info.* from class_info  where  class_info.course_id=#{courseId.long
 </select>
 
 <select id="getClassByClassId" resultMap="ClassInfoResultMap">
-select * from class_info where id=#{classId.longValue()};
+select * from class_info where id=#{classId};
 </select>
 <update id="updateClassByClassId">
 	update class_info set name=#{newClass.name},site=#{newClass.site},
@@ -50,21 +50,21 @@ select * from class_info where id=#{classId.longValue()};
 </update>
 
 <delete id="deleteClassByClassId">
-delete from class_info where id=#{classId.longValue()};
+delete from class_info where id=#{classId};
 </delete>
 
 <insert id="insertCourseSelectionById">
-insert into course_selection(class_id,student_id) values(classId.longValue(),userId.longValue());
+insert into course_selection(class_id,student_id) values(#{classId},#{userId});	
 </insert>
 
 <delete id="deleteCourseSelectionById">
-delete from course_selection where class_id=#{classId.longValue()} and student_Id=#{userId.longValue()};
+delete from course_selection where class_id=#{classId} and student_id=#{userId};
 </delete>
 
 <select id="getCallStatusById" resultMap="ClassInfoResultMap">
     select class_info.* from class_info,location where location.seminar_id=#{seminarId} and location.class_id=class_info.id;
 </select>
-
+<!--班级名字不确定-->
 <insert id="insertClassById">
 insert into class_info(name,course_id) values("周三三四节",#{courseId});
 </insert>
