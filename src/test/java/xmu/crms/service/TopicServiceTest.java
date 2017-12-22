@@ -25,6 +25,12 @@ public class TopicServiceTest {
 	private TopicService topicService;
 	
 	@Test
+	public void testGetTopicByTopicId() throws IllegalArgumentException, TopicNotFoundException {
+		Topic topic=topicService.getTopicByTopicId(new BigInteger("1"));
+		Assert.assertNotNull(topic);
+	}
+	
+	@Test
 	public void testUpdateTopicByTopicId() throws IllegalArgumentException, TopicNotFoundException {
 		Topic topic=topicService.getTopicByTopicId(new BigInteger("15"));
 		topic.setName("话题15");
@@ -32,6 +38,12 @@ public class TopicServiceTest {
 		topic.setGroupNumberLimit(9);
 		topic.setGroupStudentLimit(5);
 		Assert.assertEquals(true,topicService.updateTopicByTopicId(new BigInteger("15"), topic));
+	}
+	
+	@Test
+	@Rollback(true)
+	public void testDeleteTopicByTopicId() {
+		Assert.assertEquals(true,topicService.deleteTopicByTopicId(new BigInteger("4")));
 	}
 	
 	@Test
@@ -54,12 +66,26 @@ public class TopicServiceTest {
 	}
 	
 	@Test
+	public void testDeleteTopicById() {
+		Assert.assertEquals(true,topicService.deleteTopicById(new BigInteger("36"), new BigInteger("6")));
+	}
+	
+	@Test
+	public void testDeleteSeminarGroupTopicByTopicId() {
+		Assert.assertEquals(true,topicService.deleteSeminarGroupTopicByTopicId(new BigInteger("6")));
+	}
+	
+	@Test
 	public void testGetSeminarGroupTopicById() {
 		SeminarGroupTopic seminarGroupTopic=topicService.getSeminarGroupTopicById(new BigInteger("1"), new BigInteger("1"));
 		Assert.assertNotNull(seminarGroupTopic);
 	}
 	
-	
+	@Test
+	@Rollback(true)
+	public void testDeleteTopicBySeminarId() {
+		Assert.assertEquals(true,topicService.deleteTopicBySeminarId(new BigInteger("2")));
+	}
 	
 	
 }

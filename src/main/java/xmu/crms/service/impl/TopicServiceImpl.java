@@ -34,7 +34,9 @@ public class TopicServiceImpl implements TopicService{
 
 	public Boolean deleteTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
 		List<BigInteger> SeminarGroupTopicIds = topicMapper.getSeminarGroupTopicIdByTopicId(topicId);
-		topicMapper.deleteStudentScoreGroupById(SeminarGroupTopicIds);
+		if(!SeminarGroupTopicIds.isEmpty()) {
+			topicMapper.deleteStudentScoreGroupById(SeminarGroupTopicIds);
+		}
 		topicMapper.deleteSeminarGroupTopicByTopicId(topicId);
 		Boolean delete=topicMapper.deleteTopicByTopicId(topicId);
 		return delete;
@@ -72,9 +74,7 @@ public class TopicServiceImpl implements TopicService{
 		Iterator<Topic> it = topics.iterator();
 		Boolean delete = true;
 		while(it.hasNext()) {
-			if(this.deleteTopicByTopicId(it.next().getId())==false) {
-				delete=false;
-			}
+			this.deleteTopicByTopicId(it.next().getId());
 		}
 		return delete;
 	}

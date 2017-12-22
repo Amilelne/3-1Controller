@@ -87,13 +87,13 @@
     
     <!-- ServiceFun:deleteTopicByTopicId -->
     <!-- cascading deletion when delete a topic -->
-    <select id="getSeminarGroupTopicIdByTopicId">
+    <select id="getSeminarGroupTopicIdByTopicId" resultType="java.math.BigInteger">
     	select id from seminar_group_topic where topic_id=#{topicId}
     </select>
         
-    <delete id="deleteStudentScoreGroupById" parameterType="java.util.List">
-    	delete from student_score_group where seminar_group_topic_id in
-    	<foreach collection="seminarGroupTopicIds" item="item" index="index" open="(" close=")" separator=",">
+    <delete id="deleteStudentScoreGroupById" parameterType="java.math.BigInteger">
+    	delete from student_score_group where seminar_group_topic_id in 
+    	<foreach collection="seminarGroupTopicIds" item="item" index="index" open="(" separator="," close=")">
     		#{item}
     	</foreach>
     </delete>
