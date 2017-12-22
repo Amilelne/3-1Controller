@@ -73,7 +73,9 @@ delete from course_selection where class_id=#{classId};
 </delete>
 <!--1-->
 <select id="listClassByName" resultMap="ClassInfoResultMap">
-select class_info.* from class_info,user_info,course where course.name=#{courseName}  and course.teacher_id=user_info.id and user_info.name=#{teacherName} and course.id=class_info.course_id ;
+ select class_info.* from class_info,user_info,course 
+where course.name=#{courseName}  and course.teacher_id=user_info.id 
+and user_info.name=#{teacherName} and course.id=class_info.course_id
 </select>
 
 <select id="listClassByCourseId" resultMap="ClassInfoResultMap">
@@ -81,7 +83,7 @@ select class_info.* from class_info  where  class_info.course_id=#{courseId.long
 </select>
 
 <select id="getClassByClassId" parameterType="java.math.BigInteger" resultMap="ClassInfoResultMap">
-select * from class_info where id=#{classId};
+select * from class_info where id=#{classId}
 </select>
 <update id="updateClassByClassId">
 	update class_info set name=#{newClass.name},site=#{newClass.site},
@@ -108,6 +110,9 @@ delete from course_selection where class_id=#{classId} and student_id=#{userId};
 </select>
 <!--班级名字不确定-->
 <insert id="insertClassById">
+    	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
+               SELECT LAST_INSERT_ID() as id
+        </selectKey>
 insert into class_info(name,course_id) values("周三三四节",#{courseId});
 </insert>
 
