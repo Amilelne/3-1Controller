@@ -86,7 +86,7 @@ public class TopicController {
 		try {
 			seminarGroup = seminarGroupService.listGroupByTopicId(topicId);
 			return new ResponseEntity(seminarGroup,HttpStatus.OK);
-		} catch (InfoIllegalException e) {
+		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity(seminarGroup,HttpStatus.BAD_REQUEST);
