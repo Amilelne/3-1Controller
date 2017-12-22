@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
-import xmu.crms.exception.InfoIllegalException;
 import xmu.crms.exception.TopicNotFoundException;
 import xmu.crms.mapper.TopicMapper;
 import xmu.crms.service.TopicService;

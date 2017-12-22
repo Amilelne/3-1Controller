@@ -54,7 +54,7 @@ public class TopicController {
 	}
 
 	@DeleteMapping("/topic/{topicId}")
-	public ResponseEntity deleteTopic(@PathVariable BigInteger topicId, @PathVariable BigInteger seminarId)
+	public ResponseEntity deleteTopic(@PathVariable BigInteger topicId)
 	{
 		try {
 			topicService.deleteTopicByTopicId(topicId);
