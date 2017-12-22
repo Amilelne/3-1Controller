@@ -6,9 +6,13 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
+import xmu.crms.entity.SeminarGroup;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
+import xmu.crms.exception.GroupNotFoundException;
+import xmu.crms.exception.InfoIllegalException;
 import xmu.crms.exception.TopicNotFoundException;
+import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.TopicService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,9 @@ import org.springframework.http.ResponseEntity;
 public class TopicController {
 	@Autowired
 	private TopicService topicService;
+	
+	@Autowired
+	private SeminarGroupService seminarGroupService;
 	
 	@GetMapping("/topic/{topicId}")
 	public ResponseEntity<Topic> getTopic(@PathVariable BigInteger topicId)
@@ -71,38 +78,23 @@ public class TopicController {
 		}
 	}
 	
+	//未实现，需集成
 	@GetMapping("/topic/{topicId}/group")
-	public ResponseEntity<List<simpleGroupInfo>> getTopicGroupList(@PathVariable int topicId)
+	public ResponseEntity<List<SeminarGroup>> getTopicGroupList(@PathVariable BigInteger topicId)
 	{
-		simpleGroupInfo group1=new simpleGroupInfo(23,"1A1");
-		simpleGroupInfo group2=new simpleGroupInfo(26,"2A2");
-		List<simpleGroupInfo> groupList=new ArrayList<simpleGroupInfo>();
-		groupList.add(group1);
-		groupList.add(group2);
-		return new ResponseEntity(groupList,HttpStatus.OK);
+		List<SeminarGroup> seminarGroup=new ArrayList<SeminarGroup>();
+		try {
+			seminarGroup = seminarGroupService.listGroupByTopicId(topicId);
+			return new ResponseEntity(seminarGroup,HttpStatus.OK);
+		} catch (InfoIllegalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(seminarGroup,HttpStatus.BAD_REQUEST);
+		} catch (GroupNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(seminarGroup,HttpStatus.NOT_FOUND);
+		}
 	}
 	
-}
-
-class simpleGroupInfo
-{
-	private int id;
-	private String name;
-	public simpleGroupInfo(int id,String name)
-	{
-		this.id=id;
-		this.name=name;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 }
