@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
+
+import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.exception.TopicNotFoundException;
 import xmu.crms.service.TopicService;
@@ -23,7 +25,7 @@ public class TopicController {
 	{
 		Topic topic = null;
 		try {
-			topic = topicService.getTopicByTopicId(new BigInteger("1"));
+			topic = topicService.getTopicByTopicId(topicId);
 			return new ResponseEntity<Topic>(topic,HttpStatus.OK);
 		} catch (TopicNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -75,6 +77,13 @@ public class TopicController {
 		groupList.add(group1);
 		groupList.add(group2);
 		return new ResponseEntity(groupList,HttpStatus.OK);
+	}
+	
+	@GetMapping("/topic/{topicId}/group/{groupId}")
+	public ResponseEntity<SeminarGroupTopic> getTopicGroup(@PathVariable BigInteger topicId, @PathVariable BigInteger groupId)
+	{
+		SeminarGroupTopic seminarGroupTopic = topicService.getSeminarGroupTopicById(topicId, groupId);
+		return new ResponseEntity(seminarGroupTopic,HttpStatus.OK);
 	}
 	
 }

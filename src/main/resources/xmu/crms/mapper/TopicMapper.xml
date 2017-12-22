@@ -129,20 +129,20 @@
     
     <!-- ServiceFun:deleteTopicById -->
     <delete id="deleteTopicById">
-    	delete from seminar_group_topic where topic_id=#{topic_id} and seminar_group_id=#{groupId}
+    	delete from seminar_group_topic where topic_id=#{topicId} and seminar_group_id=#{groupId}
     </delete>
     
     <!-- ServiceFun:deleteSeminarGroupTopicByTopicId -->
     <delete id="deleteSeminarGroupTopicByTopicId" parameterType="java.math.BigInteger">
-    	delete from seminar_group_topic where topic_id=#{topic_id}
+    	delete from seminar_group_topic where topic_id=#{topicId}
     </delete>
     
     <!-- ServiceFun:deleteTopicByTopicId -->
-    <resultMap type="xmu.crms.entity.Topic" id="SeminarGroupTopicResultMap">
+    <resultMap type="xmu.crms.entity.SeminarGroupTopic" id="SeminarGroupTopicResultMap">
     	<id column="id" property="id"/>
     	<result column="presentation_grade" property="presentationGrade"/>
     	<association column="topic_id" property="topic" select="getTopicByTopicId"></association>
-    	<association column="seminar_group_id" property="seminarGroup" select="getSeminarGroupById"></association>
+    	<association column="seminar_group_id" property="seminarGroup" select="getSeminarGroupBySeminarGroupId"></association>
     </resultMap>
     
     <resultMap type="xmu.crms.entity.SeminarGroup" id="SeminarGroupResultMap">
@@ -173,8 +173,12 @@
     	select * from class_info where id=#{id}
     </select>
     
+    <select id="getSeminarGroupBySeminarGroupId" resultMap="SeminarGroupResultMap">
+    	select * from seminar_group where id=#{id}
+    </select>
+    
     <select id="getSeminarGroupTopicById" resultMap="SeminarGroupTopicResultMap">
-    	select * from seminar_group_topic where topic_id=#{topic_id} and seminar_group_id=#{groupId}
+    	select * from seminar_group_topic where topic_id=#{topicId} and seminar_group_id=#{groupId}
     </select>
     
     <!-- ServiceFun:deleteTopicBySeminarId -->
