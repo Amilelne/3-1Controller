@@ -44,7 +44,7 @@ public interface TopicService {
      * @return 是否成功
      * @exception InfoIllegalException Id格式错误时抛出
      */
-     Boolean deleteTopicByTopicId(BigInteger topicId) throws InfoIllegalException;
+     Boolean deleteTopicByTopicId(BigInteger topicId,BigInteger seminarId) throws InfoIllegalException;
         //删除topic还要把每个选了这个topic的小组的选题属性修改为null
         //想找到选了这个topic的小组，首先通过seminarId获得该讨论课所有小组，遍历判断是否选了这个topic
         //SeminarGroupService sg=new SeminarGroupService();

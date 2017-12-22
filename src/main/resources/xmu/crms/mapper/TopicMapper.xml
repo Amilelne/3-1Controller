@@ -2,8 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.crms.mapper.TopicMapper">
-	
-	<!-- ServiceFun:getTopicByTopicId -->
+
 	<resultMap type="xmu.crms.entity.Topic" id="TopicResultMap">
     	<id column="id" property="id"/>
     	<result column="name" property="name"/>
@@ -74,7 +73,6 @@
 		select * from topic where id = #{id}
     </select>
     
-    <!-- ServiceFun:updateTopicByTopicId -->
     <update id="updateTopicByTopicId" parameterType="xmu.crms.entity.Topic">
     	update topic set
     		name=#{topic.name},
@@ -85,29 +83,15 @@
     	where id=#{topicId}
     </update>
     
-    <!-- ServiceFun:deleteTopicByTopicId -->
-    <!-- cascading deletion when delete a topic -->
-    <select id="getSeminarGroupTopicIdByTopicId">
-    	select id from seminar_group_topic where topic_id=#{topicId}
-    </select>
-        
-    <delete id="deleteStudentScoreGroupById" parameterType="java.util.List">
-    	delete from student_score_group where seminar_group_topic_id in
-    	<foreach collection="seminarGroupTopicIds" item="item" index="index" open="(" close=")" separator=",">
-    		#{item}
-    	</foreach>
-    </delete>
-    
+    <!-- TODO:about set selected group to null -->
     <delete id="deleteTopicByTopicId">
     	delete from topic where id=#{topicId}
     </delete>
     
-    <!-- ServiceFun:listTopicBySeminarId -->
     <select id="listTopicBySeminarId" parameterType="java.math.BigInteger" resultMap="TopicResultMap">
 		select * from topic where seminar_id = #{id}
     </select>
     
-    <!-- ServiceFun:insertTopicBySeminarId -->
     <insert id="insertTopicBySeminarId">
     	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
                SELECT LAST_INSERT_ID() as id
@@ -127,18 +111,17 @@
     	)
     </insert>
     
-    <!-- ServiceFun:deleteTopicById -->
     <delete id="deleteTopicById">
     	delete from seminar_group_topic where topic_id=#{topic_id} and seminar_group_id=#{groupId}
     </delete>
     
-    <!-- ServiceFun:deleteSeminarGroupTopicByTopicId -->
     <delete id="deleteSeminarGroupTopicByTopicId" parameterType="java.math.BigInteger">
     	delete from seminar_group_topic where topic_id=#{topic_id}
     </delete>
     
-    <!-- ServiceFun:deleteTopicBySeminarId -->
-    <!-- about a chain of events that need to delete -->
-    <!-- using other methods to realize -->
+    <!-- TODO:about a chain of events that need to delete -->
+    <delete id="deleteTopicBySeminarId" parameterType="java.math.BigInteger">
+    	delete from topic where id=#{id}
+    </delete>
 
 </mapper>
