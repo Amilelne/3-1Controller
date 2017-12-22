@@ -10,7 +10,7 @@
     	<result column="description" property="description"/>
     	<result column="group_number_limit" property="groupNumberLimit"/>
     	<result column="group_student_limit" property="groupStudentLimit"/>
-    	<association column="seminar_id" property="seminar" select="selectSeminarByTopic"></association>
+    	<association column="seminar_id" property="seminar" select="selectSeminarBySeminarId"></association>
     </resultMap>
     
     <resultMap type="xmu.crms.entity.Seminar" id="SeminarResultMap">
@@ -20,7 +20,7 @@
     	<result column="is_fixed" property="fixed"/>
     	<result column="start_time" property="startTime"/>
     	<result column="end_time" property="endTime"/>
-    	<association column="course_id" property="course" select="selectCourseBySemianr"></association>
+    	<association column="course_id" property="course" select="selectCourseByCourseId"></association>
     </resultMap>
     
     <resultMap type="xmu.crms.entity.Course" id="CourseResultMap">
@@ -34,7 +34,7 @@
     	<result column="five_point_percentage" property="fivePointPercentage"/>
     	<result column="four_point_percentage" property="fourPointPercentage"/>
     	<result column="three_point_percentage" property="threePointPercentage"/>
-    	<association column="teacher_id" property="teacher" select="selectTeacherByCourse"></association>
+    	<association column="teacher_id" property="teacher" select="selectUserByUserId"></association>
     </resultMap>
     
     <resultMap type="xmu.crms.entity.User" id="UserResultMap">
@@ -51,26 +51,26 @@
     	<result column="education" property="education"/>
     	<result column="title" property="title"/>
     	<result column="email" property="email"/>
-    	<association column="school_id" property="school" select="selectSchoolByTeacher"/>
+    	<association column="school_id" property="school" select="selectSchoolBySchoolId"/>
     </resultMap>
     
-    <select id="selectSchoolByTeacher" resultType="xmu.crms.entity.School">
+    <select id="selectSchoolBySchoolId" resultType="xmu.crms.entity.School">
     	select * from school where id=#{id}
     </select>
     
-    <select id="selectTeacherByCourse" resultMap="UserResultMap">
+    <select id="selectUserByUserId" resultMap="UserResultMap">
     	select * from user_info where id=#{id}
     </select>
     
-    <select id="selectCourseBySemianr" resultMap="CourseResultMap">
+    <select id="selectCourseByCourseId" resultMap="CourseResultMap">
     	select * from course where id=#{id}
     </select>
     
-    <select id="selectSeminarByTopic" resultMap="SeminarResultMap">
+    <select id="selectSeminarBySeminarId" resultMap="SeminarResultMap">
     	select * from seminar where id=#{id}
     </select>
 	
-	<select id="getTopicByTopicId" parameterType="java.math.BigInteger" resultMap="TopicResultMap">
+	<select id="getTopicByTopicId" resultMap="TopicResultMap">
 		select * from topic where id = #{id}
     </select>
     
@@ -136,6 +136,46 @@
     <delete id="deleteSeminarGroupTopicByTopicId" parameterType="java.math.BigInteger">
     	delete from seminar_group_topic where topic_id=#{topic_id}
     </delete>
+    
+    <!-- ServiceFun:deleteTopicByTopicId -->
+    <resultMap type="xmu.crms.entity.Topic" id="SeminarGroupTopicResultMap">
+    	<id column="id" property="id"/>
+    	<result column="presentation_grade" property="presentationGrade"/>
+    	<association column="topic_id" property="topic" select="getTopicByTopicId"></association>
+    	<association column="seminar_group_id" property="seminarGroup" select="getSeminarGroupById"></association>
+    </resultMap>
+    
+    <resultMap type="xmu.crms.entity.SeminarGroup" id="SeminarGroupResultMap">
+    	<id column="id" property="id"/>
+    	<result column="result" property="result"/>
+    	<result column="report_grade" property="reportGrade"/>
+    	<result column="presentation_grade" property="presentationGrade"/>
+    	<result column="final_grade" property="finalGrade"/>
+    	<association column="seminar_id" property="seminar" select="selectSeminarBySeminarId"></association>
+    	<association column="class_id" property="classInfo" select="selectClassInfoByClassInfoId"></association>
+    	<association column="leader_id" property="leader" select="selectUserByUserId"></association>
+    </resultMap>
+    
+    <resultMap type="xmu.crms.entity.ClassInfo" id="ClassInfoResultMap">
+    	<id column="id" property="id"/>
+    	<result column="name" property="name"/>
+    	<result column="class_time" property="classTime"/>
+    	<result column="description" property="description"/>
+    	<result column="report_percentage" property="reportPercentage"/>
+    	<result column="presentation_percentage" property="presentationPercentage"/>
+    	<result column="five_point_percentage" property="fivePointPercentage"/>
+    	<result column="four_point_percentage" property="fourPointPercentage"/>
+    	<result column="three_point_percentage" property="threePointPercentage"/>
+    	<association column="course_id" property="course" select="selectCourseByCourseId"></association>
+    </resultMap>
+    
+    <select id="selectClassInfoByClassInfoId" resultMap="ClassInfoResultMap">
+    	select * from class_info where id=#{id}
+    </select>
+    
+    <select id="getSeminarGroupTopicById" resultMap="SeminarGroupTopicResultMap">
+    	select * from seminar_group_topic where topic_id=#{topic_id} and seminar_group_id=#{groupId}
+    </select>
     
     <!-- ServiceFun:deleteTopicBySeminarId -->
     <!-- about a chain of events that need to delete -->

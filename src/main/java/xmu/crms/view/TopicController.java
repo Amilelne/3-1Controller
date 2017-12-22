@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.Topic;
-import xmu.crms.exception.InfoIllegalException;
 import xmu.crms.exception.TopicNotFoundException;
 import xmu.crms.service.TopicService;
 
@@ -30,7 +29,7 @@ public class TopicController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity<Topic>(topic,HttpStatus.NOT_FOUND);
-		} catch (InfoIllegalException e) {
+		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity<Topic>(topic,HttpStatus.BAD_REQUEST);
@@ -47,7 +46,7 @@ public class TopicController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
-		} catch (InfoIllegalException e) {
+		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -60,7 +59,7 @@ public class TopicController {
 		try {
 			topicService.deleteTopicByTopicId(topicId);
 			return new ResponseEntity(HttpStatus.OK);
-		} catch (InfoIllegalException e) {
+		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

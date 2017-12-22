@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.exception.InfoIllegalException;
 import xmu.crms.exception.TopicNotFoundException;
@@ -18,7 +19,7 @@ public class TopicServiceImpl implements TopicService{
 	@Autowired
 	private TopicMapper topicMapper;
 
-	public Topic getTopicByTopicId(BigInteger topicId) throws TopicNotFoundException, InfoIllegalException {
+	public Topic getTopicByTopicId(BigInteger topicId) throws TopicNotFoundException, IllegalArgumentException {
 		Topic topic=topicMapper.getTopicByTopicId(topicId);
 		if(topic==null) {
 			throw new TopicNotFoundException();
@@ -27,13 +28,12 @@ public class TopicServiceImpl implements TopicService{
 	}
 
 	public Boolean updateTopicByTopicId(BigInteger topicId, Topic topic)
-			throws TopicNotFoundException, InfoIllegalException {
+			throws TopicNotFoundException, IllegalArgumentException {
 		Boolean update=topicMapper.updateTopicByTopicId(topicId, topic);
 		return update;
 	}
 
-	public Boolean deleteTopicByTopicId(BigInteger topicId) throws InfoIllegalException {
-		// TODO Auto-generated method stub
+	public Boolean deleteTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
 		List<BigInteger> SeminarGroupTopicIds = topicMapper.getSeminarGroupTopicIdByTopicId(topicId);
 		topicMapper.deleteStudentScoreGroupById(SeminarGroupTopicIds);
 		topicMapper.deleteSeminarGroupTopicByTopicId(topicId);
@@ -41,28 +41,33 @@ public class TopicServiceImpl implements TopicService{
 		return delete;
 	}
 
-	public List<Topic> listTopicBySeminarId(BigInteger seminarId) throws InfoIllegalException {
+	public List<Topic> listTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException {
 		List<Topic> topics=topicMapper.listTopicBySeminarId(seminarId);
 		return topics;
 	}
 
-	public BigInteger insertTopicBySeminarId(BigInteger seminarId, Topic topic) throws InfoIllegalException {
+	public BigInteger insertTopicBySeminarId(BigInteger seminarId, Topic topic) throws IllegalArgumentException {
 		BigInteger insert=topicMapper.insertTopicBySeminarId(seminarId, topic);
 		return insert;
 	}
 
-	public Boolean deleteTopicById(BigInteger groupId, BigInteger topicId) throws InfoIllegalException {
+	public Boolean deleteTopicById(BigInteger groupId, BigInteger topicId) throws IllegalArgumentException {
 		Boolean delete=topicMapper.deleteTopicById(groupId, topicId);
 		return delete;
 	}
 
-	public Boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId) throws InfoIllegalException {
+	public Boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
 		Boolean delete=topicMapper.deleteSeminarGroupTopicByTopicId(topicId);
 		return delete;
 	}
 
-	public Boolean deleteTopicBySeminarId(BigInteger seminarId) throws InfoIllegalException {
-		// TODO Auto-generated method stub
+	public SeminarGroupTopic getSeminarGroupTopicById(BigInteger topicId, BigInteger groupId)
+			throws IllegalArgumentException {
+		SeminarGroupTopic seminarGroupTopic=topicMapper.getSeminarGroupTopicById(topicId, groupId);
+		return seminarGroupTopic;
+	}
+
+	public Boolean deleteTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException {
 		List<Topic> topics=topicMapper.listTopicBySeminarId(seminarId);
 		Iterator<Topic> it = topics.iterator();
 		Boolean delete = true;
@@ -73,6 +78,5 @@ public class TopicServiceImpl implements TopicService{
 		}
 		return delete;
 	}
-	
 	
 }

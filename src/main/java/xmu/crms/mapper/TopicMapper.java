@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 
 public interface TopicMapper {
@@ -74,6 +75,12 @@ public interface TopicMapper {
 	 * 按topicId删除SeminarGroupTopic表信息
 	 */
 	public Boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId);
+	
+	/**
+	 * ServiceFun:getSeminarGroupTopicById
+	 * 按话题id和小组id获取讨论课小组选题信息
+	 */
+	public SeminarGroupTopic getSeminarGroupTopicById(@Param("topicId")BigInteger topicId, @Param("groupId")BigInteger groupId);
 	
 	/**
 	 * ServiceFun:deleteTopicBySeminarId
