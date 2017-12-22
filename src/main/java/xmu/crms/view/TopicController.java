@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * @author HuXingBo
+ */
 @RestController
 public class TopicController {
 	@Autowired
@@ -77,14 +80,6 @@ public class TopicController {
 		groupList.add(group1);
 		groupList.add(group2);
 		return new ResponseEntity(groupList,HttpStatus.OK);
-	}
-	
-	//用于测试，需要删除
-	@GetMapping("/topic/{topicId}/group/{groupId}")
-	public ResponseEntity<SeminarGroupTopic> getTopicGroup(@PathVariable BigInteger topicId, @PathVariable BigInteger groupId)
-	{
-		SeminarGroupTopic seminarGroupTopic = topicService.getSeminarGroupTopicById(topicId, groupId);
-		return new ResponseEntity(seminarGroupTopic,HttpStatus.OK);
 	}
 	
 }
