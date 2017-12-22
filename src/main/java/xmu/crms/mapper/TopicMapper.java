@@ -62,7 +62,7 @@ public interface TopicMapper {
 	 * ServiceFun:insertTopicBySeminarId
 	 * 根据seminarId增加记录
 	 */
-	public BigInteger insertTopicBySeminarId(@Param("seminarId")BigInteger seminarId,@Param("topic")Topic topic);
+	public int insertTopicBySeminarId(@Param("seminarId")BigInteger seminarId,@Param("topic")Topic topic);
 	
 	/**
 	 * ServiceFun:deleteTopicById

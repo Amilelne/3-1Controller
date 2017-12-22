@@ -108,10 +108,7 @@
     </select>
     
     <!-- ServiceFun:insertTopicBySeminarId -->
-    <insert id="insertTopicBySeminarId">
-    	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
-               SELECT LAST_INSERT_ID() as id
-        </selectKey>
+    <insert id="insertTopicBySeminarId" parameterType="xmu.crms.entity.Topic" useGeneratedKeys="true" keyProperty="topic.id">
     	insert into topic(
     		name,
     		description,
@@ -121,8 +118,8 @@
     	)values(
     		#{topic.name},
     		#{topic.description},
-    		#{topic.group_number_limit},
-    		#{topic.group_student_limit},
+    		#{topic.groupNumberLimit},
+    		#{topic.groupStudentLimit},
     		#{seminarId}
     	)
     </insert>
