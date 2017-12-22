@@ -54,7 +54,7 @@ public class ClassServiceImpl implements ClassService{
 		fclass = classMapper.getClassByClassId(classId);
 		return fclass;
 	}
-/*未测试-已经实现-module模块组有错误*/
+/*update-未测试-已经实现-module模块组有错误*/
 	 public Boolean updateClassByClassId(BigInteger classId,ClassInfo newClass)
 	         throws ClassesNotFoundException
 	 {
@@ -68,10 +68,10 @@ public class ClassServiceImpl implements ClassService{
 		 classMapper.deleteClassByClassId(classId);
 		 return true;
 	 }
-/*未测试，已经实现*/
+/*insert-未测试，已经实现,不知道选课url是什么*/
 	 public String insertCourseSelectionById(BigInteger userId, BigInteger classId)
 	 {
-		 String url=null;
+		 String url="//course";
 		 classMapper.insertCourseSelectionById(userId, classId);
 		 return url;
 	 }
@@ -90,7 +90,7 @@ public class ClassServiceImpl implements ClassService{
 		 return tclass;
 		 
 	 }
-/*未测试-已经实现*/
+/*insert-未测试-已经实现*/
 	 public BigInteger insertClassById(BigInteger userId, BigInteger courseId)
 	 {
 		 return classMapper.insertClassById(userId, courseId);
@@ -112,12 +112,12 @@ public class ClassServiceImpl implements ClassService{
 	 {
 		 return classMapper.getScoreRule(classId);
 	 }
-/*未测试-已经实现*/
+/*insert-未测试-已经实现*/
 	 public BigInteger insertScoreRule(BigInteger classId, ClassInfo proportions)
 	 {
 		 return classMapper.insertScoreRule(classId, proportions);
 	 }
-/*未测试-已经实现*/
+/*update-未测试-已经实现*/
 	 public Boolean updateScoreRule(BigInteger classId, ClassInfo proportions)
 	 {
 		 classMapper.updateScoreRule(classId, proportions);

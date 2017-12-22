@@ -98,6 +98,9 @@ delete from class_info where id=#{classId};
 </delete>
 
 <insert id="insertCourseSelectionById">
+    	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
+               SELECT LAST_INSERT_ID() as id
+        </selectKey>
 insert into course_selection(class_id,student_id) values(#{classId},#{userId});	
 </insert>
 
@@ -130,6 +133,9 @@ delete from class_info where course_id=#{courseId};
 </select>
 <!--ScoreRule表已经删除,插入当作设置-->
 <update id="insertScoreRule">
+    	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
+               SELECT LAST_INSERT_ID() as id
+     </selectKey>
 	update class_info set  report_percentage=#{proportions.reportPercentage},
 	presentation_percentage=#{proportions.presentationPercentage},five_point_percentage=#{proportions.fivePointPercentage},
 	four_point_percentage=#{proportions.fourPointPercentage},three_point_percentage=#{proportions.threePointPercentage},
