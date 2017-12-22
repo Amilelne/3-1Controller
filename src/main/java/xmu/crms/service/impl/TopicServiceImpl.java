@@ -46,8 +46,9 @@ public class TopicServiceImpl implements TopicService{
 	}
 
 	public BigInteger insertTopicBySeminarId(BigInteger seminarId, Topic topic) throws IllegalArgumentException {
-		BigInteger insert=topicMapper.insertTopicBySeminarId(seminarId, topic);
-		return insert;
+		topicMapper.insertTopicBySeminarId(seminarId, topic);
+		BigInteger insertId=topic.getId();
+		return insertId;
 	}
 
 	public Boolean deleteTopicById(BigInteger groupId, BigInteger topicId) throws IllegalArgumentException {

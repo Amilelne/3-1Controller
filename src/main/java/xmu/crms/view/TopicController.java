@@ -79,6 +79,7 @@ public class TopicController {
 		return new ResponseEntity(groupList,HttpStatus.OK);
 	}
 	
+	//用于测试，需要删除
 	@GetMapping("/topic/{topicId}/group/{groupId}")
 	public ResponseEntity<SeminarGroupTopic> getTopicGroup(@PathVariable BigInteger topicId, @PathVariable BigInteger groupId)
 	{
