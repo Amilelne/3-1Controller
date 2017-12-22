@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result column="three_point_percentage" property="threePointPercentage"/>
 </resultMap>
 
-<!--2-->
+<!--2 location table
 <resultMap type="xmu.crms.entity.Location" id="LocationResultMap">
     <id column="id" property="id"/>
     <result column="class_id" property="classInfo.id"/>
@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result column="latitude" property="latitude"/>
     <result column="status" property="status"/>
 </resultMap>
+-->
 <delete id="deleteClassSelectionByClassId" >
 delete from course_selection where class_id=#{classId};
 </delete>
@@ -59,9 +60,9 @@ insert into course_selection(class_id,student_id) values(classId.longValue(),use
 <delete id="deleteCourseSelectionById">
 delete from course_selection where class_id=#{classId.longValue()} and student_Id=#{userId.longValue()};
 </delete>
-<!--2有问题不懂，返回值应该是location-->
-<select id="getCallStatusById" resultMap="LocationResultMap">
-    select * from location where seminar_id=#{seminarId};
+
+<select id="getCallStatusById" resultMap="ClassInfoResultMap">
+    select class_info.* from class_info,location where location.seminar_id=#{seminarId} and location.class_id=class_info.id;
 </select>
 
 <insert id="insertClassById">
@@ -72,16 +73,26 @@ insert into class_info(name,course_id) values("周三三四节",#{courseId});
 delete from class_info where course_id=#{courseId};
 </delete>
 
-<!--ScoreRule表已经删除,以下的表可以做空方法来实现-->
+<!--ScoreRule表已经删除,删除当作设置空值-->
 <update id="deleteScoreRuleById">
+	update class_info set report_percentage=null,presentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage where id=#{classId};
 </update>
 
 <select id="getScoreRule" resultMap="ClassInfoResultMap">
+	select * from class_info where id=#{classId};
 </select>
-
-<insert id="insertScoreRule">
-</insert>
+<!--ScoreRule表已经删除,插入当作设置-->
+<update id="insertScoreRule">
+	update class_info set  report_percentage=#{proportions.reportPercentage},
+	presentation_percentage=#{proportions.presentationPercentage},five_point_percentage=#{proportions.fivePointPercentage},
+	four_point_percentage=#{proportions.fourPointPercentage},three_point_percentage=#{proportions.threePointPercentage},
+	where id=#{classId};
+</update>
 
 <update id="updateScoreRule">
+	update class_info set report_percentage=#{proportions.reportPercentage},
+	presentation_percentage=#{proportions.presentationPercentage},five_point_percentage=#{proportions.fivePointPercentage},
+	four_point_percentage=#{proportions.fourPointPercentage},three_point_percentage=#{proportions.threePointPercentage},
+	where id=#{classId};
 </update>
 </mapper>
