@@ -19,7 +19,7 @@ public interface TopicMapper {
 	 * ServiceFun:updateTopicByTopicId
 	 * 根据topicId更新topic表
 	 */
-	public Boolean updateTopicByTopicId(@Param("topicId")BigInteger topicId,@Param("topic")Topic topic);
+	public int updateTopicByTopicId(@Param("topicId")BigInteger topicId,@Param("topic")Topic topic);
 	
 	/**
 	 * ServiceFun:deleteTopicByTopicId
