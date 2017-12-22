@@ -1,6 +1,7 @@
 package xmu.crms.service.impl;
 
 import java.math.BigInteger;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,12 @@ public class TopicServiceImpl implements TopicService{
 		return update;
 	}
 
-	public Boolean deleteTopicByTopicId(BigInteger topicId, BigInteger seminarId) throws InfoIllegalException {
+	public Boolean deleteTopicByTopicId(BigInteger topicId) throws InfoIllegalException {
 		// TODO Auto-generated method stub
-		Boolean delete=topicMapper.deleteTopicByTopicId(topicId, seminarId);
+		List<BigInteger> SeminarGroupTopicIds = topicMapper.getSeminarGroupTopicIdByTopicId(topicId);
+		topicMapper.deleteStudentScoreGroupById(SeminarGroupTopicIds);
+		topicMapper.deleteSeminarGroupTopicByTopicId(topicId);
+		Boolean delete=topicMapper.deleteTopicByTopicId(topicId);
 		return delete;
 	}
 
@@ -59,7 +63,14 @@ public class TopicServiceImpl implements TopicService{
 
 	public Boolean deleteTopicBySeminarId(BigInteger seminarId) throws InfoIllegalException {
 		// TODO Auto-generated method stub
-		Boolean delete=topicMapper.deleteTopicBySeminarId(seminarId);
+		List<Topic> topics=topicMapper.listTopicBySeminarId(seminarId);
+		Iterator<Topic> it = topics.iterator();
+		Boolean delete = true;
+		while(it.hasNext()) {
+			if(this.deleteTopicByTopicId(it.next().getId())==false) {
+				delete=false;
+			}
+		}
 		return delete;
 	}
 	
