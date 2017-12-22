@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.crms.mapper.SeminarMapper">
+    <select id="listSeminarByCourseId" resultType="Seminar">
+        select * from seminar WHERE course_id = #{courseId}
+    </select>
+    
+    <delete id="deleteSeminarByCourseId">
+    	
+    </delete>
+    
+    <select id="getMySeminarBySeminarId" resultType="String" >
+    	
+    </select>
+    
+    <select id="getSeminarDetailBySeminarId" resultType="String">
+    	
+    </select>
+    
+    <select id="getSeminarBySeminarId" resultType="School">
+        select * from seminar WHERE id = #{seminarId}
+    </select>
+    
+    <update id="updateSeminarBySeminarId">
+    
+    </update>
+    
+    <delete id="deleteSeminarBySeminarId">
+    
+    </delete>
+    
+    <insert id="insertSeminarByCourseId">
+    
+    </insert>
+    
+</mapper>
