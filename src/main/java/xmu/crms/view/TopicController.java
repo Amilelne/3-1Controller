@@ -58,7 +58,7 @@ public class TopicController {
 	public ResponseEntity deleteTopic(@PathVariable BigInteger topicId, @PathVariable BigInteger seminarId)
 	{
 		try {
-			topicService.deleteTopicByTopicId(topicId, seminarId);
+			topicService.deleteTopicByTopicId(topicId);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (InfoIllegalException e) {
 			// TODO Auto-generated catch block
