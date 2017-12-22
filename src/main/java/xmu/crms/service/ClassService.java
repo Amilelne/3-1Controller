@@ -65,7 +65,7 @@ public interface ClassService {
 	 * @return boolean 班级修改是否成功情况
 	 */
 	 Boolean updateClassByClassId(BigInteger classId,ClassInfo newClass)
-	         throws ClassNotFoundException;
+	         throws ClassesNotFoundException;
 
 	/**
 	 * 按班级id删除班级.
