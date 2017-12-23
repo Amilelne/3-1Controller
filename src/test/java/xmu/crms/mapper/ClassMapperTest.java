@@ -23,12 +23,87 @@ public class ClassMapperTest {
 	private ClassMapper classMapper;
 	
 	@Test
+	public void testDeleteClassSelectionByClassId() {
+		//
+	}
+	
+	@Test
+	public void testListClassByName() {
+		
+	}
+	
+	@Test
+	public void testListClassByCourseId() {
+		
+	}
+	
+	@Test
+	public void testGetClassByClassId() {
+		
+	}
+	
+	@Test
+	public void testUpdateClassByClassId() {
+		//
+	}
+	
+	@Test
+	public void testDeleteClassByClassId() {
+		//
+	}
+	
+	@Test
 	public void testInsertCourseSelectionById() {
 		BigInteger userId=new BigInteger("200");
 		BigInteger classId=new BigInteger("200");
 		int insert=0;
 		insert=classMapper.insertCourseSelectionById(userId, classId);
 		Assert.assertNotEquals(0, insert);
+	}
+	
+	@Test
+	public void testDeleteCourseSelectionById() {
+		//
+	}
+	
+	@Test
+	public void testGetCallStatusById() {
+		
+	}
+	
+	@Test
+	public void testInsertClassById() {
+		//
+	}
+	
+	@Test
+	public void testInsertClassByIdWithTeacher() {
+		//
+	}
+	
+	@Test
+	public void testDeleteClassByCourseId() {
+		//
+	}
+	
+	@Test
+	public void testDeleteScoreRuleById() {
+		//
+	}
+	
+	@Test
+	public void testGetScoreRule() {
+		
+	}
+	
+	@Test
+	public void testInsertScoreRule() {
+		//
+	}
+	
+	@Test
+	public void testUpdateScoreRule() {
+		//
 	}
 }
 
