@@ -99,6 +99,15 @@ public class ClassMapperTest {
 	@Test
 	public void testInsertScoreRule() {
 		//
+		BigInteger classId=new BigInteger("3");
+		ClassInfo proportions=new ClassInfo();
+		proportions.setName("cccc");
+		proportions.setReportPercentage(5);
+		proportions.setFivePointPercentage(3);
+		proportions.setFourPointPercentage(4);
+		proportions.setThreePointPercentage(4);
+		proportions.setReportPercentage(4);
+		classMapper.insertScoreRule(classId, proportions);
 	}
 	
 	@Test

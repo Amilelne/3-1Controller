@@ -49,10 +49,11 @@ public class ClassServiceTest {
 	}
 */
 /////////////////////////************************下面一个存在测试问题的函数
-/*
-	@Test void testInsertScoreRule()
+
+	@Test
+	public void testInsertScoreRule()
 	{
-		BigInteger classId=new BigInteger("5");
+		BigInteger classId=new BigInteger("3");
 		ClassInfo proportions=new ClassInfo();
 		proportions.setName("cccc");
 		proportions.setReportPercentage(4);
@@ -62,7 +63,7 @@ public class ClassServiceTest {
 		proportions.setReportPercentage(4);
 		classService.insertScoreRule(classId, proportions);
 	}
-*/
+
 	//update
 /*
 	@Test
