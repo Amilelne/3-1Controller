@@ -27,9 +27,6 @@ public class TopicController {
 	@Autowired
 	private TopicService topicService;
 	
-	@Autowired
-	private SeminarGroupService seminarGroupService;
-	
 	@GetMapping("/topic/{topicId}")
 	public ResponseEntity<Topic> getTopic(@PathVariable BigInteger topicId)
 	{
@@ -79,22 +76,22 @@ public class TopicController {
 	}
 	
 	//未实现，需集成
-	@GetMapping("/topic/{topicId}/group")
-	public ResponseEntity<List<SeminarGroup>> getTopicGroupList(@PathVariable BigInteger topicId)
-	{
-		List<SeminarGroup> seminarGroup=new ArrayList<SeminarGroup>();
-		try {
-			seminarGroup = seminarGroupService.listGroupByTopicId(topicId);
-			return new ResponseEntity(seminarGroup,HttpStatus.OK);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity(seminarGroup,HttpStatus.BAD_REQUEST);
-		} catch (GroupNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity(seminarGroup,HttpStatus.NOT_FOUND);
-		}
-	}
+//	@GetMapping("/topic/{topicId}/group")
+//	public ResponseEntity<List<SeminarGroup>> getTopicGroupList(@PathVariable BigInteger topicId)
+//	{
+//		List<SeminarGroup> seminarGroup=new ArrayList<SeminarGroup>();
+//		try {
+//			seminarGroup = seminarGroupService.listGroupByTopicId(topicId);
+//			return new ResponseEntity(seminarGroup,HttpStatus.OK);
+//		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return new ResponseEntity(seminarGroup,HttpStatus.BAD_REQUEST);
+//		} catch (GroupNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return new ResponseEntity(seminarGroup,HttpStatus.NOT_FOUND);
+//		}
+//	}
 	
 }

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import xmu.crms.dao.TopicDao;
 import xmu.crms.entity.SeminarGroupTopic;
@@ -16,6 +17,7 @@ import xmu.crms.mapper.TopicMapper;
 /**
  * @author HuXingBo
  */
+@Repository("TopicDao")
 public class TopicDaoImpl implements TopicDao{
 
 	@Autowired
@@ -23,7 +25,7 @@ public class TopicDaoImpl implements TopicDao{
 
 	public Topic getTopicByTopicId(BigInteger topicId) throws TopicNotFoundException, IllegalArgumentException {
 		Topic topic=new Topic();
-		if(topicId instanceof BigInteger) {
+		if(!(topicId instanceof BigInteger)) {
 			throw new IllegalArgumentException("topicId格式错误");
 		}else {
 			topic=topicMapper.getTopicByTopicId(topicId);
@@ -37,7 +39,7 @@ public class TopicDaoImpl implements TopicDao{
 	public void updateTopicByTopicId(BigInteger topicId, Topic topic)
 			throws TopicNotFoundException, IllegalArgumentException {
 		// TODO about exception to fail to update
-		if(topicId instanceof BigInteger) {
+		if(!(topicId instanceof BigInteger)) {
 			throw new IllegalArgumentException("topicId格式错误");
 		}else if(topicMapper.getTopicByTopicId(topicId)==null) {
 			throw new TopicNotFoundException("找不到topic或topicId错误");
@@ -51,7 +53,7 @@ public class TopicDaoImpl implements TopicDao{
 
 	public void deleteTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
 		// TODO about not found topic to be deleted
-		if(topicId instanceof BigInteger) {
+		if(!(topicId instanceof BigInteger)) {
 			throw new IllegalArgumentException("topicId格式错误");
 		}else if(topicMapper.getTopicByTopicId(topicId)!=null){
 			List<BigInteger> seminarGroupTopicIds = topicMapper.getSeminarGroupTopicIdByTopicId(topicId);
@@ -65,7 +67,7 @@ public class TopicDaoImpl implements TopicDao{
 
 	public List<Topic> listTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException {
 		List<Topic> topics=new ArrayList<Topic>();
-		if(seminarId instanceof BigInteger) {
+		if(!(seminarId instanceof BigInteger)) {
 			throw new IllegalArgumentException("seminarId格式错误");
 		}else {
 			topics=topicMapper.listTopicBySeminarId(seminarId);
@@ -75,7 +77,7 @@ public class TopicDaoImpl implements TopicDao{
 
 	public BigInteger insertTopicBySeminarId(BigInteger seminarId, Topic topic) throws IllegalArgumentException {
 		BigInteger insertId=new BigInteger("0");
-		if(seminarId instanceof BigInteger) {
+		if(!(seminarId instanceof BigInteger)) {
 			throw new IllegalArgumentException("seminarId格式错误");
 		}else {
 			topicMapper.insertTopicBySeminarId(seminarId, topic);
@@ -85,9 +87,9 @@ public class TopicDaoImpl implements TopicDao{
 	}
 
 	public void deleteTopicById(BigInteger groupId, BigInteger topicId) throws IllegalArgumentException {
-		if(groupId instanceof BigInteger) {
+		if(!(groupId instanceof BigInteger)) {
 			throw new IllegalArgumentException("groupId格式错误");
-		}else if(topicId instanceof BigInteger) {
+		}else if(!(topicId instanceof BigInteger)) {
 			throw new IllegalArgumentException("topicId格式错误");
 		}else {
 			topicMapper.deleteTopicById(groupId, topicId);
@@ -95,7 +97,7 @@ public class TopicDaoImpl implements TopicDao{
 	}
 
 	public void deleteSeminarGroupTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
-		if(topicId instanceof BigInteger) {
+		if(!(topicId instanceof BigInteger)) {
 			throw new IllegalArgumentException("topicId格式错误");
 		}else {
 			topicMapper.deleteSeminarGroupTopicByTopicId(topicId);
@@ -105,9 +107,9 @@ public class TopicDaoImpl implements TopicDao{
 	public SeminarGroupTopic getSeminarGroupTopicById(BigInteger topicId, BigInteger groupId)
 			throws IllegalArgumentException {
 		SeminarGroupTopic seminarGroupTopic=new SeminarGroupTopic();
-		if(topicId instanceof BigInteger) {
+		if(!(topicId instanceof BigInteger)) {
 			throw new IllegalArgumentException("topicId格式错误");
-		}else if(groupId instanceof BigInteger) {
+		}else if(!(groupId instanceof BigInteger)) {
 			throw new IllegalArgumentException("groupId格式错误");
 		}else {
 			seminarGroupTopic=topicMapper.getSeminarGroupTopicById(topicId, groupId);
@@ -116,7 +118,7 @@ public class TopicDaoImpl implements TopicDao{
 	}
 
 	public void deleteTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException {
-		if(seminarId instanceof BigInteger) {
+		if(!(seminarId instanceof BigInteger)) {
 			throw new IllegalArgumentException("seminarId格式错误");
 		}else {
 			List<Topic> topics=topicMapper.listTopicBySeminarId(seminarId);
