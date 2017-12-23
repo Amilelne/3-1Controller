@@ -106,10 +106,14 @@ select class_info.* from class_info  where  class_info.course_id=#{courseId.long
 	select * from class_info where id=#{classId};
 </select>
 <update id="updateClassByClassId">
-	update class_info set name=#{newClass.name},site=#{newClass.site},
-	course_id=#{newClass.course.id},class_time=#{newClass.classTime},
-	report_persentage=#{newClass.reportPercentage},five_point_persentage=#{newClass.fivePointPercentage},
-	four_point_persentage=#{newClass.fourPointPercentage},three_point_persentage=#{newClass.threePointPercentage},
+	update class_info set name=#{newClass.name},
+	site=#{newClass.site},
+	course_id=#{newClass.course.id},
+	class_time=#{newClass.classTime},
+	report_percentage=#{newClass.reportPercentage},
+	five_point_percentage=#{newClass.fivePointPercentage},
+	four_point_percentage=#{newClass.fourPointPercentage},
+	three_point_percentage=#{newClass.threePointPercentage}
 	where id=#{classId};
 </update>
 
@@ -130,14 +134,24 @@ delete from course_selection where class_id=#{classId} and student_id=#{userId};
 </select>
 
 <insert id="insertClassById">
-    	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
-               SELECT LAST_INSERT_ID() as id
-        </selectKey>
-insert into class_info(name,course_id,description,site,class_time,report_percentage,resentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage) 
-values(#{classInfo.name},#{courseId},#{classInfo.site},#{classInfo.description},#{classInfo.classTime},#{classInfo.reportPercentage},#{classInfo.presentationPercentage},#{classInfo.fivePointPercentage},#{classInfo.fourPointPercentage},#{classInfo.threePointPercentage});
-</insert>
-<insert id="insertClassByIdWithTeacher">
-	
+insert into class_info(name,
+course_id,
+site,
+class_time,
+report_percentage,
+presentation_percentage,
+five_point_percentage,
+four_point_percentage,
+three_point_percentage)
+values(#{classInfo.name},
+#{courseId},
+#{classInfo.site},
+#{classInfo.classTime},
+#{classInfo.reportPercentage},
+#{classInfo.presentationPercentage},
+#{classInfo.fivePointPercentage},
+#{classInfo.fourPointPercentage},
+#{classInfo.threePointPercentage});
 </insert>
 
 <delete id="deleteClassByCourseId">
@@ -146,7 +160,12 @@ delete from class_info where course_id=#{courseId};
 
 <!--ScoreRule表已经删除,删除当作设置空值-->
 <update id="deleteScoreRuleById">
-	update class_info set report_percentage=null,presentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage where id=#{classId};
+	update class_info set report_percentage=null,
+	presentation_percentage=null,
+	five_point_percentage=null,
+	four_point_percentage=null,
+	three_point_percentage=null 
+	where id=#{classId};
 </update>
 
 <select id="getScoreRule" resultMap="ClassInfoResultMap">
@@ -154,19 +173,20 @@ delete from class_info where course_id=#{courseId};
 </select>
 <!--ScoreRule表已经删除,插入当作设置-->
 <update id="insertScoreRule">
-    	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
-               SELECT LAST_INSERT_ID() as id
-     </selectKey>
-	update class_info set  report_percentage=#{proportions.reportPercentage},
-	presentation_percentage=#{proportions.presentationPercentage},five_point_percentage=#{proportions.fivePointPercentage},
-	four_point_percentage=#{proportions.fourPointPercentage},three_point_percentage=#{proportions.threePointPercentage},
+	update class_info set report_percentage=#{proportions.reportPercentage},
+	presentation_percentage=#{proportions.presentationPercentage},
+	five_point_percentage=#{proportions.fivePointPercentage},
+	four_point_percentage=#{proportions.fourPointPercentage},
+	three_point_percentage=#{proportions.threePointPercentage}
 	where id=#{classId};
 </update>
 
 <update id="updateScoreRule">
 	update class_info set report_percentage=#{proportions.reportPercentage},
-	presentation_percentage=#{proportions.presentationPercentage},five_point_percentage=#{proportions.fivePointPercentage},
-	four_point_percentage=#{proportions.fourPointPercentage},three_point_percentage=#{proportions.threePointPercentage},
+	presentation_percentage=#{proportions.presentationPercentage},
+	five_point_percentage=#{proportions.fivePointPercentage},
+	four_point_percentage=#{proportions.fourPointPercentage},
+	three_point_percentage=#{proportions.threePointPercentage}
 	where id=#{classId};
 </update>
 </mapper>

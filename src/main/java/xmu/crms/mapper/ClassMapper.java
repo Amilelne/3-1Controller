@@ -18,7 +18,7 @@ public interface ClassMapper {
     
     public ClassInfo getClassByClassId(@Param("classId")BigInteger classId);
     
-    public Boolean updateClassByClassId(@Param("classId")BigInteger classId);
+    public Boolean updateClassByClassId(@Param("classId")BigInteger classId, @Param("newClass")ClassInfo newClass);
     
     public Boolean deleteClassByClassId(@Param("classId")BigInteger classId);
     
@@ -28,9 +28,7 @@ public interface ClassMapper {
     
     public Location getCallStatusById(@Param("seminarId")BigInteger seminarId);
     
-    public BigInteger insertClassById(@Param("userId")BigInteger userId, @Param("courseId")BigInteger courseId,@Param("classInfo")ClassInfo classInfo);
-    
-    public void insertClassByIdWithTeacher(@Param("userId")BigInteger userId, @Param("courseId")BigInteger courseId,@Param("classInfo")ClassInfo classInfo);
+    public int insertClassById(@Param("userId")BigInteger userId, @Param("courseId")BigInteger courseId,@Param("classInfo")ClassInfo classInfo);
     
     public Boolean deleteClassByCourseId(@Param("courseId")BigInteger courseId);
     
@@ -38,7 +36,7 @@ public interface ClassMapper {
     
     public ClassInfo getScoreRule(@Param("classId")BigInteger classId);
     
-    public BigInteger insertScoreRule(@Param("classId")BigInteger classId, @Param("proportions")ClassInfo proportions);
+    public int insertScoreRule(@Param("classId")BigInteger classId, @Param("proportions")ClassInfo proportions);
     
     public Boolean updateScoreRule(@Param("classId")BigInteger classId, @Param("proportions")ClassInfo proportions);
 }

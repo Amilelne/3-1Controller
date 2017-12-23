@@ -22,7 +22,7 @@ public class ClassServiceTest {
 	@Autowired
 	private ClassService classService;
 	//insert 
-
+/*
 	@Test
 	public void testInsertCourseSelectionById() {
 		BigInteger userId=new BigInteger("100");
@@ -30,37 +30,56 @@ public class ClassServiceTest {
 		String insert=classService.insertCourseSelectionById(userId, classId);
 		Assert.assertNotNull(insert);
 	}
-
-
+*/
+/*
 	@Test
 	public void testInsertClassById()
 	{
 		BigInteger userId=new BigInteger("200");
 		BigInteger courseId=new BigInteger("200");
-		ClassInfo classInfo=null;
-		BigInteger insert=classService.insertClassById(userId, courseId,classInfo);
+		ClassInfo classInfo=new ClassInfo();
+		classInfo.setName("222");
+		classInfo.setReportPercentage(5);
+		classInfo.setFivePointPercentage(5);
+		classInfo.setFourPointPercentage(5);
+		classInfo.setThreePointPercentage(5);
+		classInfo.setPresentationPercentage(5);
+		int insert=classService.insertClassById(userId, courseId,classInfo);
 		Assert.assertNotNull(insert);
 	}
-
-	/*其实本质是修改-不能直接测试
+*/
+/////////////////////////************************下面一个存在测试问题的函数
+/*
 	@Test void testInsertScoreRule()
 	{
-		BigInteger classId=new BigInteger("300");
-		ClassInfo proportions=classService.getClassByClassId(new BigInteger("1"));
-		BigInteger insert=classService.insertScoreRule(classId, proportions);
-		Assert.assertNotNull(insert);
-	}*/
-	
+		BigInteger classId=new BigInteger("5");
+		ClassInfo proportions=new ClassInfo();
+		proportions.setName("cccc");
+		proportions.setReportPercentage(4);
+		proportions.setFivePointPercentage(4);
+		proportions.setFourPointPercentage(4);
+		proportions.setThreePointPercentage(4);
+		proportions.setReportPercentage(4);
+		classService.insertScoreRule(classId, proportions);
+	}
+*/
 	//update
 /*
 	@Test
 	public void testUpdateClassByClassId() throws ClassesNotFoundException
 	{
-		BigInteger classId=new BigInteger("400");
-		ClassInfo newClass=new ClassInfo();
-		classService.updateClassByClassId(classId, newClass);
+		BigInteger classId=new BigInteger("6");
+		ClassInfo proportions=new ClassInfo();
+		proportions.setName("111");
+		proportions.setReportPercentage(4);
+		proportions.setFivePointPercentage(4);
+		proportions.setFourPointPercentage(4);
+		proportions.setThreePointPercentage(4);
+		proportions.setReportPercentage(4);
+		classService.updateClassByClassId(classId, proportions);
 	}
-*/
+	*/
+
 /*
 	@Test
 	public void testupdateScoreRule()
@@ -75,26 +94,30 @@ public class ClassServiceTest {
 	@Test
 	public void testDeleteClassSelectionByClassId()
 	{
-		classService.deleteClassSelectionByClassId(new BigInteger("100"));
+		classService.deleteClassSelectionByClassId(new BigInteger("200"));
 	}
 */
 /*
 	@Test
 	public void testDeleteClassByClassId()
 	{
-		classService.deleteClassByClassId(new BigInteger("200"));
+		classService.deleteClassByClassId(new BigInteger("6"));
 	}
+*/
+/*
 	@Test
 	public void testDeleteCourseSelectionById()
 	{
-		BigInteger userId=new BigInteger("600");
-		BigInteger classId=new BigInteger("600");
+		BigInteger userId=new BigInteger("100");
+		BigInteger classId=new BigInteger("100");
 		classService.deleteCourseSelectionById(userId, classId);
 	}
+*/
+/*
 	@Test
 	public void testDeleteClassByCourseId()
 	{
-		BigInteger courseId=new BigInteger("700");
+		BigInteger courseId=new BigInteger("200");
 		classService.deleteClassByCourseId(courseId);
 	}
 */
@@ -103,7 +126,7 @@ public class ClassServiceTest {
 	@Test
 	public void testDeleteScoreRuleById()
 	{
-		BigInteger classId=new BigInteger("800");
+		BigInteger classId=new BigInteger("2");
 		classService.deleteScoreRuleById(classId);
 	}
 */

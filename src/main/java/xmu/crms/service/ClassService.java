@@ -128,7 +128,7 @@ public interface ClassService {
 	 * @param courseId 课程id
 	 * @return classId 班级Id
 	 */
-	 BigInteger insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo);
+	 int insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo);
 
 	/**
 	 * 按courseId删除Class.
@@ -174,7 +174,7 @@ public interface ClassService {
 	 * @param proportions  评分规则
 	 * @return scoreRuleId 若创建成功则返回该评分规则的id，失败则返回-1
 	 */
-	 BigInteger insertScoreRule(BigInteger classId, ClassInfo proportions);
+	 int insertScoreRule(BigInteger classId, ClassInfo proportions);
 
 	/**
 	 * 修改评分规则.

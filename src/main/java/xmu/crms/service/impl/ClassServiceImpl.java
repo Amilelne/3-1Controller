@@ -27,7 +27,7 @@ import java.math.BigInteger;
 public class ClassServiceImpl implements ClassService{
 	@Autowired
 	private ClassMapper classMapper;
-/*delete-未测试-已经实现*/
+/*已经测试-已经实现*/
 	 public Boolean deleteClassSelectionByClassId(BigInteger classId)
 	 {
 		 classMapper.deleteClassSelectionByClassId(classId);
@@ -55,28 +55,28 @@ public class ClassServiceImpl implements ClassService{
 		fclass = classMapper.getClassByClassId(classId);
 		return fclass;
 	}
-/*update-未测试-已经实现-module模块组有错误*/
+/*已经测试-已经实现*/
 	 public Boolean updateClassByClassId(BigInteger classId,ClassInfo newClass)
 	         throws ClassesNotFoundException
 	 {
-		 classMapper.updateClassByClassId(classId);
+		 classMapper.updateClassByClassId(classId,newClass);
 		 return true;
 		 
 	 }
-/*delete-未测试-已经实现*/
+/*已经测试-已经实现*/
 	 public Boolean deleteClassByClassId(BigInteger classId)
 	 {
 		 classMapper.deleteClassByClassId(classId);
 		 return true;
 	 }
-/*insert-未测试，已经实现,不知道选课url是什么*/
+/*已经测试*/
 	 public String insertCourseSelectionById(BigInteger userId, BigInteger classId)
 	 {
 		 String url="//course";
 		 classMapper.insertCourseSelectionById(userId, classId);
 		 return url;
 	 }
-/*delete-未测试-已经实现*/
+/*已经测试-已经实现*/
 	 public Boolean deleteCourseSelectionById(BigInteger userId, BigInteger classId)
 	 {
 		 classMapper.deleteCourseSelectionById(userId, classId);
@@ -91,14 +91,14 @@ public class ClassServiceImpl implements ClassService{
 		 return tstatus;
 		 
 	 }
-/*insert-未测试-已经实现*/
-	 public BigInteger insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo)
+/*已经测试-已经实现*/
+	 public int insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo)
 	 {
-		 classMapper.insertClassByIdWithTeacher(userId, courseId, classInfo);
-		 return classMapper.insertClassById(userId, courseId,classInfo);
+		 classMapper.insertClassById(userId, courseId,classInfo);
+		 return 1;
 	 }
 
-/*delete-未测试-已经实现*/
+/*已经测试-已经实现*/
 	 public Boolean deleteClassByCourseId(BigInteger courseId)
 	 {
 		 classMapper.deleteClassByCourseId(courseId);
@@ -115,12 +115,12 @@ public class ClassServiceImpl implements ClassService{
 	 {
 		 return classMapper.getScoreRule(classId);
 	 }
-/*insert-未测试-已经实现*/
-	 public BigInteger insertScoreRule(BigInteger classId, ClassInfo proportions)
+/*未测试-已经实现-测试存在问题/应该是版本问题*/
+	 public int insertScoreRule(BigInteger classId, ClassInfo proportions)
 	 {
 		 return classMapper.insertScoreRule(classId, proportions);
 	 }
-/*update-未测试-已经实现*/
+/*已经测试-已经实现*/
 	 public Boolean updateScoreRule(BigInteger classId, ClassInfo proportions)
 	 {
 		 classMapper.updateScoreRule(classId, proportions);
