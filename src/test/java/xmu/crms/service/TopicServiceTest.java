@@ -82,6 +82,12 @@ public class TopicServiceTest {
 	}
 	
 	@Test
+	public void testListSeminarGroupTopicByGroupId() {
+		List<SeminarGroupTopic> seminarGroupTopics=topicService.listSeminarGroupTopicByGroupId(new BigInteger("1"));
+		Assert.assertNotNull(seminarGroupTopics);
+	}
+	
+	@Test
 	@Rollback(true)
 	public void testDeleteTopicBySeminarId() {
 		//Assert.assertEquals(true,topicService.deleteTopicBySeminarId(new BigInteger("2")));

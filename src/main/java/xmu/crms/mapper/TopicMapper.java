@@ -65,16 +65,22 @@ public interface TopicMapper {
 	public int insertTopicBySeminarId(@Param("seminarId")BigInteger seminarId,@Param("topic")Topic topic);
 	
 	/**
-	 * ServiceFun:deleteTopicById
+	 * ServiceFun:deleteSeminarGroupTopicById
 	 * 删除seminar_group_topic表的记录
 	 */
-	public Boolean deleteTopicById(@Param("groupId")BigInteger groupId,@Param("topicId")BigInteger topicId);
+	public Boolean deleteSeminarGroupTopicById(@Param("groupId")BigInteger groupId,@Param("topicId")BigInteger topicId);
 	
 	/**
 	 * ServiceFun:deleteTopicById
 	 * 按topicId删除SeminarGroupTopic表信息
 	 */
 	public Boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId);
+	
+	/**
+	 * ServiceFun:listSeminarGroupTopicByGroupId
+	 * 根据小组id获取该小组该堂讨论课所有选题信息
+	 */
+	public List<SeminarGroupTopic> listSeminarGroupTopicByGroupId(BigInteger groupId);
 	
 	/**
 	 * ServiceFun:getSeminarGroupTopicById

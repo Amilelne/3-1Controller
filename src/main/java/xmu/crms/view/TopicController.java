@@ -72,6 +72,10 @@ public class TopicController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		} catch (TopicNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
 	}
 	

@@ -124,8 +124,8 @@
     	)
     </insert>
     
-    <!-- ServiceFun:deleteTopicById -->
-    <delete id="deleteTopicById">
+    <!-- ServiceFun:deleteSeminarGroupTopicById -->
+    <delete id="deleteSeminarGroupTopicById">
     	delete from seminar_group_topic where topic_id=#{topicId} and seminar_group_id=#{groupId}
     </delete>
     
@@ -176,6 +176,11 @@
     
     <select id="getSeminarGroupTopicById" resultMap="SeminarGroupTopicResultMap">
     	select * from seminar_group_topic where topic_id=#{topicId} and seminar_group_id=#{groupId}
+    </select>
+    
+    <!-- ServiceFun:listSeminarGroupTopicByGroupId -->
+    <select id="listSeminarGroupTopicByGroupId" resultMap="SeminarGroupTopicResultMap">
+    	select * from seminar_group_topic where seminar_group_id=#{id}
     </select>
     
     <!-- ServiceFun:deleteTopicBySeminarId -->

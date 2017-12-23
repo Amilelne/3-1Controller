@@ -14,11 +14,12 @@
     <delete id="deleteSeminarGroupBySeminarId">
     	delete from seminar_group where seminar_id = #{seminarId}
     </delete>
-    
+<!--  
     <select id="listTopicBySeminarId" parameterType="java.math.BigInteger" resultMap="TopicResultMap">
 		select * from topic where seminar_id = #{id}
     </select>
-    
+ --> 
+   
     <!-- 返回的是Seminar类，但是并不包含学生是否是队长的信息 ，当前讨论课的签到状态，选题和组队方式-->
     <select id="getMySeminarBySeminarId" resultType="String" >
     	select * from seminar WHERE id = #{seminarId}
