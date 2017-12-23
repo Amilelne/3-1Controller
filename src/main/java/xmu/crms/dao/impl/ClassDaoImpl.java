@@ -113,6 +113,8 @@ public class ClassDaoImpl implements ClassDao{
 	/*已经测试-已经实现*/
 		 public BigInteger insertScoreRule(BigInteger classId, ClassInfo proportions)throws InvalidOperationException,ClassNotFoundException
 		 {
+			 if(!(proportions instanceof ClassInfo))
+				 throw new InvalidOperationException();
 			 classMapper.insertScoreRule(classId, proportions);
 			 return proportions.getId();
 		 }
