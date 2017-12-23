@@ -18,22 +18,24 @@ import xmu.crms.mapper.*;
  */
 @Repository("ClassDao")
 public class ClassDaoImpl implements ClassDao{
-
+	@Autowired
 	private ClassMapper classMapper;
 	/*已经测试-已经实现*/
+	@Override
 		 public void deleteClassSelectionByClassId(BigInteger classId)
 		 {
 			 classMapper.deleteClassSelectionByClassId(classId);
 		 }
 	/*已测试-已经实现*/
-		 public List<ClassInfo> listClassByName(String courseName, String teacherName)
+		 public List<ClassInfo> listClassByName(String courseName, String teacherName)throws
+		 UserNotFoundException,CourseNotFoundException
 		 {
 			 List<ClassInfo> classes=new ArrayList<ClassInfo>();
 			classes=classMapper.listClassByName("课程1", "邱明");
 			return classes;
 		 }
 	/*已测试-已经实现*/
-		 public List<ClassInfo> listClassByCourseId(BigInteger courseId) 
+		 public List<ClassInfo> listClassByCourseId(BigInteger courseId) throws CourseNotFoundException
 		 {
 			 List<ClassInfo> classes=new ArrayList<ClassInfo>();
 			 classes=classMapper.listClassByCourseId(courseId);
@@ -41,7 +43,7 @@ public class ClassDaoImpl implements ClassDao{
 		}
 
 	/*已测试-已经实现*/
-		 public ClassInfo getClassByClassId(BigInteger classId) 
+		 public ClassInfo getClassByClassId(BigInteger classId) throws ClassNotFoundException
 		 {
 			 ClassInfo fclass = new ClassInfo(); 	
 			fclass = classMapper.getClassByClassId(classId);
@@ -49,66 +51,81 @@ public class ClassDaoImpl implements ClassDao{
 		}
 	/*已经测试-已经实现*/
 		 public void updateClassByClassId(BigInteger classId,ClassInfo newClass)
-		         throws ClassesNotFoundException
+		         throws ClassNotFoundException
 		 {
+			 if(classId==null)
+				 throw new ClassNotFoundException("没有找到相应的班级id");
+			 if(newClass==null)
+				 throw new ClassNotFoundException("无法获得班级相应的信息");
 			 classMapper.updateClassByClassId(classId,newClass);
 			 
 		 }
 	/*已经测试-已经实现*/
-		 public void deleteClassByClassId(BigInteger classId)
+		 public void deleteClassByClassId(BigInteger classId)throws ClassNotFoundException
 		 {
 			 classMapper.deleteClassByClassId(classId);
 		 }
 	/*已经测试*/
-		 public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)
+		 public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)throws UserNotFoundException,ClassNotFoundException
 		 {
 			 int integer=classMapper.insertCourseSelectionById(userId, classId);
 			 return BigInteger.valueOf(integer);
 		 }
 	/*已经测试-已经实现*/
-		 public void deleteCourseSelectionById(BigInteger userId, BigInteger classId)
+		 public void deleteCourseSelectionById(BigInteger userId, BigInteger classId)throws UserNotFoundException,ClassNotFoundException
 		 {
 			 classMapper.deleteCourseSelectionById(userId, classId);
 		 }
 	/*已测试-经实现*/
-		 public Location getCallStatusById(BigInteger seminarId)
-		throws SeminarNotFoundException
+		 public Location getCallStatusById(BigInteger classId,BigInteger seminarId)throws SeminarNotFoundException
 		 {
-			 Location tstatus=null;
-			 tstatus=classMapper.getCallStatusById(seminarId);
-			 return tstatus;
-			 
+			 return classMapper.getCallStatusById(classId, seminarId);
 		 }
 	/*已经测试-已经实现*/
-		 public int insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo)
+		 public BigInteger insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo)
+				 throws UserNotFoundException,CourseNotFoundException
 		 {
+			 if(userId==null)
+				 throw new UserNotFoundException();//没有定义string类型
+			 if(courseId==null)
+				 throw new CourseNotFoundException();
+			 
 			 classMapper.insertClassById(userId, courseId,classInfo);
-			 return 1;
+			 return classInfo.getId();
 		 }
 
 	/*已经测试-已经实现*/
-		 public void deleteClassByCourseId(BigInteger courseId)
+		 public void deleteClassByCourseId(BigInteger courseId)throws 
+         CourseNotFoundException
 		 {
 			 classMapper.deleteClassByCourseId(courseId);
 		 }
 	/*已经测试-已经实现*/
-		 public void deleteScoreRuleById(BigInteger classId)
+		 public void deleteScoreRuleById(BigInteger classId)throws ClassNotFoundException
 		 {
 			 classMapper.deleteScoreRuleById(classId);
 		 }
 	/*已测试-已经实现*/
-		 public ClassInfo getScoreRule(BigInteger classId)
+		 public ClassInfo getScoreRule(BigInteger classId)throws ClassNotFoundException
 		 {
 			 return classMapper.getScoreRule(classId);
 		 }
 	/*已经测试-已经实现*/
-		 public int insertScoreRule(BigInteger classId, ClassInfo proportions)
+		 public BigInteger insertScoreRule(BigInteger classId, ClassInfo proportions)throws InvalidOperationException,ClassNotFoundException
 		 {
-			 return classMapper.insertScoreRule(classId, proportions);
+			 classMapper.insertScoreRule(classId, proportions);
+			 return proportions.getId();
 		 }
 	/*已经测试-已经实现*/
-		 public void updateScoreRule(BigInteger classId, ClassInfo proportions)
+		 public void updateScoreRule(BigInteger classId, ClassInfo proportions)throws InvalidOperationException,ClassNotFoundException
 		 {
+			 
 			 classMapper.updateScoreRule(classId, proportions);
 		 }
+		 
+	/*已经测试-已经实现*/
+		public BigInteger CallInRollById(Location location) throws SeminarNotFoundException, ClassNotFoundException {
+			classMapper.CallInRollById(location);
+			return location.getId();		
+		}
 }

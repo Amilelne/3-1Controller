@@ -130,10 +130,10 @@ delete from course_selection where class_id=#{classId} and student_id=#{userId};
 </delete>
 
 <select id="getCallStatusById" resultMap="LocationResultMap">
-   	select * from location where seminar_id=#{seminarId};
+   	select * from location where seminar_id=#{seminarId} and class_id=#{classId};
 </select>
 
-<insert id="insertClassById">
+<insert id="insertClassById" useGeneratedKeys="true" keyProperty="classInfo.id">
 insert into class_info(name,
 course_id,
 site,
@@ -189,4 +189,8 @@ delete from class_info where course_id=#{courseId};
 	three_point_percentage=#{proportions.threePointPercentage}
 	where id=#{classId};
 </update>
+<insert id="CallInRollById" useGeneratedKeys="true" keyProperty="location.id">
+	insert into location(class_id,seminar_id,longitude,latitude,status) 
+	values(null,null,null,null,null);
+</insert>
 </mapper>

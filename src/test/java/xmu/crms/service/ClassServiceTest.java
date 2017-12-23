@@ -51,7 +51,7 @@ public class ClassServiceTest {
 /////////////////////////************************下面一个存在测试问题的函数
 
 	@Test
-	public void testInsertScoreRule()
+	public void testInsertScoreRule() throws ClassNotFoundException, InvalidOperationException
 	{
 		BigInteger classId=new BigInteger("3");
 		ClassInfo proportions=new ClassInfo();

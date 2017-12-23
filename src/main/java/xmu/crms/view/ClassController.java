@@ -39,44 +39,19 @@ public class ClassController {
 	private ClassService classService;
 	 
     @GetMapping("/class")
-    public ResponseEntity<List<ClassInfo>> getClassController() {
+    public ResponseEntity<List<ClassInfo>> getClassController() throws UserNotFoundException, CourseNotFoundException {
     		List<ClassInfo> classes=new ArrayList<ClassInfo>();
     		classes=classService.listClassByName("课程1", "邱明");
         return new ResponseEntity<List<ClassInfo>>(classes, HttpStatus.OK);
     }
     
     @GetMapping("/class/{classId}")
-    public ResponseEntity<ClassInfo> getClassById(@PathVariable BigInteger classId) {
+    public ResponseEntity<ClassInfo> getClassById(@PathVariable BigInteger classId) throws ClassNotFoundException {
     		ClassInfo fclass = new ClassInfo(); 		
 		fclass = classService.getClassByClassId(classId);
 		return new ResponseEntity<ClassInfo>(fclass,HttpStatus.OK);
     }
-    //以下为自定义的测试类
-    @GetMapping("/class/1/{courseId}")
-    public  ResponseEntity<List<ClassInfo>> getClassBycourseId(@PathVariable BigInteger courseId) {
-		List<ClassInfo> classes=new ArrayList<ClassInfo>();
-		classes= classService.listClassByCourseId(courseId);
-	return new ResponseEntity<List<ClassInfo>>(classes,HttpStatus.OK);
-	
-}
-    @GetMapping("/class/2/{seminarId}")
-    public ResponseEntity<Location> getCallStatusById(@PathVariable BigInteger seminarId) {
-    		Location fclass = new Location(); 		
-		try {
-			fclass = classService.getCallStatusById(seminarId);
-		} catch (SeminarNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Location>(fclass,HttpStatus.OK);
-    }
-    @GetMapping("/class/3/{classId}")
-    public ResponseEntity<ClassInfo> getScoreRule(@PathVariable BigInteger classId) {
-    		ClassInfo fclass = new ClassInfo(); 		
-		fclass = classService.getScoreRule(classId);
-		return new ResponseEntity<ClassInfo>(fclass,HttpStatus.OK);
-    }
-    //以上为自定义测试类
+   
     /*没有要修改的实体*/
     @PutMapping("/class/{classId}")
     public ResponseEntity updateClass(@PathVariable("classId") int classId) {
@@ -86,7 +61,7 @@ public class ClassController {
     }
     
     @DeleteMapping("/class/{classId}")
-    public ResponseEntity deleteClass(@PathVariable("classId") int classId) {
+    public ResponseEntity deleteClass(@PathVariable("classId") int classId) throws ClassNotFoundException {
        classService.deleteClassByClassId(BigInteger.valueOf(classId));
     	return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

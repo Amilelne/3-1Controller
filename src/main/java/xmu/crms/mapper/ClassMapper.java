@@ -26,7 +26,7 @@ public interface ClassMapper {
     
     public void deleteCourseSelectionById(@Param("userId")BigInteger userId, @Param("classId")BigInteger classId);
     
-    public Location getCallStatusById(@Param("seminarId")BigInteger seminarId);
+    public Location getCallStatusById(@Param("classId")BigInteger classId, @Param("seminarId")BigInteger seminarId);
     
     public int insertClassById(@Param("userId")BigInteger userId, @Param("courseId")BigInteger courseId,@Param("classInfo")ClassInfo classInfo);
     
@@ -39,4 +39,6 @@ public interface ClassMapper {
     public int insertScoreRule(@Param("classId")BigInteger classId, @Param("proportions")ClassInfo proportions);
     
     public void updateScoreRule(@Param("classId")BigInteger classId, @Param("proportions")ClassInfo proportions);
+    
+    public int CallInRollById(@Param("location")Location location);
 }
