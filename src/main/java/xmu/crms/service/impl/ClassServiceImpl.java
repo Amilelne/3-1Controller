@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,24 +82,26 @@ public class ClassServiceImpl implements ClassService{
 		 classMapper.deleteCourseSelectionById(userId, classId);
 		 return true;
 	 }
-/*已测试-已经实现*/
-	 public ClassInfo getCallStatusById(BigInteger seminarId)
+/*已测试-经实现*/
+	 public Location getCallStatusById(BigInteger seminarId)
 	throws SeminarNotFoundException
 	 {
-		 ClassInfo tclass=null;
-		 tclass=classMapper.getCallGroupStatusById(seminarId);
-		 return tclass;
+		 Location tstatus=null;
+		 tstatus=classMapper.getCallStatusById(seminarId);
+		 return tstatus;
 		 
 	 }
 /*insert-未测试-已经实现*/
-	 public BigInteger insertClassById(BigInteger userId, BigInteger courseId)
+	 public BigInteger insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo)
 	 {
-		 return classMapper.insertClassById(userId, courseId);
+		 classMapper.insertClassByIdWithTeacher(userId, courseId, classInfo);
+		 return classMapper.insertClassById(userId, courseId,classInfo);
 	 }
 
 /*delete-未测试-已经实现*/
 	 public Boolean deleteClassByCourseId(BigInteger courseId)
 	 {
+		 classMapper.deleteClassByCourseId(courseId);
 		 return true;
 	 }
 /*delete-未测试-已经实现*/

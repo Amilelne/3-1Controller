@@ -115,7 +115,7 @@ public interface ClassService {
 	 * @return classBO 班级
 	 * @see SeminarGroupService #listSeminarGroupBySeminarId(BigInteger seminarId)
 	 */
-	 ClassInfo getCallStatusById(BigInteger seminarId)
+	 Location getCallStatusById(BigInteger seminarId)
 	         throws SeminarNotFoundException;
 
 	/**
@@ -128,7 +128,7 @@ public interface ClassService {
 	 * @param courseId 课程id
 	 * @return classId 班级Id
 	 */
-	 BigInteger insertClassById(BigInteger userId, BigInteger courseId);
+	 BigInteger insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo);
 
 	/**
 	 * 按courseId删除Class.

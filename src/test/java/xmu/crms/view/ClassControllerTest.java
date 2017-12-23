@@ -30,6 +30,8 @@ public class ClassControllerTest {
      * httpMethod: GET
      * @throws Exception
      */
+	
+	
     @Test
     public void testGetClassList() throws Exception{
         mvc.perform(get("/class"))

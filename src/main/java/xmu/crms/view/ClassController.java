@@ -3,8 +3,6 @@ package xmu.crms.view;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import xmu.crms.entity.Topic;
-import xmu.crms.exception.InfoIllegalException;
-import xmu.crms.exception.TopicNotFoundException;
 import xmu.crms.view.vo.ClassProportionsVO;
 import xmu.crms.view.vo.ClassVO;
 import xmu.crms.view.vo.GroupVO;
@@ -24,6 +22,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.ClassInfo;
+import xmu.crms.entity.Location;
 import xmu.crms.exception.*;
 import xmu.crms.service.impl.*;
 import xmu.crms.service.*;
@@ -61,10 +60,15 @@ public class ClassController {
 	
 }
     @GetMapping("/class/2/{seminarId}")
-    public ResponseEntity<ClassInfo> getCallStatusById(@PathVariable BigInteger seminarId) {
-    		ClassInfo fclass = new ClassInfo(); 		
-		fclass = classService.getClassByClassId(seminarId);
-		return new ResponseEntity<ClassInfo>(fclass,HttpStatus.OK);
+    public ResponseEntity<Location> getCallStatusById(@PathVariable BigInteger seminarId) {
+    		Location fclass = new Location(); 		
+		try {
+			fclass = classService.getCallStatusById(seminarId);
+		} catch (SeminarNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Location>(fclass,HttpStatus.OK);
     }
     @GetMapping("/class/3/{classId}")
     public ResponseEntity<ClassInfo> getScoreRule(@PathVariable BigInteger classId) {

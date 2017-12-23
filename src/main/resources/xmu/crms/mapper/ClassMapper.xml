@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result column="five_point_percentage" property="fivePointPercentage"/>
     <result column="four_point_percentage" property="fourPointPercentage"/>
     <result column="three_point_percentage" property="threePointPercentage"/>
-    <association column="course_id" property="course" select="selectCourseByClass"/>
+    <association column="course_id" property="course" select="selectCourseByCourseId"/>
 </resultMap>
 
 <resultMap type="xmu.crms.entity.Course" id="CourseResultMap">
@@ -27,9 +27,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	<result column="five_point_percentage" property="fivePointPercentage"/>
     	<result column="four_point_percentage" property="fourPointPercentage"/>
     	<result column="three_point_percentage" property="threePointPercentage"/>
-    	<association column="teacher_id" property="teacher" select="selectTeacherByCourse"></association>
+    	<association column="teacher_id" property="teacher" select="selectTeacherByTeacherId"></association>
     </resultMap>
-     <resultMap type="xmu.crms.entity.User" id="UserResultMap">
+    
+ <resultMap type="xmu.crms.entity.User" id="UserResultMap">
     	<id column="id" property="id"/>
     	<result column="phone" property="phone"/>
     	<result column="wechat_id" property="wechatId"/>
@@ -43,31 +44,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	<result column="education" property="education"/>
     	<result column="title" property="title"/>
     	<result column="email" property="email"/>
-    	<association column="school_id" property="school" select="selectSchoolByTeacher"/>
-    </resultMap>
+    	<association column="school_id" property="school" select="selectSchoolBySchoolId"/>
+</resultMap>
     
-    <select id="selectSchoolByTeacher" resultType="xmu.crms.entity.School">
-    		select * from school where id=#{id}
-    </select>
-    
-    <select id="selectTeacherByCourse" resultMap="UserResultMap">
-    		select * from user_info where id=#{id}
-    </select>
-    
-    <select id="selectCourseByClass" resultMap="CourseResultMap">
-    		select * from course where id=#{id}
-    </select>
-    
-<!--2 location table
 <resultMap type="xmu.crms.entity.Location" id="LocationResultMap">
     <id column="id" property="id"/>
-    <result column="class_id" property="classInfo.id"/>
-    <result column="seminar_id" property="seminar.id"/>
     <result column="longtitude" property="BigIntegeritude"/>
     <result column="latitude" property="latitude"/>
     <result column="status" property="status"/>
+    <association column="class_id" property="class" select="selectClassByClassId"/>
+    <association column="seminar_id" property="seminar" select="selectSeminarBySeminarId"/>
 </resultMap>
--->
+
+ <resultMap type="xmu.crms.entity.Seminar" id="SeminarResultMap">
+    	<id column="id" property="id"/>
+    	<result column="name" property="name"/>
+    	<result column="description" property="description"/>
+    	<result column="is_fixed" property="fixed"/>
+    	<result column="start_time" property="startTime"/>
+    	<result column="end_time" property="endTime"/>
+    	<association column="course_id" property="course" select="selectCourseByCourseId"></association>
+</resultMap>
+
+    
+    <select id="selectSeminarBySeminarId" resultMap="SeminarResultMap">
+    	select * from seminar where id=#{id}
+    </select>
+    
+    <select id="selectClassByClassId" resultMap="ClassInfoResultMap">
+    		select * from class_info where id=#{id}
+    </select>
+    
+
+    <select id="selectSchoolBySchoolId" resultType="xmu.crms.entity.School">
+    		select * from school where id=#{id}
+    </select>
+    
+    <select id="selectTeacherByTeacherId" resultMap="UserResultMap">
+    		select * from user_info where id=#{id}
+    </select>
+    
+    <select id="selectCourseByCourseId" resultMap="CourseResultMap">
+    		select * from course where id=#{id}
+    </select>
+
 <delete id="deleteClassSelectionByClassId" >
 delete from course_selection where class_id=#{classId};
 </delete>
@@ -75,7 +95,7 @@ delete from course_selection where class_id=#{classId};
 <select id="listClassByName" resultMap="ClassInfoResultMap">
  select class_info.* from class_info,user_info,course 
 where course.name=#{courseName}  and course.teacher_id=user_info.id 
-and user_info.name=#{teacherName} and course.id=class_info.course_id
+and user_info.name=#{teacherName} and course.id=class_info.course_id;
 </select>
 
 <select id="listClassByCourseId" resultMap="ClassInfoResultMap">
@@ -83,7 +103,7 @@ select class_info.* from class_info  where  class_info.course_id=#{courseId.long
 </select>
 
 <select id="getClassByClassId" parameterType="java.math.BigInteger" resultMap="ClassInfoResultMap">
-select * from class_info where id=#{classId}
+	select * from class_info where id=#{classId};
 </select>
 <update id="updateClassByClassId">
 	update class_info set name=#{newClass.name},site=#{newClass.site},
@@ -98,9 +118,6 @@ delete from class_info where id=#{classId};
 </delete>
 
 <insert id="insertCourseSelectionById">
-    	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
-               SELECT LAST_INSERT_ID() as id
-        </selectKey>
 insert into course_selection(class_id,student_id) values(#{classId},#{userId});	
 </insert>
 
@@ -108,15 +125,19 @@ insert into course_selection(class_id,student_id) values(#{classId},#{userId});
 delete from course_selection where class_id=#{classId} and student_id=#{userId};
 </delete>
 
-<select id="getCallStatusById" resultMap="ClassInfoResultMap">
-    select class_info.* from class_info,location where location.seminar_id=#{seminarId} and location.class_id=class_info.id;
+<select id="getCallStatusById" resultMap="LocationResultMap">
+   	select * from location where seminar_id=#{seminarId};
 </select>
-<!--班级名字不确定-->
+
 <insert id="insertClassById">
     	<selectKey keyProperty="id" resultType="java.math.BigInteger" order="AFTER" >
                SELECT LAST_INSERT_ID() as id
         </selectKey>
-insert into class_info(name,course_id) values("周三三四节",#{courseId});
+insert into class_info(name,course_id,description,site,class_time,report_percentage,resentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage) 
+values(#{classInfo.name},#{courseId},#{classInfo.site},#{classInfo.description},#{classInfo.classTime},#{classInfo.reportPercentage},#{classInfo.presentationPercentage},#{classInfo.fivePointPercentage},#{classInfo.fourPointPercentage},#{classInfo.threePointPercentage});
+</insert>
+<insert id="insertClassByIdWithTeacher">
+	
 </insert>
 
 <delete id="deleteClassByCourseId">

@@ -12,7 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import xmu.crms.entity.*;
-
+import xmu.crms.exception.*;
+import xmu.crms.mapper.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
@@ -21,31 +22,26 @@ public class ClassServiceTest {
 	@Autowired
 	private ClassService classService;
 	//insert 
+
 	@Test
 	public void testInsertCourseSelectionById() {
-		/*Topic topic=new Topic();
-		topic.setName("话题14");
-		topic.setDescription("话题14描述");
-		topic.setGroupNumberLimit(4);
-		topic.setGroupStudentLimit(5);
-		BigInteger insert=topicService.insertTopicBySeminarId(new BigInteger("1"), topic);
-		System.out.println(topic.getId());
-		System.out.println(insert);
-		Assert.assertNotNull(insert);*/
 		BigInteger userId=new BigInteger("100");
 		BigInteger classId=new BigInteger("100");
 		String insert=classService.insertCourseSelectionById(userId, classId);
 		Assert.assertNotNull(insert);
 	}
-	/*其实本质是修改-不能直接测试
+
+
 	@Test
 	public void testInsertClassById()
 	{
 		BigInteger userId=new BigInteger("200");
 		BigInteger courseId=new BigInteger("200");
-		BigInteger insert=classService.insertClassById(userId, courseId);
+		ClassInfo classInfo=null;
+		BigInteger insert=classService.insertClassById(userId, courseId,classInfo);
 		Assert.assertNotNull(insert);
-	}*/
+	}
+
 	/*其实本质是修改-不能直接测试
 	@Test void testInsertScoreRule()
 	{
@@ -54,4 +50,61 @@ public class ClassServiceTest {
 		BigInteger insert=classService.insertScoreRule(classId, proportions);
 		Assert.assertNotNull(insert);
 	}*/
+	
+	//update
+/*
+	@Test
+	public void testUpdateClassByClassId() throws ClassesNotFoundException
+	{
+		BigInteger classId=new BigInteger("400");
+		ClassInfo newClass=new ClassInfo();
+		classService.updateClassByClassId(classId, newClass);
+	}
+*/
+/*
+	@Test
+	public void testupdateScoreRule()
+	{
+		BigInteger classId=new BigInteger("500");
+		ClassInfo proportions=new ClassInfo();
+		classService.updateScoreRule(classId, proportions);
+	}
+*/
+/*
+	//delete
+	@Test
+	public void testDeleteClassSelectionByClassId()
+	{
+		classService.deleteClassSelectionByClassId(new BigInteger("100"));
+	}
+*/
+/*
+	@Test
+	public void testDeleteClassByClassId()
+	{
+		classService.deleteClassByClassId(new BigInteger("200"));
+	}
+	@Test
+	public void testDeleteCourseSelectionById()
+	{
+		BigInteger userId=new BigInteger("600");
+		BigInteger classId=new BigInteger("600");
+		classService.deleteCourseSelectionById(userId, classId);
+	}
+	@Test
+	public void testDeleteClassByCourseId()
+	{
+		BigInteger courseId=new BigInteger("700");
+		classService.deleteClassByCourseId(courseId);
+	}
+*/
+/*
+	//其实本质是update
+	@Test
+	public void testDeleteScoreRuleById()
+	{
+		BigInteger classId=new BigInteger("800");
+		classService.deleteScoreRuleById(classId);
+	}
+*/
 }
