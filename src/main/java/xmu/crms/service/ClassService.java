@@ -19,7 +19,7 @@ public interface ClassService {
 	 * @param classId 班级Id
 	 * @return true/false 是否成功删除
 	 */
-	 Boolean deleteClassSelectionByClassId(BigInteger classId);
+	 void deleteClassSelectionByClassId(BigInteger classId);
 
 	/**
 	 * 按课程名称和教师名称获取班级列表.
@@ -62,9 +62,9 @@ public interface ClassService {
 	 * 
 	 * @author yexiaona
 	 * @param classId 班级ID
-	 * @return boolean 班级修改是否成功情况
+	 * @return void 班级修改是否成功情况
 	 */
-	 Boolean updateClassByClassId(BigInteger classId,ClassInfo newClass)
+	 void updateClassByClassId(BigInteger classId,ClassInfo newClass)
 	         throws ClassesNotFoundException;
 
 	/**
@@ -74,12 +74,12 @@ public interface ClassService {
 	 * 
 	 * @author yexiaona
 	 * @param classId 班级ID
-	 * @return boolean 班级删除是否成功情况
+	 * @return void 班级删除是否成功情况
 	 * @see ClassService #deleteCourseSelectionById(BigInteger classId,User user)
 	 * @see FixGroupService #deleteFixGroupByClassId(BigInteger classId)
 	 * @see SeminarGroupService #deleteSeminarGroupByClaaId(BigInteger classId)
 	 */
-	 Boolean deleteClassByClassId(BigInteger classId);
+	 void deleteClassByClassId(BigInteger classId);
 
 	/**
 	 * 学生按班级id选择班级.
@@ -91,7 +91,7 @@ public interface ClassService {
 	 * @param classId 班级id
 	 * @return url 选课url
 	 */
-	 String insertCourseSelectionById(BigInteger userId, BigInteger classId);
+	 BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId);
 
 	/**
 	 * 学生按班级id取消选择班级.
@@ -101,9 +101,9 @@ public interface ClassService {
 	 * @author yexiaona
 	 * @param userId 用户id
 	 * @param classId  班级id
-	 * @return boolean 取消班级是否成功
+	 * @return void 取消班级是否成功
 	 */
-	 Boolean deleteCourseSelectionById(BigInteger userId, BigInteger classId);
+	 void deleteCourseSelectionById(BigInteger userId, BigInteger classId);
 
 	/**
 	 * 老师获取该班级签到、分组状态.
@@ -142,7 +142,7 @@ public interface ClassService {
 	 * @see FixGroupService #deleteFixGroupByClassId(BigInteger ClassId)
 	 * @return true删除成功 false删除失败
 	 */
-	 Boolean deleteClassByCourseId(BigInteger courseId);
+	 void deleteClassByCourseId(BigInteger courseId);
 
 	/**
 	 * 按classId删除ScoreRule.
@@ -151,7 +151,7 @@ public interface ClassService {
 	 * @param classId 班级Id
 	 * @return true删除成功 false删除失败
 	 */
-	 Boolean deleteScoreRuleById(BigInteger classId);
+	 void deleteScoreRuleById(BigInteger classId);
 
 	/**
 	 * 查询评分规则.
@@ -186,5 +186,5 @@ public interface ClassService {
 	 * @param proportions 评分规则
 	 * @return state 若修改成功则返回true，失败则返回false
 	 */
-	 Boolean updateScoreRule(BigInteger classId, ClassInfo proportions);
+	 void updateScoreRule(BigInteger classId, ClassInfo proportions);
 }
