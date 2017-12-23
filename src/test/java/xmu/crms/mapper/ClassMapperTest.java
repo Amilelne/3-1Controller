@@ -24,8 +24,8 @@ public class ClassMapperTest {
 	
 	@Test
 	public void testInsertCourseSelectionById() {
-		BigInteger userId=new BigInteger("100");
-		BigInteger classId=new BigInteger("100");
+		BigInteger userId=new BigInteger("200");
+		BigInteger classId=new BigInteger("200");
 		int insert=0;
 		insert=classMapper.insertCourseSelectionById(userId, classId);
 		Assert.assertNotEquals(0, insert);
