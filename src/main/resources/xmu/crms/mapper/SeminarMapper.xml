@@ -8,32 +8,47 @@
         select * from seminar WHERE course_id = #{courseId}
     </select>
     
-    <delete id="deleteSeminarByCourseId">
-    	
+    <delete id="deleteTopicBySeminarId">
+    	delete from topic where seminar_id = #{seminarId}
+    </delete>
+    <delete id="deleteSeminarGroupBySeminarId">
+    	delete from seminar_group where seminar_id = #{seminarId}
     </delete>
     
-    <select id="getMySeminarBySeminarId" resultType="String" >
-    	
+    <select id="listTopicBySeminarId" parameterType="java.math.BigInteger" resultMap="TopicResultMap">
+		select * from topic where seminar_id = #{id}
     </select>
     
+    <!-- 返回的是Seminar类，但是并不包含学生是否是队长的信息 ，当前讨论课的签到状态，选题和组队方式-->
+    <select id="getMySeminarBySeminarId" resultType="String" >
+    	select * from seminar WHERE id = #{seminarId}
+    </select>
+    
+    <!-- 没有使用userId,不清楚要获取什么具体的信息 -->
     <select id="getSeminarDetailBySeminarId" resultType="String">
-    	
+    	select * from seminar WHERE id = #{seminarId}
     </select>
     
     <select id="getSeminarBySeminarId" resultType="School">
         select * from seminar WHERE id = #{seminarId}
     </select>
     
-    <update id="updateSeminarBySeminarId">
-    
+    <update id="updateSeminarBySeminarId" parameterType="Seminar">
+    	update seminar set
+    		name = #{name},
+    		description = #{description},
+    		is_fixed = #{fixed},
+    		start_time = #{startTime},
+    		end_time = #{endTime}
+    		WHERE id = #{seminarId}
     </update>
     
     <delete id="deleteSeminarBySeminarId">
-    
+    	delete from seminar WHERE id = #{seminarId}
     </delete>
     
-    <insert id="insertSeminarByCourseId">
-    
+    <insert id="insertSeminarByCourseId" parameterType="Seminar">
+    	insert into seminar(name,description,course_id,is_fixed,start_time,end_time) values(#{name},#{description},#{courseId},#{fixed},#{startTime},#{endTime})
     </insert>
     
 </mapper>

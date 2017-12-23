@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import xmu.crms.entity.Seminar;
+import xmu.crms.entity.Topic;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.InfoIllegalException;
 import xmu.crms.exception.SeminarNotFoundException;
@@ -115,4 +116,15 @@ public interface SeminarMapper {
 	 */
 	 BigInteger insertSeminarByCourseId(BigInteger courseId, Seminar seminar) throws
 	        InfoIllegalException,CourseNotFoundException;
+	 
+	 /**
+	  * 根据seminar信息删除相关topic记录
+	  */
+	 List<Topic> listTopicBySeminarId(BigInteger seminarId);
+	 Boolean deleteTopicBySeminarId(BigInteger seminarId);
+	 
+	 /**
+	  * 根据seminarId删除seminarGroup信息
+	  */
+	 Boolean deleteSeminarGroupBySeminarId(BigInteger seminarId);
 }

@@ -25,47 +25,61 @@ public class SeminarServiceImpl implements SeminarService {
 	}
 
 	public Boolean deleteSeminarByCourseId(BigInteger courseId) throws InfoIllegalException, CourseNotFoundException {
+		/**
+		 * 根据courseId获得所有的seminar信息
+		 */
 		List<Seminar> seminars = seminarMapper.listSeminarByCourseId(courseId);
 		Iterator<Seminar> it = seminars.iterator();
+		/**
+		 * 根据seminarId删除相关的topic记录，删除seminarGroup表记录
+		 * 最后再将seminar记录删除
+		 */
 		while(it.hasNext()) {
-			
+			try {
+				seminarMapper.deleteTopicBySeminarId(it.next().getId());
+				seminarMapper.deleteSeminarGroupBySeminarId(it.next().getId());
+				this.deleteSeminarBySeminarId(it.next().getId());
+			} catch (SeminarNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		return null;
+		return true;
 	}
 
 	public Seminar getMySeminarBySeminarId(BigInteger seminarId, BigInteger userId)
 			throws InfoIllegalException, SeminarNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return seminarMapper.getSeminarBySeminarId(seminarId);
 	}
 
 	public Seminar getSeminarDetailBySeminarId(BigInteger seminarId, BigInteger userId)
 			throws InfoIllegalException, SeminarNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return seminarMapper.getSeminarDetailBySeminarId(seminarId, userId);
 	}
 
 	public Seminar getSeminarBySeminarId(BigInteger seminarId) throws InfoIllegalException, SeminarNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return seminarMapper.getSeminarBySeminarId(seminarId);
 	}
 
 	public Boolean updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar)
 			throws InfoIllegalException, SeminarNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return seminarMapper.updateSeminarBySeminarId(seminarId, seminar);
 	}
 
 	public Boolean deleteSeminarBySeminarId(BigInteger seminarId)
 			throws InfoIllegalException, SeminarNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return seminarMapper.deleteSeminarBySeminarId(seminarId);
 	}
 
 	public BigInteger insertSeminarByCourseId(BigInteger courseId, Seminar seminar)
 			throws InfoIllegalException, CourseNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return seminarMapper.insertSeminarByCourseId(courseId, seminar);
 	}
 
 }
