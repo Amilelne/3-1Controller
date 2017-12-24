@@ -26,7 +26,7 @@ public class TopicServiceTest {
 	
 	@Test
 	public void testGetTopicByTopicId() throws IllegalArgumentException, TopicNotFoundException {
-		Topic topic=topicService.getTopicByTopicId(new BigInteger("1"));
+		Topic topic=topicService.getTopicByTopicId(new BigInteger("2"));
 		Assert.assertNotNull(topic);
 	}
 	
@@ -37,18 +37,18 @@ public class TopicServiceTest {
 		topic.setDescription("话题15描述");
 		topic.setGroupNumberLimit(9);
 		topic.setGroupStudentLimit(5);
-		//Assert.assertEquals(true,topicService.updateTopicByTopicId(new BigInteger("15"), topic));
+		Assert.assertNotEquals(0,topicService.updateTopicByTopicId(new BigInteger("15"), topic));
 	}
 	
 	@Test
 	@Rollback(true)
-	public void testDeleteTopicByTopicId() {
-		//Assert.assertEquals(true,topicService.deleteTopicByTopicId(new BigInteger("4")));
+	public void testDeleteTopicByTopicId() throws IllegalArgumentException, TopicNotFoundException {
+		Assert.assertNotEquals(0,topicService.deleteTopicByTopicId(new BigInteger("15")));
 	}
 	
 	@Test
 	public void testListTopicBySeminarId() {
-		List<Topic> topics=topicService.listTopicBySeminarId(new BigInteger("1"));
+		List<Topic> topics=topicService.listTopicBySeminarId(new BigInteger("2"));
 		Assert.assertNotNull(topics.get(0));	
 	}
 	
@@ -66,13 +66,13 @@ public class TopicServiceTest {
 	}
 	
 	@Test
-	public void testDeleteTopicById() {
-		//Assert.assertEquals(true,topicService.deleteTopicById(new BigInteger("36"), new BigInteger("6")));
+	public void testDeleteSeminarGroupTopicById() {
+		Assert.assertNotEquals(0,topicService.deleteSeminarGroupTopicById(new BigInteger("18"), new BigInteger("2")));
 	}
 	
 	@Test
 	public void testDeleteSeminarGroupTopicByTopicId() {
-		//Assert.assertEquals(true,topicService.deleteSeminarGroupTopicByTopicId(new BigInteger("6")));
+		Assert.assertNotEquals(0,topicService.deleteSeminarGroupTopicByTopicId(new BigInteger("6")));
 	}
 	
 	@Test
@@ -90,8 +90,7 @@ public class TopicServiceTest {
 	@Test
 	@Rollback(true)
 	public void testDeleteTopicBySeminarId() {
-		//Assert.assertEquals(true,topicService.deleteTopicBySeminarId(new BigInteger("2")));
+		Assert.assertNotEquals(0,topicService.deleteTopicBySeminarId(new BigInteger("2")));
 	}
-	
 	
 }
