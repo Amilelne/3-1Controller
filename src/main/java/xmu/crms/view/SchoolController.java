@@ -18,7 +18,7 @@ public class SchoolController {
 	
 	@PostMapping("/school")
 	public ResponseEntity insertSchool(@RequestParam("detail") School school) {
-		Boolean result = schoolService.insertSchool(school);
+		BigInteger result = schoolService.insertSchool(school);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	

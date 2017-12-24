@@ -39,8 +39,9 @@ public class SchoolMapperTest {
 		school.setCity("北京");
 		school.setName("清华大学");
 		school.setProvince("直辖市");
-		boolean result = schoolMapper.insertSchool(school);
-		assertEquals(result, true);
+		int result = schoolMapper.insertSchool(school);
+		System.out.println(result);
+		assertNotNull(result);
 	}
 	
 }
