@@ -224,6 +224,20 @@ public interface ClassDao {
 	     * @exception SeminarNotFoundException 讨论课没有找到
 	     * @exception ClassNotFoundException 无此Id的班级 
 		 */
-		 BigInteger CallInRollById(Location location)
-	             throws SeminarNotFoundException,ClassNotFoundException;
+	BigInteger CallInRollById(Location location)
+	          throws SeminarNotFoundException,ClassNotFoundException;
+	
+	 /**
+     * 根据学生ID获取班级列表.
+     * <p>根据学生ID获取班级列表<br>
+     *
+     * @param userId 学生ID
+     * @return list 班级列表
+     * @throws IllegalArgumentException userId格式错误时抛出或courseId格式错误时抛出
+     * @throws ClassesNotFoundException   未找到班级
+     * @author YeXiaona
+     * @see ClassService #getClassByClassId(BigInteger classId)
+     */
+	List<ClassInfo> listClassByUserId(BigInteger userId) throws IllegalArgumentException, ClassesNotFoundException;
+
 }

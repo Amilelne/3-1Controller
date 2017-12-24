@@ -98,4 +98,9 @@ public class ClassServiceImpl implements ClassService{
 			return classDao.CallInRollById(location);
 		}
 	
+	 @Override
+	 public List<ClassInfo> listClassByUserId(BigInteger userId)
+				throws IllegalArgumentException, ClassesNotFoundException {
+		 return classDao.listClassByUserId(userId);
+	}
 }
