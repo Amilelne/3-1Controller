@@ -6,6 +6,7 @@
 	<!-- ServiceFun:getTopicByTopicId -->
 	<resultMap type="xmu.crms.entity.Topic" id="TopicResultMap">
     	<id column="id" property="id"/>
+    	<result column="serial" property="serial"/>
     	<result column="name" property="name"/>
     	<result column="description" property="description"/>
     	<result column="group_number_limit" property="groupNumberLimit"/>
@@ -78,6 +79,7 @@
     <sql id="setTopicCondition">
     	<set>
     		<if test="topic.id != null and topic.id != ''">id=#{topic.id},</if>
+    		<if test="topic.serial != null and topic.serial != null">serial=#{topic.serial},</if>
     		<if test="topic.name != null and topic.name != null">name=#{topic.name},</if>
     		<if test="topic.description != null and topic.description != ''">description=#{topic.description},</if>
     		<if test="topic.groupNumberLimit != null and topic.groupNumberLimit != ''">group_number_limit=#{topic.groupNumberLimit},</if>
@@ -117,12 +119,14 @@
     <!-- ServiceFun:insertTopicBySeminarId -->
     <insert id="insertTopicBySeminarId" parameterType="xmu.crms.entity.Topic" useGeneratedKeys="true" keyProperty="topic.id">
     	insert into topic(
+    		serial,
     		name,
     		description,
     		group_number_limit,
     		group_student_limit,
     		seminar_id
     	)values(
+    		#{topic.serial},
     		#{topic.name},
     		#{topic.description},
     		#{topic.groupNumberLimit},

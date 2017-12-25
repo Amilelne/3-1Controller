@@ -33,6 +33,7 @@ public class TopicServiceTest {
 	@Test
 	public void testUpdateTopicByTopicId() throws IllegalArgumentException, TopicNotFoundException {
 		Topic topic=topicService.getTopicByTopicId(new BigInteger("7"));
+		topic.setSerial("A");
 		topic.setName("话题15");
 		topic.setDescription("话题说明7");
 		topic.setGroupNumberLimit(9);
@@ -55,6 +56,7 @@ public class TopicServiceTest {
 	@Test
 	public void testInsertTopicBySeminarId() {
 		Topic topic=new Topic();
+		topic.setSerial("B");
 		topic.setName("话题7");
 		topic.setDescription("话题7描述");
 		topic.setGroupNumberLimit(4);

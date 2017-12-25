@@ -15,136 +15,335 @@ import xmu.crms.mapper.*;
 
 /**
  * @author chengjin
+ * @author xingb
  */
+
 @Repository("ClassDao")
 public class ClassDaoImpl implements ClassDao{
+	
 	@Autowired
 	private ClassMapper classMapper;
-	/*已经测试-已经实现*/
+
 	@Override
-		 public void deleteClassSelectionByClassId(BigInteger classId)
-		 {
-			 classMapper.deleteClassSelectionByClassId(classId);
-		 }
-	/*已测试-已经实现*/
-		 public List<ClassInfo> listClassByName(String courseName, String teacherName)throws
-		 UserNotFoundException,CourseNotFoundException
-		 {
-			 List<ClassInfo> classes=new ArrayList<ClassInfo>();
-			classes=classMapper.listClassByName("课程1", "邱明");
-			return classes;
-		 }
-	/*已测试-已经实现*/
-		 public List<ClassInfo> listClassByCourseId(BigInteger courseId) throws CourseNotFoundException
-		 {
-			 List<ClassInfo> classes=new ArrayList<ClassInfo>();
-			 classes=classMapper.listClassByCourseId(courseId);
-			 return classes;
+	public int deleteClassSelectionByClassId(BigInteger classId) throws ClazzNotFoundException{
+		int delete=0;
+		ClassInfo classInfo=classMapper.getClassByClassId(classId);
+		if(classInfo==null) {
+			throw new ClazzNotFoundException("无此classId的班级");
+		}else {
+			classMapper.deleteLocationByClassId(classId);
+			List<BigInteger> fixGroupIds=classMapper.listFixGroupIdByClassId(classId);
+			if(!fixGroupIds.isEmpty()) {
+				classMapper.deleteFixGroupMemberByFixGroupId(fixGroupIds);
+				classMapper.deleteFixGroupTopicByFixGroupId(fixGroupIds);
+			}
+			classMapper.deleteFixGroupByClassId(classId);
+			List<BigInteger> seminarGroupIds=classMapper.listSeminarGroupIdByClassId(classId);
+			if(!seminarGroupIds.isEmpty()) {
+				classMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarGroupIds);
+				List<BigInteger> seminarGroupTopicIds=classMapper.listSeminarGroupTopicIdBySeminarGroupId(seminarGroupIds);
+				if(!seminarGroupTopicIds.isEmpty()) {
+					classMapper.deleteStudentScoreGroupBySeminarGroupTopicId(seminarGroupTopicIds);
+				}
+				classMapper.deleteSeminarGroupTopicBySeminarGroupId(seminarGroupIds);
+			}
+			classMapper.deleteAttendanceByClassId(classId);
+			classMapper.deleteSeminarGroupByClassId(classId);
+			delete=classMapper.deleteClassSelectionByClassId(classId);
 		}
+		return delete;
+	}
 
-	/*已测试-已经实现*/
-		 public ClassInfo getClassByClassId(BigInteger classId) throws ClassNotFoundException
-		 {
-			 ClassInfo fclass = new ClassInfo(); 	
-			fclass = classMapper.getClassByClassId(classId);
-			return fclass;
+	@Override
+	public List<ClassInfo> listClassByName(String courseName, String teacherName)
+			throws UserNotFoundException, CourseNotFoundException {
+		List<ClassInfo> classInfos=new ArrayList<ClassInfo>();
+		List<BigInteger> courseIds=classMapper.getCourseIdByName(courseName);
+		if(courseIds.isEmpty()) {
+			throw new CourseNotFoundException("无此名称的课程");
+		}else {
+			List<BigInteger> userIds=classMapper.getUserIdByName(teacherName);
+			if(userIds.isEmpty()) {
+				throw new UserNotFoundException("无此姓名的教师");
+			}else {
+				classInfos=classMapper.listClassByName(courseName, teacherName);
+			}
 		}
-	/*已经测试-已经实现*/
-		 public void updateClassByClassId(BigInteger classId,ClassInfo newClass)
-		         throws ClassNotFoundException
-		 {
-			 if(classId==null)
-				 throw new ClassNotFoundException("没有找到相应的班级id");
-			 if(newClass==null)
-				 throw new ClassNotFoundException("无法获得班级相应的信息");
-			 classMapper.updateClassByClassId(classId,newClass);
-			 
-		 }
-	/*已经测试-已经实现*/
-		 public void deleteClassByClassId(BigInteger classId)throws ClassNotFoundException
-		 {
-			 classMapper.deleteClassByClassId(classId);
-		 }
-	/*已经测试*/
-		 public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)throws UserNotFoundException,ClassNotFoundException
-		 {
-			 int integer=classMapper.insertCourseSelectionById(userId, classId);
-			 return BigInteger.valueOf(integer);
-		 }
-	/*已经测试-已经实现*/
-		 public void deleteCourseSelectionById(BigInteger userId, BigInteger classId)throws UserNotFoundException,ClassNotFoundException
-		 {
-			 classMapper.deleteCourseSelectionById(userId, classId);
-		 }
-	/*已测试-经实现*/
-		 public Location getCallStatusById(BigInteger classId,BigInteger seminarId)throws SeminarNotFoundException
-		 {
-			 return classMapper.getCallStatusById(classId, seminarId);
-		 }
-	/*已经测试-已经实现*/
-		 public BigInteger insertClassById(BigInteger userId, BigInteger courseId,ClassInfo classInfo)
-				 throws UserNotFoundException,CourseNotFoundException
-		 {
-			 if(userId==null)
-				 throw new UserNotFoundException();//没有定义string类型
-			 if(courseId==null)
-				 throw new CourseNotFoundException();
-			 
-			 classMapper.insertClassById(userId, courseId,classInfo);
-			 return classInfo.getId();
-		 }
+		return classInfos;
+	}
 
-	/*已经测试-已经实现*/
-		 public void deleteClassByCourseId(BigInteger courseId)throws 
-         CourseNotFoundException
-		 {
-			 classMapper.deleteClassByCourseId(courseId);
-		 }
-	/*已经测试-已经实现*/
-		 public void deleteScoreRuleById(BigInteger classId)throws ClassNotFoundException
-		 {
-			 classMapper.deleteScoreRuleById(classId);
-		 }
-	/*已测试-已经实现*/
-		 public ClassInfo getScoreRule(BigInteger classId)throws ClassNotFoundException
-		 {
-			 return classMapper.getScoreRule(classId);
-		 }
-	/*已经测试-已经实现*/
-		 public BigInteger insertScoreRule(BigInteger classId, ClassInfo proportions)throws InvalidOperationException,ClassNotFoundException
-		 {
-			 if(!(proportions instanceof ClassInfo))
-				 throw new InvalidOperationException();
-			 classMapper.insertScoreRule(classId, proportions);
-			 return proportions.getId();
-		 }
-	/*已经测试-已经实现*/
-		 public void updateScoreRule(BigInteger classId, ClassInfo proportions)throws InvalidOperationException,ClassNotFoundException
-		 {
-			 
-			 classMapper.updateScoreRule(classId, proportions);
-		 }
-		 
-	/*已经测试-已经实现*/
-		public BigInteger CallInRollById(Location location) throws SeminarNotFoundException, ClassNotFoundException {
-			classMapper.CallInRollById(location);
-			return location.getId();		
+	@Override
+	public List<ClassInfo> listClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
+		List<ClassInfo> classInfos=new ArrayList<ClassInfo>();
+		Course course=classMapper.selectCourseByCourseId(courseId);
+		if(course==null) {
+			throw new CourseNotFoundException("无此courseId的课程");
+		}else {
+			classInfos=classMapper.listClassByCourseId(courseId);
 		}
-		
-		@Override
-		public List<ClassInfo> listClassByUserId(BigInteger userId)
-				throws IllegalArgumentException, ClassesNotFoundException {
-			List<ClassInfo> classInfos=new ArrayList();
-			if(!(userId instanceof BigInteger)) {
-				throw new IllegalArgumentException("userId格式错误");
-			}else{
-				List<BigInteger> classIds=classMapper.listClassByUserId(userId);
+		return classInfos;
+	}
+
+	@Override
+	public ClassInfo getClassByClassId(BigInteger classId) throws ClazzNotFoundException {
+		ClassInfo classInfo=classMapper.getClassByClassId(classId);
+		if(classInfo==null) {
+			throw new ClazzNotFoundException("无此classId的班级");
+		}
+		return classInfo;
+	}
+
+	@Override
+	public int updateClassByClassId(BigInteger classId, ClassInfo newClass) throws ClazzNotFoundException {
+		int update=0;
+		ClassInfo classInfo=classMapper.getClassByClassId(classId);
+		if(classInfo==null) {
+			throw new ClazzNotFoundException("无此classId的班级");
+		}else {
+			update=classMapper.updateClassByClassId(classId, newClass);
+		}
+		return update;
+	}
+
+	@Override
+	public int deleteClassByClassId(BigInteger classId) throws ClazzNotFoundException {
+		int delete=0;
+		ClassInfo classInfo=classMapper.getClassByClassId(classId);
+		if(classInfo==null) {
+			throw new ClazzNotFoundException("无此classId的班级");
+		}else {
+			classMapper.deleteLocationByClassId(classId);
+			classMapper.deleteClassSelectionByClassId(classId);
+			List<BigInteger> fixGroupIds=classMapper.listFixGroupIdByClassId(classId);
+			if(!fixGroupIds.isEmpty()) {
+				classMapper.deleteFixGroupMemberByFixGroupId(fixGroupIds);
+				classMapper.deleteFixGroupTopicByFixGroupId(fixGroupIds);
+			}
+			classMapper.deleteFixGroupByClassId(classId);
+			List<BigInteger> seminarGroupIds=classMapper.listSeminarGroupIdByClassId(classId);
+			if(!seminarGroupIds.isEmpty()) {
+				classMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarGroupIds);
+				List<BigInteger> seminarGroupTopicIds=classMapper.listSeminarGroupTopicIdBySeminarGroupId(seminarGroupIds);
+				if(!seminarGroupTopicIds.isEmpty()) {
+					classMapper.deleteStudentScoreGroupBySeminarGroupTopicId(seminarGroupTopicIds);
+				}
+				classMapper.deleteSeminarGroupTopicBySeminarGroupId(seminarGroupIds);
+			}
+			classMapper.deleteAttendanceByClassId(classId);
+			classMapper.deleteSeminarGroupByClassId(classId);
+			delete=classMapper.deleteClassByClassId(classId);
+		}
+		return delete;
+	}
+
+	@Override
+	public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)
+			throws UserNotFoundException, ClazzNotFoundException {
+		BigInteger insertId=new BigInteger("0");
+		User user=classMapper.selectUserByUserId(userId);
+		if(user==null) {
+			throw new UserNotFoundException("无此userId的用户");
+		}else {
+			ClassInfo classInfo=classMapper.getClassByClassId(classId);
+			if(classInfo==null) {
+				throw new ClazzNotFoundException("无此classId的班级");
+			}else {
+				ClassInfo classInfoIn=new ClassInfo();
+				User studentIn=new User();
+				classInfoIn.setId(classId);
+				studentIn.setId(userId);
+				CourseSelection courseSelection=new CourseSelection();
+				courseSelection.setClassInfo(classInfoIn);
+				courseSelection.setStudent(studentIn);
+				int insert=classMapper.insertCourseSelection(courseSelection);
+				insertId=courseSelection.getId();
+			}
+		}
+		return insertId;
+	}
+
+	@Override
+	public int deleteCourseSelectionById(BigInteger userId, BigInteger classId)
+			throws UserNotFoundException, ClazzNotFoundException {
+		int delete=0;
+		User user=classMapper.selectUserByUserId(userId);
+		if(user==null) {
+			throw new UserNotFoundException("无此userId的用户");
+		}{
+			ClassInfo classInfo=classMapper.getClassByClassId(classId);
+			if(classInfo==null) {
+				throw new ClazzNotFoundException("无此classId的班级");
+			}else {
+				delete=classMapper.deleteCourseSelectionById(userId, classId);
+			}
+		}
+		return delete;
+	}
+
+	@Override
+	public Location getCallStatusById(BigInteger classId, BigInteger seminarId) throws SeminarNotFoundException {
+		Location location=new Location();
+		Seminar seminar=classMapper.selectSeminarBySeminarId(seminarId);
+		if(seminar==null) {
+			throw new SeminarNotFoundException("无此seminarId的讨论课");
+		}else {
+			location=classMapper.getCallStatusById(classId, seminarId);
+		}
+		return location;
+	}
+
+	@Override
+	public BigInteger insertClassById(BigInteger courseId, ClassInfo classInfo) throws CourseNotFoundException {
+		BigInteger insertId=new BigInteger("0");
+		Course course=classMapper.selectCourseByCourseId(courseId);
+		if(course==null) {
+			throw new CourseNotFoundException("无此courseId的课程");
+		}else {
+			int insert=classMapper.insertClassById(courseId, classInfo);
+			insertId=classInfo.getId();
+		}
+		return insertId;
+	}
+
+	@Override
+	public int deleteClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
+		int delete=0;
+		Course course=classMapper.selectCourseByCourseId(courseId);
+		if(course==null) {
+			throw new CourseNotFoundException("无此courseId的课程");
+		}else {
+			List<ClassInfo> classInfos=classMapper.listClassByCourseId(courseId);
+			Iterator<ClassInfo> it = classInfos.iterator();
+			while(it.hasNext()) {
+				BigInteger classId=it.next().getId();
+				classMapper.deleteLocationByClassId(classId);
+				classMapper.deleteClassSelectionByClassId(classId);
+				List<BigInteger> fixGroupIds=classMapper.listFixGroupIdByClassId(classId);
+				if(!fixGroupIds.isEmpty()) {
+					classMapper.deleteFixGroupMemberByFixGroupId(fixGroupIds);
+					classMapper.deleteFixGroupTopicByFixGroupId(fixGroupIds);
+				}
+				classMapper.deleteFixGroupByClassId(classId);
+				List<BigInteger> seminarGroupIds=classMapper.listSeminarGroupIdByClassId(classId);
+				if(!seminarGroupIds.isEmpty()) {
+					classMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarGroupIds);
+					List<BigInteger> seminarGroupTopicIds=classMapper.listSeminarGroupTopicIdBySeminarGroupId(seminarGroupIds);
+					if(!seminarGroupTopicIds.isEmpty()) {
+						classMapper.deleteStudentScoreGroupBySeminarGroupTopicId(seminarGroupTopicIds);
+					}
+					classMapper.deleteSeminarGroupTopicBySeminarGroupId(seminarGroupIds);
+				}
+				classMapper.deleteAttendanceByClassId(classId);
+				classMapper.deleteSeminarGroupByClassId(classId);
+				delete+=classMapper.deleteClassByClassId(classId);
+			}
+		}
+		return delete;
+	}
+
+	@Override
+	public int deleteScoreRuleById(BigInteger classId) throws ClazzNotFoundException {
+		int delete=0;
+		ClassInfo classInfo=classMapper.getClassByClassId(classId);
+		if(classInfo==null) {
+			throw new ClazzNotFoundException("无此classId的班级");
+		}else {
+			delete=classMapper.deleteScoreRuleById(classId);
+		}
+		return delete;
+	}
+
+	@Override
+	public ClassInfo getScoreRule(BigInteger classId) throws ClazzNotFoundException {
+		ClassInfo classInfo=classMapper.getClassByClassId(classId);
+		if(classInfo==null) {
+			throw new ClazzNotFoundException("无此classId的班级");
+		}
+		return classInfo;
+	}
+
+	@Override
+	public int insertScoreRule(BigInteger classId, ClassInfo proportions)
+			throws InvalidOperationException, ClazzNotFoundException {
+		int insert=0;
+		if(!(proportions instanceof ClassInfo)) {
+			throw new InvalidOperationException();
+		}
+		ClassInfo classInfo=classMapper.getClassByClassId(classId);
+		if(classInfo==null) {
+			throw new ClazzNotFoundException("无此classId的班级");
+		}else {
+			insert=classMapper.insertScoreRule(classId, proportions);
+		}
+		return insert;
+	}
+
+	@Override
+	public int updateScoreRule(BigInteger classId, ClassInfo proportions)
+			throws InvalidOperationException, ClazzNotFoundException {
+		int update=0;
+		ClassInfo classInfo=classMapper.getClassByClassId(classId);
+		if(classInfo==null) {
+			throw new ClazzNotFoundException("无此classId的班级");
+		}else {
+			update=classMapper.updateScoreRule(classId, proportions);
+		}
+		return update;
+	}
+
+	@Override
+	public BigInteger callInRollById(Location location) throws SeminarNotFoundException, ClazzNotFoundException {
+		BigInteger insertId=new BigInteger("0");
+		Seminar seminar=classMapper.selectSeminarBySeminarId(location.getSeminar().getId());
+		if(seminar==null) {
+			throw new SeminarNotFoundException("无此seminarId的讨论课");
+		}else {
+			ClassInfo classInfo=classMapper.getClassByClassId(location.getClassInfo().getId());
+			if(classInfo==null) {
+				throw new ClazzNotFoundException("无此classId的班级");
+			}else {
+				int insert=classMapper.CallInRollById(location);
+				insertId=location.getId();
+			}
+		}
+		return insertId;
+	}
+
+	@Override
+	public int endCallRollById(BigInteger seminarId, BigInteger classId) throws SeminarNotFoundException, ClazzNotFoundException {
+		int update=0;
+		Seminar seminar=classMapper.selectSeminarBySeminarId(seminarId);
+		if(seminar==null) {
+			throw new SeminarNotFoundException("无此seminarId的讨论课");
+		}else {
+			ClassInfo classInfo=classMapper.getClassByClassId(classId);
+			if(classInfo==null) {
+				throw new ClazzNotFoundException("无此classId的班级");
+			}else {
+				update=classMapper.endCallRollById(seminarId,classId);
+			}
+		}
+		return update;
+	}
+
+	@Override
+	public List<ClassInfo> listClassByUserId(BigInteger userId)
+			throws IllegalArgumentException, ClazzNotFoundException {
+		List<ClassInfo> classInfos=new ArrayList<ClassInfo>();
+		if(!(userId instanceof BigInteger)) {
+			throw new IllegalArgumentException();
+		}else {
+			List<BigInteger> classIds=classMapper.listClassByUserId(userId);
+			if(classIds.isEmpty()) {
+				throw new ClazzNotFoundException("找不到班级");
+			}else {
 				Iterator<BigInteger> it = classIds.iterator();
 				while(it.hasNext()) {
 					classInfos.add(classMapper.getClassByClassId(it.next()));
 				}
 			}
-			return classInfos;
-}
+		}
+		return classInfos;
+	}
 
 }

@@ -1,6 +1,7 @@
 package xmu.crms.mapper;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -28,6 +29,12 @@ public class ClassMapperTest {
 	}
 	
 	@Test
+	public void testGetCourseIdByName() {
+		List<BigInteger> courseIds=classMapper.getCourseIdByName("课程1");
+		Assert.assertNotEquals(true, courseIds.isEmpty());
+	}
+	
+	@Test
 	public void testListClassByName() {
 		
 	}
@@ -45,6 +52,16 @@ public class ClassMapperTest {
 	@Test
 	public void testUpdateClassByClassId() {
 		//
+	}
+	
+	@Test
+	public void testDeleteFixGroupMemberByFixGroupId() {
+		//
+		List<BigInteger> fixGroupIds=new ArrayList<BigInteger>();
+		fixGroupIds.add(new BigInteger("17"));
+		fixGroupIds.add(new BigInteger("18"));
+		int delete=classMapper.deleteFixGroupMemberByFixGroupId(fixGroupIds);
+		Assert.assertNotEquals(0, delete);
 	}
 	
 	@Test

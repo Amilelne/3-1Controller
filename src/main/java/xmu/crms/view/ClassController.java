@@ -46,8 +46,8 @@ public class ClassController {
     }
     
     @GetMapping("/class/{classId}")
-    public ResponseEntity<ClassInfo> getClassById(@PathVariable BigInteger classId) throws ClassNotFoundException {
-    		ClassInfo fclass = new ClassInfo(); 		
+    public ResponseEntity<ClassInfo> getClassById(@PathVariable BigInteger classId) throws ClassNotFoundException, ClassesNotFoundException {
+    		ClassInfo fclass = new ClassInfo(); 
 		fclass = classService.getClassByClassId(classId);
 		return new ResponseEntity<ClassInfo>(fclass,HttpStatus.OK);
     }
@@ -61,7 +61,7 @@ public class ClassController {
     }
     
     @DeleteMapping("/class/{classId}")
-    public ResponseEntity deleteClass(@PathVariable("classId") int classId) throws ClassNotFoundException {
+    public ResponseEntity deleteClass(@PathVariable("classId") int classId) throws ClassNotFoundException, ClassesNotFoundException {
        classService.deleteClassByClassId(BigInteger.valueOf(classId));
     	return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
