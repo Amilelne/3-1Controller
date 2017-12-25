@@ -32,12 +32,12 @@ public class TopicServiceTest {
 	
 	@Test
 	public void testUpdateTopicByTopicId() throws IllegalArgumentException, TopicNotFoundException {
-		Topic topic=topicService.getTopicByTopicId(new BigInteger("15"));
+		Topic topic=topicService.getTopicByTopicId(new BigInteger("7"));
 		topic.setName("话题15");
-		topic.setDescription("话题15描述");
+		topic.setDescription("话题说明7");
 		topic.setGroupNumberLimit(9);
 		topic.setGroupStudentLimit(5);
-		Assert.assertNotEquals(0,topicService.updateTopicByTopicId(new BigInteger("15"), topic));
+		Assert.assertNotEquals(0,topicService.updateTopicByTopicId(new BigInteger("7"), topic));
 	}
 	
 	@Test
@@ -55,11 +55,11 @@ public class TopicServiceTest {
 	@Test
 	public void testInsertTopicBySeminarId() {
 		Topic topic=new Topic();
-		topic.setName("话题14");
-		topic.setDescription("话题14描述");
+		topic.setName("话题7");
+		topic.setDescription("话题7描述");
 		topic.setGroupNumberLimit(4);
 		topic.setGroupStudentLimit(5);
-		BigInteger insert=topicService.insertTopicBySeminarId(new BigInteger("1"), topic);
+		BigInteger insert=topicService.insertTopicBySeminarId(new BigInteger("3"), topic);
 		System.out.println(topic.getId());
 		System.out.println(insert);
 		Assert.assertNotNull(insert);

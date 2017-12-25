@@ -225,7 +225,7 @@ public class TopicDaoImpl implements TopicDao{
      */
 	@Override
 	public List<SeminarGroupTopic> listSeminarGroupTopicByGroupId(BigInteger groupId) throws IllegalArgumentException {
-		List<SeminarGroupTopic> seminarGroupTopics=new ArrayList();
+		List<SeminarGroupTopic> seminarGroupTopics=new ArrayList<SeminarGroupTopic>();
 		if(!(groupId instanceof BigInteger)) {
 			throw new IllegalArgumentException("groupId格式错误");
 		}else {

@@ -75,13 +75,20 @@
     </select>
     
     <!-- ServiceFun:updateTopicByTopicId -->
+    <sql id="setTopicCondition">
+    	<set>
+    		<if test="topic.id != null and topic.id != ''">id=#{topic.id},</if>
+    		<if test="topic.name != null and topic.name != null">name=#{topic.name},</if>
+    		<if test="topic.description != null and topic.description != ''">description=#{topic.description},</if>
+    		<if test="topic.groupNumberLimit != null and topic.groupNumberLimit != ''">group_number_limit=#{topic.groupNumberLimit},</if>
+    		<if test="topic.groupStudentLimit != null and topic.groupStudentLimit != ''">group_student_limit=#{topic.groupStudentLimit},</if>
+    		<if test="topic.seminar != null">seminar_id=#{topic.seminar.id},</if>
+    	</set>
+    </sql>
+    
     <update id="updateTopicByTopicId" parameterType="xmu.crms.entity.Topic">
-    	update topic set
-    		name=#{topic.name},
-    		description=#{topic.description},
-    		group_number_limit=#{topic.groupNumberLimit},
-    		group_student_limit=#{topic.groupStudentLimit},
-    		seminar_id=#{topic.seminar.id}
+    	update topic 
+    	<include refid="setTopicCondition"></include>
     	where id=#{topicId}
     </update>
     
