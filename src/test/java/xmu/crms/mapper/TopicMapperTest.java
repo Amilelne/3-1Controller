@@ -53,4 +53,13 @@ public class TopicMapperTest {
 		List<SeminarGroupTopic> seminarGroupTopics=topicMapper.listSeminarGroupTopicByGroupId(new BigInteger("1"));
 		Assert.assertNotNull(seminarGroupTopics);
 	}
+	
+	@Test
+	public void testUpdateTopicByTopicId() {
+		Topic topic=new Topic();
+		topic.setDescription("话题说明5更新");
+		System.out.println(topic.getDescription());
+		int update=topicMapper.updateTopicByTopicId(new BigInteger("5"), topic);
+		Assert.assertNotEquals(0, update);
+	}
 }
